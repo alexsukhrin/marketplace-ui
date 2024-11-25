@@ -3,17 +3,17 @@ import './src/ui/screens/login_screen.dart';
 import './src/ui/themes/app_theme.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const Marcketplace());
 }
 
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+class Marcketplace extends StatefulWidget {
+  const Marcketplace({super.key});
 
   @override
-  _MyAppState createState() => _MyAppState();
+  MyAppState createState() => MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class MyAppState extends State<Marcketplace> {
   bool _isDarkMode = false;
 
   void _toggleTheme() {

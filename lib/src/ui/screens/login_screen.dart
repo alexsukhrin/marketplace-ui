@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
+
 import '../widgets/login_field.dart';
 import '../widgets/password_field.dart';
 import '../widgets/custom_button.dart';
+
 import 'registration_screen.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -9,6 +12,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final logger = Logger();
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -20,9 +24,9 @@ class LoginScreen extends StatelessWidget {
             const PasswordField(),
             const SizedBox(height: 32),
             CustomButton(
-              text: 'Логін',
+              text: 'Вхід',
               onPressed: () {
-                print('Логін');
+                logger.i('Вхід');
               },
             ),
             const SizedBox(height: 16),

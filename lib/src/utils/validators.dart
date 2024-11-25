@@ -1,5 +1,3 @@
-// lib/src/utils/validators.dart
-
 String? validateEmail(String? value) {
   if (value == null || value.isEmpty) {
     return 'Будь ласка, введіть електронну пошту';
