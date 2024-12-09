@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import './src/ui/screens/login_screen.dart';
 import './src/ui/themes/app_theme.dart';
+import 'src/ui/screens/greeting_screen.dart';
 
 void main() {
   runApp(const Marcketplace());
@@ -29,20 +30,25 @@ class MyAppState extends State<Marcketplace> {
       theme: AppTheme.lightTheme(),
       darkTheme: AppTheme.darkTheme(),
       themeMode: _isDarkMode ? ThemeMode.dark : ThemeMode.light,
-      home: const LoginScreen(),
+      routes: {
+        '/chooseRole': (context) => const ChooseRoleScreen(),
+        '/selectCategory': (context) => const SelectCategoryScreen(),
+      },
+      // home: const LoginScreen(),
+      home: GreetingScreen(),
       builder: (context, child) {
         return Scaffold(
-          appBar: AppBar(
-            title: const Text('Marketplace'),
-            actions: [
-              IconButton(
-                icon: Icon(
-                  _isDarkMode ? Icons.wb_sunny : Icons.nightlight_round,
-                ),
-                onPressed: _toggleTheme,
-              ),
-            ],
-          ),
+          // appBar: AppBar(
+          //   title: const Text('Marketplace'),
+          //   actions: [
+          //     IconButton(
+          //       icon: Icon(
+          //         _isDarkMode ? Icons.wb_sunny : Icons.nightlight_round,
+          //       ),
+          //       onPressed: _toggleTheme,
+          //     ),
+          //   ],
+          // ),
           body: child!,
         );
       },

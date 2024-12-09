@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 class AppTheme {
+  static const Color searchFieldBackground = Color(0xFFF4F4F4);
+  static const Color yellowColor = Color(0xFF9500);
+
   static ThemeData lightTheme() {
     return ThemeData(
       primarySwatch: Colors.blue,
@@ -10,19 +13,19 @@ class AppTheme {
       ),
       textTheme: const TextTheme(
         bodyLarge: TextStyle(color: Colors.black, fontSize: 18),
-        bodyMedium: TextStyle(color: Colors.grey, fontSize: 14),
+        bodyMedium: TextStyle(color: Colors.black, fontSize: 14),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.purple,
+          backgroundColor: Color(0xFF9500),
           foregroundColor: Colors.white,
           textStyle: const TextStyle(fontSize: 16),
         ),
       ),
       scaffoldBackgroundColor: Colors.white,
       appBarTheme: const AppBarTheme(
-        backgroundColor: Colors.purple,
-        titleTextStyle: TextStyle(color: Colors.white, fontSize: 20),
+        backgroundColor: Colors.white,
+        titleTextStyle: TextStyle(color: Colors.black, fontSize: 20),
       ),
     );
   }
