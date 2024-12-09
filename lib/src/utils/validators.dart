@@ -21,3 +21,12 @@ String? validatePassword(String? value) {
   }
   return null;
 }
+
+String? validateName(String? value) {
+  if (value == null || value.isEmpty) {
+    return 'Це поле обов’язкове для заповнення';
+  } else if (value.length < 2) {
+    return 'Ім’я/прізвище має бути довше 2 символів';
+  }
+  return null;
+}

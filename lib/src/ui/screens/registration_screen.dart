@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 
 import '../widgets/custom_button.dart';
 import '../widgets/password_field.dart';
-
+import '../widgets/login_field.dart';
+import '../widgets/form_header.dart';
 import '../../utils/validators.dart';
+
+import '../themes/app_theme.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
@@ -14,88 +17,105 @@ class RegistrationScreen extends StatefulWidget {
 
 class RegistrationScreenState extends State<RegistrationScreen> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _firstNameController = TextEditingController();
-  final TextEditingController _lastNameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Реєстрація')),
-      body: Padding(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: ListView(
-            children: <Widget>[
-              // First Name
-              TextFormField(
-                controller: _firstNameController,
-                decoration: const InputDecoration(
-                  labelText: 'Ім\'я',
-                  border: OutlineInputBorder(),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            const FormHeader(
+              text: 'Marketplace',
+            ),
+            const SizedBox(height: 30),
+            Column(
+              children: [
+                Text(
+                  'Реєстрація',
+                  textAlign: TextAlign.center,
+                  style: textTheme.displayLarge?.copyWith(
+                    fontSize: 24,
+                  ),
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Будь ласка, введіть ім\'я';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 16),
-
-              // Last Name
-              TextFormField(
-                controller: _lastNameController,
-                decoration: const InputDecoration(
-                  labelText: 'Прізвище',
-                  border: OutlineInputBorder(),
+                const SizedBox(height: 8),
+                Text(
+                  'Отримайте більше можливостей\nстворивши акаунт',
+                  textAlign: TextAlign.center,
+                  style: textTheme.bodyMedium?.copyWith(
+                    fontSize: 14,
+                    color: Colors.grey,
+                  ),
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Будь ласка, введіть прізвище';
-                  }
-                  return null;
-                },
+              ],
+            ),
+            const SizedBox(height: 50),
+            Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const LoginField(
+                    labelText: 'Ім’я',
+                    validator: validateName,
+                  ),
+                  const SizedBox(height: 20),
+                  const LoginField(
+                    labelText: 'Прізвище',
+                    validator: validateName,
+                  ),
+                  const SizedBox(height: 20),
+                  const LoginField(labelText: 'Електронна пошта'),
+                  const SizedBox(height: 20),
+                  const PasswordField(
+                    showCounter: true,
+                    labelText: "Введіть пароль",
+                  ),
+                  const SizedBox(height: 16),
+                  CustomButton(
+                    text: 'Зареєструватися',
+                    onPressed: () {
+                      if (_formKey.currentState?.validate() ?? false) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Реєстрація успішна!')),
+                        );
+                      }
+                    },
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: RichText(
+                      text: const TextSpan(
+                        style: TextStyle(
+                          color: Colors.black,
+                        ),
+                        children: [
+                          TextSpan(
+                            text: 'Вже маєте акаунт? ',
+                          ),
+                          TextSpan(
+                            text: 'Увійти',
+                            style: TextStyle(
+                              color: AppTheme.linkTextColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
               ),
-              const SizedBox(height: 16),
-
-              // Email
-              TextFormField(
-                controller: _emailController,
-                decoration: const InputDecoration(
-                  labelText: 'Електронна пошта',
-                  border: OutlineInputBorder(),
-                ),
-                keyboardType: TextInputType.emailAddress,
-                validator: validateEmail,
-              ),
-              const SizedBox(height: 16),
-
-              // Password
-              const PasswordField(),
-              const SizedBox(height: 32),
-
-              CustomButton(
-                text: 'Зареєструватися',
-                onPressed: () {
-                  if (_formKey.currentState?.validate() ?? false) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Реєстрація успішна!')),
-                    );
-                  }
-                },
-              ),
-              const SizedBox(height: 16),
-
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text('Вже маєте акаунт? Увійти'),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
