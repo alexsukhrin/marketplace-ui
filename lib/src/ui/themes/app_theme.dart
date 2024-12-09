@@ -18,6 +18,11 @@ class AppTheme {
 
   static const Color textError = Colors.red;
 
+  static const Color lightBodyColor = Color(0xFF3B3B3B);
+
+  static const Color progressIndicatorInactive = Color(0xFFEFEFEF);
+  static const Color progressIndicatorActive = Color(0xFFB6B6B6);
+
   static ThemeData lightTheme() {
     return ThemeData(
       primarySwatch: Colors.blue,
@@ -57,7 +62,7 @@ class AppTheme {
           textStyle: const TextStyle(fontSize: 16),
         ),
       ),
-      scaffoldBackgroundColor: backgroundColor,
+      // scaffoldBackgroundColor: backgroundColor,
       appBarTheme: const AppBarTheme(
         // backgroundColor: Colors.purple,
         titleTextStyle: TextStyle(color: witeText, fontSize: 20),

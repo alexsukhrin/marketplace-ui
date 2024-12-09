@@ -11,6 +11,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_svg: ^2.0.7
 
   google_fonts: ^6.0.0
   cupertino_icons: ^1.0.8
@@ -25,4 +26,7 @@ flutter:
 
   assets:
     - assets/images/
+
     - assets/images/logIn_icons/
+
+    - assets/images/welcome_page/
