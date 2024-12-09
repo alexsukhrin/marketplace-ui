@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './src/ui/screens/login_screen.dart';
+import 'src/ui/screens/login_screen.dart';
 import './src/ui/themes/app_theme.dart';
 import 'src/ui/screens/greeting_screen.dart';
 
@@ -15,13 +15,13 @@ class Marcketplace extends StatefulWidget {
 }
 
 class MyAppState extends State<Marcketplace> {
-  bool _isDarkMode = false;
+  // bool _isDarkMode = false;
 
-  void _toggleTheme() {
-    setState(() {
-      _isDarkMode = !_isDarkMode;
-    });
-  }
+  // void _toggleTheme() {
+  //   setState(() {
+  //     _isDarkMode = !_isDarkMode;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -29,12 +29,7 @@ class MyAppState extends State<Marcketplace> {
       title: 'Flutter Demo',
       theme: AppTheme.lightTheme(),
       darkTheme: AppTheme.darkTheme(),
-      themeMode: _isDarkMode ? ThemeMode.dark : ThemeMode.light,
-      routes: {
-        '/chooseRole': (context) => const ChooseRoleScreen(),
-        '/selectCategory': (context) => const SelectCategoryScreen(),
-      },
-      // home: const LoginScreen(),
+      // themeMode: _isDarkMode ? ThemeMode.dark : ThemeMode.light,
       home: GreetingScreen(),
       builder: (context, child) {
         return Scaffold(

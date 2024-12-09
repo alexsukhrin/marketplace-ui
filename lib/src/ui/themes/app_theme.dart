@@ -1,8 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
-  static const Color searchFieldBackground = Color(0xFFF4F4F4);
-  static const Color yellowColor = Color(0xFF9500);
+  static const Color primaryColor = Colors.blue;
+  static const Color buttonColor = Color(0xFFFF9500);
+  static const Color backgroundColor = Colors.white;
+
+  static const Color witeText = Colors.white;
+  static const Color headingTextColor = Color(0xFF212121);
+  static const Color linkTextColor = Color(0xFFFF9500);
+
+  static const Color activeBorderColor = Color(0xFFFFCC85);
+  static const Color textFieldBackgroundColor = Color(0xFFF2F2F7);
+
+  static const Color textFieldCounterColor = Color(0xFF949494);
+  static const Color textFieldValidColor = Colors.green;
+
+  static const Color textError = Colors.red;
+
+  static const Color lightBodyColor = Color(0xFF3B3B3B);
+
+  static const Color progressIndicatorInactive = Color(0xFFEFEFEF);
+  static const Color progressIndicatorActive = Color(0xFFB6B6B6);
 
   static ThemeData lightTheme() {
     return ThemeData(
@@ -11,21 +30,42 @@ class AppTheme {
         border: OutlineInputBorder(),
         labelStyle: TextStyle(fontSize: 16),
       ),
-      textTheme: const TextTheme(
-        bodyLarge: TextStyle(color: Colors.black, fontSize: 18),
-        bodyMedium: TextStyle(color: Colors.black, fontSize: 14),
+      textTheme: GoogleFonts.mulishTextTheme(
+        const TextTheme(
+          displayLarge: TextStyle(
+            color: Colors.black,
+            fontSize: 20,
+            fontWeight: FontWeight.w400,
+            height: 1.255,
+            letterSpacing: -0.24,
+          ),
+          bodyMedium: TextStyle(
+            color: Colors.black,
+            fontSize: 16,
+            fontWeight: FontWeight.w300,
+            height: 1.255,
+            letterSpacing: -0.24,
+          ),
+          bodyLarge: TextStyle(
+            color: Colors.black,
+            fontSize: 14,
+            fontWeight: FontWeight.w300,
+            height: 1.255,
+            letterSpacing: -0.24,
+          ),
+        ),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: Color(0xFF9500),
+          backgroundColor: Colors.purple,
           foregroundColor: Colors.white,
           textStyle: const TextStyle(fontSize: 16),
         ),
       ),
-      scaffoldBackgroundColor: Colors.white,
+      // scaffoldBackgroundColor: backgroundColor,
       appBarTheme: const AppBarTheme(
-        backgroundColor: Colors.white,
-        titleTextStyle: TextStyle(color: Colors.black, fontSize: 20),
+        // backgroundColor: Colors.purple,
+        titleTextStyle: TextStyle(color: witeText, fontSize: 20),
       ),
     );
   }
