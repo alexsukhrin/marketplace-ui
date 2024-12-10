@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'src/ui/screens/login_screen.dart';
 import './src/ui/themes/app_theme.dart';
-import 'src/ui/screens/greeting_screen.dart';
+import 'src/ui/screens/welcome_page_screens/greeting_screen.dart';
 
 void main() {
   runApp(const Marcketplace());
