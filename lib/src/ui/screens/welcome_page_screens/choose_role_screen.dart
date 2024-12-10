@@ -1,23 +1,25 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/ui/widgets/welcome_page_widgets/welcome_page_header.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../services/auth_service.dart';
 import '../../widgets/custom_button.dart';
-
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 import '../../widgets/welcome_page_widgets/custom_outlined_button.dart';
 
 class ChooseRoleScreen extends StatefulWidget {
-  const ChooseRoleScreen({Key? key}) : super(key: key);
+  const ChooseRoleScreen({super.key});
 
   @override
-  _ChooseRoleScreenState createState() => _ChooseRoleScreenState();
+  ChooseRoleScreenState createState() => ChooseRoleScreenState();
 }
 
-class _ChooseRoleScreenState extends State<ChooseRoleScreen> {
+class ChooseRoleScreenState extends State<ChooseRoleScreen> {
   String? selectedRole;
+
+  get http => null;
 
   Future<void> _submitRole() async {
     if (selectedRole == null) return;

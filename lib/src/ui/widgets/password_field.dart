@@ -12,6 +12,7 @@ class PasswordField extends StatefulWidget {
     this.controller,
     this.showCounter = false,
     required this.labelText,
+    required String? Function(String? value) validator,
   });
 
   @override

@@ -23,12 +23,7 @@ class GreetingScreen extends StatelessWidget {
             // Skip Button
             GestureDetector(
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const ChooseRoleScreen(),
-                  ),
-                );
+                Navigator.pushNamed(context, '/chooseRole');
               },
               child: const Text(
                 'Пропустити',
@@ -126,12 +121,7 @@ class GreetingScreen extends StatelessWidget {
             CustomButton(
               text: "Давай почнемо",
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const ChooseRoleScreen(),
-                  ),
-                );
+                Navigator.pushNamed(context, '/chooseRole');
               },
             ),
             const SizedBox(height: 40),
