@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/ui/screens/welcome_page_screens/choose_role_screen.dart';
 import 'package:flutter_application_1/src/ui/themes/app_theme.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../widgets/custom_button.dart';
+import '../../widgets/custom_button.dart';
 
 class GreetingScreen extends StatelessWidget {
   const GreetingScreen({super.key});
@@ -99,7 +100,7 @@ class GreetingScreen extends StatelessWidget {
                 Container(
                   height: 6,
                   width: 6,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: AppTheme.progressIndicatorInactive,
                     shape: BoxShape.circle,
                   ),

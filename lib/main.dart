@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/ui/screens/welcome_page_screens/choose_role_screen.dart';
+import 'package:flutter_application_1/src/ui/screens/welcome_page_screens/select_category_screen.dart';
 import 'src/ui/screens/login_screen.dart';
 import './src/ui/themes/app_theme.dart';
-import 'src/ui/screens/greeting_screen.dart';
+import 'src/ui/screens/welcome_page_screens/greeting_screen.dart';
 
 void main() {
   runApp(const Marcketplace());
@@ -34,6 +36,8 @@ class MyAppState extends State<Marcketplace> {
       routes: {
         '/': (context) => LoginScreen(),
         '/greeting': (context) => const GreetingScreen(),
+        '/chooseRole': (context) => const ChooseRoleScreen(),
+        '/selectCategory': (context) => const SelectCategoryScreen(),
       },
       builder: (context, child) {
         return Scaffold(
