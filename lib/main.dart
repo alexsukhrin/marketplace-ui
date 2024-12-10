@@ -26,11 +26,15 @@ class MyAppState extends State<Marcketplace> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Marketplace',
       theme: AppTheme.lightTheme(),
       darkTheme: AppTheme.darkTheme(),
       // themeMode: _isDarkMode ? ThemeMode.dark : ThemeMode.light,
-      home: GreetingScreen(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => LoginScreen(),
+        '/greeting': (context) => const GreetingScreen(),
+      },
       builder: (context, child) {
         return Scaffold(
           // appBar: AppBar(

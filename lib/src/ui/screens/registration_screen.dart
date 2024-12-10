@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../services/auth_service.dart';
+
 import '../widgets/custom_button.dart';
 import '../widgets/password_field.dart';
 import '../widgets/login_field.dart';
@@ -17,6 +19,44 @@ class RegistrationScreen extends StatefulWidget {
 
 class RegistrationScreenState extends State<RegistrationScreen> {
   final _formKey = GlobalKey<FormState>();
+
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  Map<String, String> getFormData() {
+    return {
+      "first-name": _firstNameController.text,
+      "last-name": _lastNameController.text,
+      "email": _emailController.text,
+      "password": _passwordController.text,
+    };
+  }
+
+  @override
+  void dispose() {
+    _firstNameController.dispose();
+    _lastNameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  Future<void> registerUser(BuildContext context) async {
+    if (_formKey.currentState?.validate() ?? false) {
+      final formData = getFormData();
+      await AuthService.registerUser(formData);
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Реєстрація успішна!')),
+        );
+
+        Navigator.pushReplacementNamed(context, '/greeting');
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,31 +102,34 @@ class RegistrationScreenState extends State<RegistrationScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const LoginField(
+                  LoginField(
                     labelText: 'Ім’я',
                     validator: validateName,
+                    controller: _firstNameController,
                   ),
                   const SizedBox(height: 20),
-                  const LoginField(
+                  LoginField(
                     labelText: 'Прізвище',
                     validator: validateName,
+                    controller: _lastNameController,
                   ),
                   const SizedBox(height: 20),
-                  const LoginField(labelText: 'Електронна пошта'),
+                  LoginField(
+                    labelText: 'Електронна пошта',
+                    controller: _emailController,
+                  ),
                   const SizedBox(height: 20),
-                  const PasswordField(
+                  PasswordField(
                     showCounter: true,
                     labelText: "Введіть пароль",
+                    controller: _passwordController,
+                    validator: (String? value) {},
                   ),
                   const SizedBox(height: 16),
                   CustomButton(
                     text: 'Зареєструватися',
                     onPressed: () {
-                      if (_formKey.currentState?.validate() ?? false) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Реєстрація успішна!')),
-                        );
-                      }
+                      registerUser(context);
                     },
                   ),
                   TextButton(

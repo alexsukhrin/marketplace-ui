@@ -75,11 +75,13 @@ class PasswordRecoveryState extends State<PasswordRecovery> {
               controller: _newPasswordController,
               showCounter: true,
               labelText: 'Введіть пароль',
+              validator: (String? value) {},
             ),
             const SizedBox(height: 10),
             PasswordField(
               controller: _confirmPasswordController,
               labelText: 'Введіть пароль',
+              validator: (String? value) {},
             ),
             const SizedBox(height: 10),
             if (_errorMessage != null)
