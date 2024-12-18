@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/ui/widgets/welcome_page_widgets/welcome_page_header.dart';
 
-import '../../widgets/custom_button.dart';
+import '../../widgets/auth_widgets/auth_button.dart';
 import '../../widgets/welcome_page_widgets/custom_outlined_button.dart';
 
 class SelectCategoryScreen extends StatefulWidget {
@@ -110,7 +110,7 @@ class _SelectCategoryScreenState extends State<SelectCategoryScreen> {
               ],
             ),
             const SizedBox(height: 14),
-            CustomButton(
+            AuthButton(
               text: "На головну сторінку",
               onPressed: () {
                 Navigator.pushNamed(context, '/mainScreen');

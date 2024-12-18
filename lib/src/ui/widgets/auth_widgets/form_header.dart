@@ -21,7 +21,7 @@ class FormHeader extends StatelessWidget {
       children: [
         Icon(
           icon,
-          size: 50,
+          size: 28,
           color: iconColor,
         ),
         const SizedBox(height: 8),

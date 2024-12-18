@@ -1,23 +1,22 @@
 import 'package:flutter/material.dart';
 
-import '../../services/auth_service.dart';
+import '../../../services/auth_service.dart';
 
-import '../widgets/custom_button.dart';
-import '../widgets/password_field.dart';
-import '../widgets/login_field.dart';
-import '../widgets/form_header.dart';
-import '../../utils/validators.dart';
+import '../../widgets/auth_widgets/auth_button.dart';
+import '../../widgets/auth_widgets/auth_field.dart';
+import '../../widgets/auth_widgets/form_header.dart';
+import '../../../utils/validators.dart';
 
-import '../themes/app_theme.dart';
+import '../../themes/app_theme.dart';
 
-class RegistrationScreen extends StatefulWidget {
-  const RegistrationScreen({super.key});
+class RegistrationPage extends StatefulWidget {
+  const RegistrationPage({super.key});
 
   @override
-  RegistrationScreenState createState() => RegistrationScreenState();
+  RegistrationPageState createState() => RegistrationPageState();
 }
 
-class RegistrationScreenState extends State<RegistrationScreen> {
+class RegistrationPageState extends State<RegistrationPage> {
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _firstNameController = TextEditingController();
@@ -73,7 +72,7 @@ class RegistrationScreenState extends State<RegistrationScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             const FormHeader(
-              text: 'Marketplace',
+              text: 'SHUM',
             ),
             const SizedBox(height: 30),
             Column(
@@ -102,31 +101,37 @@ class RegistrationScreenState extends State<RegistrationScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  LoginField(
+                  AuthField(
                     labelText: 'Ім’я',
                     validator: validateName,
                     controller: _firstNameController,
+                    hintText: "Введіть ім'я",
                   ),
                   const SizedBox(height: 20),
-                  LoginField(
+                  AuthField(
                     labelText: 'Прізвище',
                     validator: validateName,
                     controller: _lastNameController,
+                    hintText: "Введіть прізвище",
                   ),
                   const SizedBox(height: 20),
-                  LoginField(
+                  AuthField(
                     labelText: 'Електронна пошта',
                     controller: _emailController,
+                    hintText: 'Введіть пошту',
+                    validator: validateEmail,
                   ),
                   const SizedBox(height: 20),
-                  PasswordField(
-                    showCounter: true,
-                    labelText: "Введіть пароль",
+                  AuthField(
+                    labelText: 'Пароль',
                     controller: _passwordController,
-                    validator: (String? value) {},
+                    hintText: 'Введіть пароль',
+                    validator: validatePassword,
+                    showCounter: true,
+                    isObscureText: true,
                   ),
                   const SizedBox(height: 16),
-                  CustomButton(
+                  AuthButton(
                     text: 'Зареєструватися',
                     onPressed: () {
                       registerUser(context);

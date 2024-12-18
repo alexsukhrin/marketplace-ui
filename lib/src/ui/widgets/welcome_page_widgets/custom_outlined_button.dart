@@ -23,14 +23,16 @@ class CustomOutlinedButton extends StatelessWidget {
           horizontal: 40,
           vertical: 11,
         ),
-        backgroundColor: isSelected ? AppTheme.buttonColor : Colors.transparent,
-        side: const BorderSide(color: AppTheme.buttonColor),
-        foregroundColor: isSelected ? Colors.transparent : AppTheme.buttonColor,
+        backgroundColor:
+            isSelected ? AppTheme.activeButtonColor : Colors.transparent,
+        side: const BorderSide(color: AppTheme.activeButtonColor),
+        foregroundColor:
+            isSelected ? Colors.transparent : AppTheme.activeButtonColor,
       ),
       child: Text(
         text,
         style: TextStyle(
-          color: isSelected ? AppTheme.witeText : AppTheme.buttonColor,
+          color: isSelected ? AppTheme.witeText : AppTheme.activeButtonColor,
         ),
       ),
     );

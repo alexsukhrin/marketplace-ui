@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/ui/screens/welcome_page_screens/choose_role_screen.dart';
 import 'package:flutter_application_1/src/ui/themes/app_theme.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../../widgets/custom_button.dart';
+import '../../widgets/auth_widgets/auth_button.dart';
 
 class GreetingScreen extends StatelessWidget {
   const GreetingScreen({super.key});
@@ -118,7 +118,7 @@ class GreetingScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             // Button
-            CustomButton(
+            AuthButton(
               text: "Давай почнемо",
               onPressed: () {
                 Navigator.pushNamed(context, '/chooseRole');

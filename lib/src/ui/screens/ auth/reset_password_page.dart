@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
-import '../widgets/password_field.dart';
-import '../widgets/custom_button.dart';
 
-class PasswordRecovery extends StatefulWidget {
-  const PasswordRecovery({super.key});
+import '../../../utils/validators.dart';
+
+import '../../widgets/auth_widgets/auth_field.dart';
+import '../../widgets/auth_widgets/auth_button.dart';
+
+class ResetPasswordPage extends StatefulWidget {
+  const ResetPasswordPage({super.key});
 
   @override
-  PasswordRecoveryState createState() => PasswordRecoveryState();
+  ResetPasswordPageState createState() => ResetPasswordPageState();
 }
 
-class PasswordRecoveryState extends State<PasswordRecovery> {
+class ResetPasswordPageState extends State<ResetPasswordPage> {
   final TextEditingController _newPasswordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
@@ -70,18 +73,20 @@ class PasswordRecoveryState extends State<PasswordRecovery> {
               style: textTheme.bodyMedium,
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 30),
-            PasswordField(
+            AuthField(
+              hintText: 'Пароль',
               controller: _newPasswordController,
               showCounter: true,
               labelText: 'Введіть пароль',
-              validator: (String? value) {},
+              validator: validatePassword,
+              isObscureText: true,
             ),
-            const SizedBox(height: 10),
-            PasswordField(
+            AuthField(
+              hintText: 'Повторіть пароль',
               controller: _confirmPasswordController,
-              labelText: 'Введіть пароль',
-              validator: (String? value) {},
+              labelText: 'Поворіть пароль',
+              validator: validatePassword,
+              isObscureText: true,
             ),
             const SizedBox(height: 10),
             if (_errorMessage != null)
@@ -93,7 +98,7 @@ class PasswordRecoveryState extends State<PasswordRecovery> {
                 ),
               ),
             const SizedBox(height: 40),
-            CustomButton(
+            AuthButton(
               text: 'Зберегти пароль',
               onPressed: _isButtonEnabled
                   ? () {
