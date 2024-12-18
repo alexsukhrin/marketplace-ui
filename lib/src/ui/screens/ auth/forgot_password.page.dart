@@ -1,29 +1,46 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/src/ui/screens/code_validate.dart';
-import '../widgets/form_header.dart';
-import '../widgets/login_field.dart';
-import '../widgets/custom_button.dart';
-import '../../utils/validators.dart';
 
-class PasswordRecoveryScreen extends StatefulWidget {
-  const PasswordRecoveryScreen({super.key});
+import 'code_validate_page.dart';
+import '../../../utils/validators.dart';
+import '../../../services/auth_service.dart';
+
+import '../../widgets/auth_widgets/form_header.dart';
+import '../../widgets/auth_widgets/auth_field.dart';
+import '../../widgets/auth_widgets/auth_button.dart';
+
+class ForgotPasswordPage extends StatefulWidget {
+  const ForgotPasswordPage({super.key});
 
   @override
-  State<PasswordRecoveryScreen> createState() => _PasswordRecoveryScreenState();
+  State<ForgotPasswordPage> createState() => _ForgotPasswordPageState();
 }
 
-class _PasswordRecoveryScreenState extends State<PasswordRecoveryScreen> {
+class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
 
-  void _onSendCode() {
+  void _onSendCode() async {
     if (_formKey.currentState?.validate() ?? false) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const CodeValidate(),
-        ),
-      );
+      final email = _emailController.text;
+
+      try {
+        await AuthService.sendRecoveryEmail(email);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+              content: Text('Лист для відновлення паролю надіслано')),
+        );
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const CodeValidatePage(),
+          ),
+        );
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Помилка: $e')),
+        );
+      }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Будь ласка, виправте помилки у формі')),
@@ -49,7 +66,7 @@ class _PasswordRecoveryScreenState extends State<PasswordRecoveryScreen> {
             children: <Widget>[
               const Center(
                 child: FormHeader(
-                  text: 'Marketplace',
+                  text: 'SHUM',
                 ),
               ),
               const SizedBox(height: 40),
@@ -65,13 +82,14 @@ class _PasswordRecoveryScreenState extends State<PasswordRecoveryScreen> {
                 style: textTheme.bodyMedium?.copyWith(),
               ),
               const SizedBox(height: 68),
-              LoginField(
+              AuthField(
                 labelText: "Введіть пошту",
                 controller: _emailController,
                 validator: validateEmail,
+                hintText: "Введіть пошту",
               ),
               const SizedBox(height: 40),
-              CustomButton(
+              AuthButton(
                 text: 'Надіслати код',
                 onPressed: _onSendCode,
               ),

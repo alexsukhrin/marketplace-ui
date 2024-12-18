@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/ui/screens/welcome_page_screens/choose_role_screen.dart';
 import 'package:flutter_application_1/src/ui/screens/welcome_page_screens/select_category_screen.dart';
-import 'src/ui/screens/login_screen.dart';
+import 'src/ui/screens/ auth/login_page.dart';
 import './src/ui/themes/app_theme.dart';
 import 'src/ui/screens/welcome_page_screens/greeting_screen.dart';
 
@@ -28,13 +28,14 @@ class MyAppState extends State<Marcketplace> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Marketplace',
       theme: AppTheme.lightTheme(),
       darkTheme: AppTheme.darkTheme(),
       // themeMode: _isDarkMode ? ThemeMode.dark : ThemeMode.light,
       initialRoute: '/',
       routes: {
-        '/': (context) => LoginScreen(),
+        '/': (context) => const LoginPage(),
         '/greeting': (context) => const GreetingScreen(),
         '/chooseRole': (context) => const ChooseRoleScreen(),
         '/selectCategory': (context) => const SelectCategoryScreen(),

@@ -5,7 +5,7 @@ import 'package:flutter_application_1/src/ui/widgets/welcome_page_widgets/welcom
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../services/auth_service.dart';
-import '../../widgets/custom_button.dart';
+import '../../widgets/auth_widgets/auth_button.dart';
 
 import '../../widgets/welcome_page_widgets/custom_outlined_button.dart';
 
@@ -136,7 +136,7 @@ class ChooseRoleScreenState extends State<ChooseRoleScreen> {
               ],
             ),
             const SizedBox(height: 20),
-            CustomButton(
+            AuthButton(
               text: "Далі",
               onPressed: selectedRole == null ? null : _submitRole,
             ),

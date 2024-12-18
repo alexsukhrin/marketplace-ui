@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
-import 'password_recovery.dart';
+import 'reset_password_page.dart';
 
-import '../themes/app_theme.dart';
+import '../../themes/app_theme.dart';
 
-class CodeValidate extends StatefulWidget {
-  const CodeValidate({super.key});
+class CodeValidatePage extends StatefulWidget {
+  const CodeValidatePage({super.key});
 
   @override
-  CodeValidateState createState() => CodeValidateState();
+  CodeValidatePageState createState() => CodeValidatePageState();
 }
 
-class CodeValidateState extends State<CodeValidate> {
+class CodeValidatePageState extends State<CodeValidatePage> {
   final TextEditingController _field1Controller = TextEditingController();
   final TextEditingController _field2Controller = TextEditingController();
   final TextEditingController _field3Controller = TextEditingController();
@@ -109,7 +109,7 @@ class CodeValidateState extends State<CodeValidate> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) =>
-                                        const PasswordRecovery(),
+                                        const ResetPasswordPage(),
                                   ),
                                 );
                               } else {
@@ -120,7 +120,7 @@ class CodeValidateState extends State<CodeValidate> {
                             }
                           : null,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: AppTheme.buttonColor,
+                        backgroundColor: AppTheme.activeButtonColor,
                         foregroundColor: AppTheme.witeText,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),

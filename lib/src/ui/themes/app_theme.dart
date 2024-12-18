@@ -3,12 +3,15 @@ import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
   static const Color primaryColor = Colors.blue;
-  static const Color buttonColor = Color(0xFFFF9500);
-  static const Color backgroundColor = Colors.white;
+  static const Color activeButtonColor = Color(0xFFFF9500);
+  static Color disabledButtonColor = const Color.fromRGBO(255, 204, 133, 1);
+  static const Color backgroundColorWhite = Colors.white;
 
+  static const Color blackText = Colors.black;
   static const Color witeText = Colors.white;
   static const Color headingTextColor = Color(0xFF212121);
   static const Color linkTextColor = Color(0xFFFF9500);
+  static const Color hintTesxtGrey = Color(0xFF949494);
 
   static const Color activeBorderColor = Color(0xFFFFCC85);
   static const Color textFieldBackgroundColor = Color(0xFFF2F2F7);
@@ -25,7 +28,6 @@ class AppTheme {
 
   static ThemeData lightTheme() {
     return ThemeData(
-      primarySwatch: Colors.blue,
       inputDecorationTheme: const InputDecorationTheme(
         border: OutlineInputBorder(),
         labelStyle: TextStyle(fontSize: 16),
@@ -62,7 +64,7 @@ class AppTheme {
           textStyle: const TextStyle(fontSize: 16),
         ),
       ),
-      // scaffoldBackgroundColor: backgroundColor,
+      scaffoldBackgroundColor: backgroundColorWhite,
       appBarTheme: const AppBarTheme(
         // backgroundColor: Colors.purple,
         titleTextStyle: TextStyle(color: witeText, fontSize: 20),
