@@ -61,13 +61,12 @@ class _LoginPageState extends State<LoginPage> {
     try {
       final response = await AuthService.loginUser(email, password);
 
-      // Перевірка, чи містить відповідь токен
       if (response.containsKey('token')) {
         final token = response['token'];
         await AuthStorage.saveToken(token);
 
         if (mounted) {
-          Navigator.pushReplacementNamed(context, '/main');
+          Navigator.pushReplacementNamed(context, '/greeting');
         }
       } else {
         final errorMessage =
