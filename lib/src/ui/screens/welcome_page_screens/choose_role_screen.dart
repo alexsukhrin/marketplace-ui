@@ -1,10 +1,8 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/services/user_role_service.dart';
 import 'package:flutter_application_1/src/ui/widgets/welcome_page_widgets/welcome_page_header.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../services/auth_service.dart';
 import '../../widgets/auth_widgets/auth_button.dart';
 
 import '../../widgets/welcome_page_widgets/custom_outlined_button.dart';
@@ -19,44 +17,37 @@ class ChooseRoleScreen extends StatefulWidget {
 class ChooseRoleScreenState extends State<ChooseRoleScreen> {
   String? selectedRole;
 
-  get http => null;
-
-  Future<void> _submitRole() async {
+  Future<void> submitRole() async {
     if (selectedRole == null) return;
-
-    final url = Uri.parse('https://your-backend-api.com/role');
-    final body = jsonEncode({'role': selectedRole});
-
+    final roleMap = {
+      'is-seller': selectedRole == 'seller',
+      'is-buyer': selectedRole == 'customer',
+    };
     try {
-      final response = await http.post(
-        url,
-        headers: {'Content-Type': 'application/json'},
-        body: body,
-      );
+      // Send the selected role using UserRoleService
+      await UserRoleService.sendRole(roleMap);
 
-      if (response.statusCode == 200) {
-        // Successfully sent data to backend
-        print('Role submitted: $selectedRole');
-        Navigator.pushNamed(context, '/selectCategory');
-      } else {
-        // Handle server error
-        print('Error submitting role: ${response.statusCode}');
-      }
+      // Navigate to the next screen
+      Navigator.pushNamed(context, '/selectCategory');
     } catch (e) {
-      // Handle network error
-      print('Network error: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to submit role: $e')),
+      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const WelcomePageHeader(),
+      appBar: const WelcomePageHeader(
+        routeName: '/selectCategory',
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const SizedBox(height: 10),
             const Text(
               "Обирай ким ти є?",
               style: TextStyle(
@@ -138,9 +129,9 @@ class ChooseRoleScreenState extends State<ChooseRoleScreen> {
             const SizedBox(height: 20),
             AuthButton(
               text: "Далі",
-              onPressed: selectedRole == null ? null : _submitRole,
+              onPressed: selectedRole == null ? null : submitRole,
             ),
-            const SizedBox(height: 40),
+            const SizedBox(height: 45),
           ],
         ),
       ),
