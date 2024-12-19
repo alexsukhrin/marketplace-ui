@@ -52,7 +52,7 @@ class RegistrationPageState extends State<RegistrationPage> {
           const SnackBar(content: Text('Реєстрація успішна!')),
         );
 
-        Navigator.pushReplacementNamed(context, '/greeting');
+        Navigator.pushReplacementNamed(context, '/succesRegistration');
       }
     }
   }

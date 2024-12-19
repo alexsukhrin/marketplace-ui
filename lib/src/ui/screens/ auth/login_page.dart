@@ -60,21 +60,27 @@ class _LoginPageState extends State<LoginPage> {
 
     try {
       final response = await AuthService.loginUser(email, password);
-      if (response['success'] == true) {
-        final token = response['data']['token'];
+
+      // Перевірка, чи містить відповідь токен
+      if (response.containsKey('token')) {
+        final token = response['token'];
         await AuthStorage.saveToken(token);
 
         if (mounted) {
-          Navigator.pushReplacementNamed(context, '/home');
+          Navigator.pushReplacementNamed(context, '/main');
         }
       } else {
         final errorMessage =
             response['message'] ?? 'Невірна електронна пошта або пароль';
-        _showErrorDialog(context, errorMessage);
+        if (mounted) {
+          _showErrorDialog(context, errorMessage);
+        }
       }
     } catch (e) {
-      _showErrorDialog(
-          context, 'Щось пішло не так. Будь ласка, спробуйте пізніше.');
+      if (mounted) {
+        _showErrorDialog(
+            context, 'Щось пішло не так. Будь ласка, спробуйте пізніше.');
+      }
     }
   }
 
