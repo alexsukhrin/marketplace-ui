@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/ui/screens/%20auth/registration_page.dart';
+import 'package:flutter_application_1/src/ui/screens/main_screen.dart';
 import 'package:flutter_application_1/src/ui/screens/welcome_page_screens/choose_role_screen.dart';
 import 'package:flutter_application_1/src/ui/screens/welcome_page_screens/select_category_screen.dart';
+import 'package:flutter_application_1/src/ui/screens/welcome_page_screens/welcome_screen.dart';
 import 'src/ui/screens/ auth/login_page.dart';
 import './src/ui/themes/app_theme.dart';
 import 'src/ui/screens/welcome_page_screens/greeting_screen.dart';
@@ -35,10 +38,13 @@ class MyAppState extends State<Marcketplace> {
       // themeMode: _isDarkMode ? ThemeMode.dark : ThemeMode.light,
       initialRoute: '/',
       routes: {
-        '/': (context) => const LoginPage(),
+        '/': (context) => const WelcomeScreen(),
+        '/login': (context) => const LoginPage(),
+        '/registration': (context) => const RegistrationPage(),
         '/greeting': (context) => const GreetingScreen(),
         '/chooseRole': (context) => const ChooseRoleScreen(),
         '/selectCategory': (context) => const SelectCategoryScreen(),
+        '/main': (context) => const MainScreen(),
       },
       builder: (context, child) {
         return Scaffold(

@@ -3,7 +3,12 @@ import 'package:flutter/material.dart';
 import '../../themes/app_theme.dart';
 
 class WelcomePageHeader extends StatelessWidget implements PreferredSizeWidget {
-  const WelcomePageHeader({super.key});
+  final String routeName;
+
+  const WelcomePageHeader({
+    super.key,
+    required this.routeName,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +27,7 @@ class WelcomePageHeader extends StatelessWidget implements PreferredSizeWidget {
             const SizedBox(),
             GestureDetector(
               onTap: () {
-                Navigator.pushNamed(context, '/selectCategory');
+                Navigator.pushNamed(context, routeName);
               },
               child: const Text(
                 'Пропустити',
@@ -35,7 +40,6 @@ class WelcomePageHeader extends StatelessWidget implements PreferredSizeWidget {
             ),
           ],
         ),
-        // elevation: 0,
       ),
     );
   }

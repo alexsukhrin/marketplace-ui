@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/src/ui/screens/welcome_page_screens/choose_role_screen.dart';
 import 'package:flutter_application_1/src/ui/themes/app_theme.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../widgets/auth_widgets/auth_button.dart';
@@ -11,13 +10,13 @@ class GreetingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 80,
+        automaticallyImplyLeading: false,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             // Logo
             SvgPicture.asset(
-              'assets/images/welcome_page/logo.svg',
+              'assets/images/logo.svg',
               height: 30,
             ),
             // Skip Button
@@ -41,7 +40,7 @@ class GreetingScreen extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             // Greeting Text
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.90,
@@ -116,7 +115,7 @@ class GreetingScreen extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 12),
             // Button
             AuthButton(
               text: "Давай почнемо",
@@ -124,7 +123,7 @@ class GreetingScreen extends StatelessWidget {
                 Navigator.pushNamed(context, '/chooseRole');
               },
             ),
-            const SizedBox(height: 40),
+            const SizedBox(height: 45),
           ],
         ),
       ),

@@ -11,6 +11,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
+  shared_preferences: ^2.0.15
   flutter_svg: ^2.0.7
 
   flutter_secure_storage: ^8.0.0
@@ -28,7 +30,6 @@ flutter:
 
   assets:
     - assets/images/
-
     - assets/images/logIn_icons/
-
     - assets/images/welcome_page/
+    - assets/images/samples/
