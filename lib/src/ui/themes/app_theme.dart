@@ -26,6 +26,8 @@ class AppTheme {
   static const Color progressIndicatorInactive = Color(0xFFEFEFEF);
   static const Color progressIndicatorActive = Color(0xFFB6B6B6);
 
+  static const Color successColor = Color.fromRGBO(159, 219, 77, 1);
+
   static ThemeData lightTheme() {
     return ThemeData(
       inputDecorationTheme: const InputDecorationTheme(

@@ -6,6 +6,7 @@ import 'package:flutter_application_1/src/ui/screens/welcome_page_screens/select
 import 'package:flutter_application_1/src/ui/screens/welcome_page_screens/welcome_screen.dart';
 import 'src/ui/screens/ auth/login_page.dart';
 import './src/ui/themes/app_theme.dart';
+import 'src/ui/screens/ auth/registration_success_page.dart';
 import 'src/ui/screens/welcome_page_screens/greeting_screen.dart';
 
 void main() {
@@ -41,6 +42,7 @@ class MyAppState extends State<Marcketplace> {
         '/': (context) => const WelcomeScreen(),
         '/login': (context) => const LoginPage(),
         '/registration': (context) => const RegistrationPage(),
+        '/succesRegistration': (context) => const RegistrationSuccessPage(),
         '/greeting': (context) => const GreetingScreen(),
         '/chooseRole': (context) => const ChooseRoleScreen(),
         '/selectCategory': (context) => const SelectCategoryScreen(),

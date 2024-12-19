@@ -25,7 +25,7 @@ class AuthButton extends StatelessWidget {
             ? AppTheme.disabledButtonColor
             : AppTheme.activeButtonColor,
         foregroundColor: AppTheme.witeText,
-        minimumSize: const Size(double.infinity, 44),
+        minimumSize: const Size(354, 44),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
         ),
