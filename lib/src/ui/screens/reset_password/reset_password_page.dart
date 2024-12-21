@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../services/password_reset_service.dart';
 import '../../../utils/validators.dart';
 
 import '../../widgets/auth_widgets/auth_field.dart';
@@ -37,6 +38,24 @@ class ResetPasswordPageState extends State<ResetPasswordPage> {
         _errorMessage = null;
       }
     });
+  }
+
+  Future<void> _resetPassword() async {
+    final newPassword = _newPasswordController.text;
+
+    try {
+      await PasswordResetService.resetPassword(newPassword);
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Пароль успішно змінено!')),
+      );
+
+      Navigator.pop(context);
+    } catch (e) {
+      setState(() {
+        _errorMessage = 'Помилка зміни пароля. Спробуйте ще раз.';
+      });
+    }
   }
 
   @override
@@ -80,6 +99,9 @@ class ResetPasswordPageState extends State<ResetPasswordPage> {
               labelText: 'Введіть пароль',
               validator: validatePassword,
               isObscureText: true,
+              showSuffixIcon: (text) {
+                return validatePassword(text) == null;
+              },
             ),
             AuthField(
               hintText: 'Повторіть пароль',
@@ -87,6 +109,9 @@ class ResetPasswordPageState extends State<ResetPasswordPage> {
               labelText: 'Поворіть пароль',
               validator: validatePassword,
               isObscureText: true,
+              showSuffixIcon: (text) {
+                return validatePassword(text) == null;
+              },
             ),
             const SizedBox(height: 10),
             if (_errorMessage != null)
@@ -104,6 +129,7 @@ class ResetPasswordPageState extends State<ResetPasswordPage> {
                   ? () {
                       if (_newPasswordController.text ==
                           _confirmPasswordController.text) {
+                        _resetPassword();
                       } else {
                         setState(() {
                           _errorMessage = 'Паролі не співпадають!';

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../../services/password_reset_service.dart';
 import 'code_validate_page.dart';
 import '../../../utils/validators.dart';
-import '../../../services/auth_service.dart';
 
 import '../../widgets/auth_widgets/form_header.dart';
 import '../../widgets/auth_widgets/auth_field.dart';
@@ -18,34 +18,69 @@ class ForgotPasswordPage extends StatefulWidget {
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
+  bool _isButtonDisabled = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _emailController.addListener(_updateButtonState);
+  }
+
+  void _updateButtonState() {
+    setState(() {
+      _isButtonDisabled = _emailController.text.isEmpty;
+    });
+  }
+
+  @override
+  void dispose() {
+    _emailController.removeListener(_updateButtonState);
+    _emailController.dispose();
+    super.dispose();
+  }
 
   void _onSendCode() async {
     if (_formKey.currentState?.validate() ?? false) {
       final email = _emailController.text;
 
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => const Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+
       try {
-        await AuthService.sendRecoveryEmail(email);
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-              content: Text('Лист для відновлення паролю надіслано')),
-        );
+        final response = await PasswordResetService.sendRecoveryEmail(email);
+        Navigator.pop(context);
+
+        final successMessage =
+            response['message'] ?? 'Лист для відновлення паролю надіслано';
+        _showSnackBarMessage(successMessage);
 
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const CodeValidatePage(),
+            builder: (context) => CodeValidatePage(email: email),
           ),
         );
       } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Помилка: $e')),
-        );
+        Navigator.pop(context);
+        _showSnackBarMessage('$e');
       }
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Будь ласка, виправте помилки у формі')),
-      );
+      _showSnackBarMessage('Будь ласка, виправте помилки у формі');
     }
+  }
+
+  void _showSnackBarMessage(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        duration: const Duration(seconds: 3),
+      ),
+    );
   }
 
   @override
@@ -87,11 +122,15 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 controller: _emailController,
                 validator: validateEmail,
                 hintText: "Введіть пошту",
+                showSuffixIcon: (text) {
+                  return validateEmail(text) == null;
+                },
               ),
               const SizedBox(height: 40),
               AuthButton(
                 text: 'Надіслати код',
                 onPressed: _onSendCode,
+                isButtonDisabled: _isButtonDisabled,
               ),
             ],
           ),

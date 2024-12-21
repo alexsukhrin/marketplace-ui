@@ -9,6 +9,7 @@ class AuthField extends StatefulWidget {
   final bool isObscureText;
   final String? Function(String?)? validator;
   final String labelText;
+  final bool Function(String)? showSuffixIcon;
 
   const AuthField({
     super.key,
@@ -18,6 +19,7 @@ class AuthField extends StatefulWidget {
     required this.controller,
     this.isObscureText = false,
     this.validator,
+    this.showSuffixIcon,
   });
 
   @override
@@ -36,6 +38,8 @@ class _AuthFieldState extends State<AuthField> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final isValid =
+        widget.showSuffixIcon?.call(widget.controller.text) ?? false;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -90,10 +94,18 @@ class _AuthFieldState extends State<AuthField> {
                       });
                     },
                   )
-                : null,
+                : isValid
+                    ? const Icon(
+                        Icons.check_circle_outline,
+                        color: Colors.green,
+                      )
+                    : null,
           ),
           validator: widget.validator,
           obscureText: !_isPasswordVisible,
+          onChanged: (_) {
+            setState(() {});
+          },
         ),
         if (widget.showCounter == true)
           Align(

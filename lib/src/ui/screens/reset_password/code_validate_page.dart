@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 
+import '../../../services/password_reset_service.dart';
+import '../../widgets/auth_widgets/auth_button.dart';
 import 'reset_password_page.dart';
 
 import '../../themes/app_theme.dart';
 
 class CodeValidatePage extends StatefulWidget {
-  const CodeValidatePage({super.key});
+  final String email;
+
+  const CodeValidatePage({super.key, required this.email});
 
   @override
   CodeValidatePageState createState() => CodeValidatePageState();
@@ -16,11 +20,15 @@ class CodeValidatePageState extends State<CodeValidatePage> {
   final TextEditingController _field2Controller = TextEditingController();
   final TextEditingController _field3Controller = TextEditingController();
   final TextEditingController _field4Controller = TextEditingController();
+  final TextEditingController _field5Controller = TextEditingController();
+  final TextEditingController _field6Controller = TextEditingController();
 
   final FocusNode _focusNode1 = FocusNode();
   final FocusNode _focusNode2 = FocusNode();
   final FocusNode _focusNode3 = FocusNode();
   final FocusNode _focusNode4 = FocusNode();
+  final FocusNode _focusNode5 = FocusNode();
+  final FocusNode _focusNode6 = FocusNode();
 
   String _errorMessage = '';
 
@@ -28,7 +36,9 @@ class CodeValidatePageState extends State<CodeValidatePage> {
     return _field1Controller.text.isNotEmpty &&
         _field2Controller.text.isNotEmpty &&
         _field3Controller.text.isNotEmpty &&
-        _field4Controller.text.isNotEmpty;
+        _field4Controller.text.isNotEmpty &&
+        _field5Controller.text.isNotEmpty &&
+        _field6Controller.text.isNotEmpty;
   }
 
   @override
@@ -36,9 +46,20 @@ class CodeValidatePageState extends State<CodeValidatePage> {
     super.initState();
   }
 
-  void _onFieldChanged(String value, FocusNode nextFocusNode) {
-    if (value.length == 1) {
-      FocusScope.of(context).requestFocus(nextFocusNode);
+  Future<void> _sendCodeToServer(String code) async {
+    try {
+      await PasswordResetService.validateRecoveryCode(widget.email, code);
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const ResetPasswordPage(),
+        ),
+      );
+    } catch (e) {
+      setState(() {
+        _errorMessage = 'Помилка при відправці коду: $e';
+      });
     }
   }
 
@@ -78,7 +99,11 @@ class CodeValidatePageState extends State<CodeValidatePage> {
                 const SizedBox(width: 10),
                 _buildOtpField(_field3Controller, _focusNode3, _focusNode4),
                 const SizedBox(width: 10),
-                _buildOtpField(_field4Controller, _focusNode4, _focusNode4),
+                _buildOtpField(_field4Controller, _focusNode4, _focusNode5),
+                const SizedBox(width: 10),
+                _buildOtpField(_field5Controller, _focusNode5, _focusNode6),
+                const SizedBox(width: 10),
+                _buildOtpField(_field6Controller, _focusNode6, _focusNode6),
               ],
             ),
             const SizedBox(height: 20),
@@ -93,41 +118,21 @@ class CodeValidatePageState extends State<CodeValidatePage> {
               padding: const EdgeInsets.only(bottom: 50.0),
               child: Column(
                 children: [
-                  SizedBox(
-                    width: 352,
-                    height: 44,
-                    child: ElevatedButton(
-                      onPressed: _isButtonEnabled
-                          ? () {
-                              String code = _field1Controller.text +
-                                  _field2Controller.text +
-                                  _field3Controller.text +
-                                  _field4Controller.text;
+                  AuthButton(
+                    text: 'Підтвердити',
+                    onPressed: _isButtonEnabled
+                        ? () {
+                            String code = _field1Controller.text +
+                                _field2Controller.text +
+                                _field3Controller.text +
+                                _field4Controller.text +
+                                _field5Controller.text +
+                                _field6Controller.text;
 
-                              if (code == '3333') {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        const ResetPasswordPage(),
-                                  ),
-                                );
-                              } else {
-                                setState(() {
-                                  _errorMessage = 'Неправильний код';
-                                });
-                              }
-                            }
-                          : null,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppTheme.activeButtonColor,
-                        foregroundColor: AppTheme.witeText,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                      child: const Text('Підтвердити'),
-                    ),
+                            _sendCodeToServer(code);
+                          }
+                        : null,
+                    isButtonDisabled: !_isButtonEnabled,
                   ),
                   const SizedBox(height: 12),
                   GestureDetector(
@@ -137,6 +142,7 @@ class CodeValidatePageState extends State<CodeValidatePage> {
                         color: AppTheme.linkTextColor,
                       ),
                     ),
+                    onTap: () {},
                   ),
                 ],
               ),
@@ -149,8 +155,11 @@ class CodeValidatePageState extends State<CodeValidatePage> {
 
   Widget _buildOtpField(TextEditingController controller,
       FocusNode currentFocusNode, FocusNode nextFocusNode) {
+    currentFocusNode.addListener(() {
+      setState(() {});
+    });
     return SizedBox(
-      width: 79,
+      width: 49,
       height: 79,
       child: TextFormField(
         controller: controller,
@@ -162,7 +171,9 @@ class CodeValidatePageState extends State<CodeValidatePage> {
           counterText: "",
           border: InputBorder.none,
           filled: true,
-          fillColor: Colors.grey[200],
+          fillColor: currentFocusNode.hasFocus
+              ? AppTheme.activeFieldBackgroundColor
+              : AppTheme.codeFieldBackgroundColor,
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
             borderSide: const BorderSide(color: Color(0xFFF6EADA), width: 2),
@@ -175,9 +186,9 @@ class CodeValidatePageState extends State<CodeValidatePage> {
         ),
         style: const TextStyle(fontSize: 24),
         onChanged: (value) {
+          setState(() {});
           if (value.length == 1) {
-            _onFieldChanged(value, nextFocusNode);
-            setState(() {});
+            FocusScope.of(context).requestFocus(nextFocusNode);
           }
         },
       ),

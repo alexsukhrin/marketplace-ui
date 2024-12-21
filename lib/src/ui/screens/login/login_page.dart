@@ -8,8 +8,8 @@ import '../../widgets/auth_widgets/auth_field.dart';
 import '../../widgets/auth_widgets/auth_button.dart';
 import '../../widgets/auth_widgets/form_header.dart';
 
-import 'forgot_password.page.dart';
-import 'registration_page.dart';
+import '../reset_password/forgot_password.page.dart';
+import '../registration/registration_page.dart';
 
 import '../../themes/app_theme.dart';
 
@@ -133,6 +133,9 @@ class _LoginPageState extends State<LoginPage> {
                 hintText: "Введіть пошту",
                 controller: _emailController,
                 validator: validateEmail,
+                showSuffixIcon: (text) {
+                  return validateEmail(text) == null;
+                },
               ),
               const SizedBox(height: 16),
               AuthField(

@@ -106,6 +106,9 @@ class RegistrationPageState extends State<RegistrationPage> {
                     validator: validateName,
                     controller: _firstNameController,
                     hintText: "Введіть ім'я",
+                    showSuffixIcon: (text) {
+                      return validateName(text) == null;
+                    },
                   ),
                   const SizedBox(height: 20),
                   AuthField(
@@ -113,6 +116,9 @@ class RegistrationPageState extends State<RegistrationPage> {
                     validator: validateName,
                     controller: _lastNameController,
                     hintText: "Введіть прізвище",
+                    showSuffixIcon: (text) {
+                      return validateName(text) == null;
+                    },
                   ),
                   const SizedBox(height: 20),
                   AuthField(
@@ -120,6 +126,9 @@ class RegistrationPageState extends State<RegistrationPage> {
                     controller: _emailController,
                     hintText: 'Введіть пошту',
                     validator: validateEmail,
+                    showSuffixIcon: (text) {
+                      return validateEmail(text) == null;
+                    },
                   ),
                   const SizedBox(height: 20),
                   AuthField(
