@@ -41,7 +41,7 @@ class PasswordResetService {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
         },
-        body: jsonEncode({'email': email, 'opt': code}),
+        body: jsonEncode({'email': email, 'otp': code}),
       );
 
       if (response.statusCode == 200) {
