@@ -10,6 +10,7 @@ class WelcomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: AppTheme.backgroundColorWhite,
         automaticallyImplyLeading: false,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -34,9 +35,10 @@ class WelcomeScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const SizedBox(height: 20),
+            const SizedBox(height: 5),
             // Logo
             SvgPicture.asset(
               'assets/images/logo.svg',
@@ -87,37 +89,41 @@ class WelcomeScreen extends StatelessWidget {
             ),
 
             const SizedBox(height: 35),
-            // Button
-            AuthButton(
-              text: "Зареєструватись",
-              onPressed: () {
-                Navigator.pushNamed(context, '/registration');
-              },
-            ),
-            const SizedBox(height: 8),
-            // Outlined Button (Увійти)
-            OutlinedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/login');
-              },
-              style: OutlinedButton.styleFrom(
-                backgroundColor: Colors.transparent,
-                side: BorderSide(
-                  color: AppTheme.activeButtonColor,
-                  width: 1,
-                ),
-                minimumSize: const Size(double.infinity, 44),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-              child: const Text(
-                "Увійти",
-                style: TextStyle(
-                  fontSize: 16,
-                  color: AppTheme.activeButtonColor,
-                  fontWeight: FontWeight.w500,
-                ),
+            Center(
+              child: Column(
+                children: [
+                  AuthButton(
+                    text: "Зареєструватись",
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/registration');
+                    },
+                  ),
+                  const SizedBox(height: 8),
+                  OutlinedButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/login');
+                    },
+                    style: OutlinedButton.styleFrom(
+                      backgroundColor: Colors.transparent,
+                      side: const BorderSide(
+                        color: AppTheme.activeButtonColor,
+                        width: 1,
+                      ),
+                      minimumSize: const Size(354, 44),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    child: const Text(
+                      "Увійти",
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: AppTheme.activeButtonColor,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
             const SizedBox(height: 45),

@@ -14,6 +14,7 @@ class WelcomePageHeader extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: AppTheme.backgroundColorWhite,
         toolbarHeight: 80,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: AppTheme.lightBodyColor),

@@ -127,9 +127,15 @@ class ChooseRoleScreenState extends State<ChooseRoleScreen> {
               ],
             ),
             const SizedBox(height: 20),
-            AuthButton(
-              text: "Далі",
-              onPressed: selectedRole == null ? null : submitRole,
+            Center(
+              child: Column(
+                children: [
+                  AuthButton(
+                    text: "Далі",
+                    onPressed: selectedRole == null ? null : submitRole,
+                  ),
+                ],
+              ),
             ),
             const SizedBox(height: 45),
           ],
