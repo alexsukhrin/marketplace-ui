@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
+import '../../../exceptions/invalid_opt_exception.dart';
 import '../../../services/password_reset_service.dart';
 import '../../widgets/auth_widgets/auth_button.dart';
 import 'reset_password_page.dart';
@@ -31,6 +34,9 @@ class CodeValidatePageState extends State<CodeValidatePage> {
   final FocusNode _focusNode6 = FocusNode();
 
   String _errorMessage = '';
+  String _timerText = 'Надіслати код знову';
+  bool _isResendDisabled = false;
+  late Timer _timer;
 
   bool get _isButtonEnabled {
     return _field1Controller.text.isNotEmpty &&
@@ -58,9 +64,52 @@ class CodeValidatePageState extends State<CodeValidatePage> {
       );
     } catch (e) {
       setState(() {
+        if (e is InvalidOtpException) {
+          _errorMessage = e.message;
+        } else {
+          _errorMessage = 'Помилка при відправці коду: $e';
+        }
+      });
+    }
+  }
+
+  Future<void> _resendCode() async {
+    if (_isResendDisabled) return;
+
+    setState(() {
+      _isResendDisabled = true;
+      _timerText = 'Надіслати код знову';
+    });
+
+    try {
+      await PasswordResetService.sendRecoveryEmail(widget.email);
+    } catch (e) {
+      setState(() {
         _errorMessage = 'Помилка при відправці коду: $e';
       });
     }
+
+    int counter = 60;
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {
+        counter--;
+        _timerText = 'Надіслати код знову через ($counter сек)';
+      });
+
+      if (counter == 0) {
+        setState(() {
+          _isResendDisabled = false;
+          _timerText = 'Надіслати код знову';
+        });
+        _timer.cancel();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
   }
 
   @override
@@ -136,13 +185,13 @@ class CodeValidatePageState extends State<CodeValidatePage> {
                   ),
                   const SizedBox(height: 12),
                   GestureDetector(
+                    onTap: _resendCode,
                     child: Text(
-                      'Надіслати код знову',
+                      _timerText,
                       style: textTheme.bodyMedium?.copyWith(
                         color: AppTheme.linkTextColor,
                       ),
                     ),
-                    onTap: () {},
                   ),
                 ],
               ),

@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/ui/widgets/auth_widgets/auth_button.dart';
 
-import '../../themes/app_theme.dart';
+import '../themes/app_theme.dart';
 
-class RegistrationSuccessPage extends StatelessWidget {
-  const RegistrationSuccessPage({super.key});
+class SuccessPage extends StatelessWidget {
+  final String? title;
+  final String? message;
+
+  const SuccessPage({
+    super.key,
+    this.title,
+    this.message,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -20,13 +27,13 @@ class RegistrationSuccessPage extends StatelessWidget {
               size: 150,
             ),
             Text(
-              'Дякуємо, реєстрація успішна!',
+              title!,
               style: textTheme.displayLarge
                   ?.copyWith(color: AppTheme.successColor),
             ),
             Text(
               textAlign: TextAlign.center,
-              'Будь ласка, перевірте пошту для\n підтвердження акаунту.',
+              message!,
               style: textTheme.bodyMedium?.copyWith(),
             ),
           ],

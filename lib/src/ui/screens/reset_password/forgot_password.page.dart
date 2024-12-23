@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../exceptions/user_not_found_exception.dart';
 import '../../../services/password_reset_service.dart';
 import 'code_validate_page.dart';
 import '../../../utils/validators.dart';
@@ -39,6 +40,10 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     super.dispose();
   }
 
+  bool _containsVerificationCode(String message) {
+    return message.length == 6 && RegExp(r'^[0-9]+$').hasMatch(message);
+  }
+
   void _onSendCode() async {
     if (_formKey.currentState?.validate() ?? false) {
       final email = _emailController.text;
@@ -55,9 +60,11 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         final response = await PasswordResetService.sendRecoveryEmail(email);
         Navigator.pop(context);
 
-        final successMessage =
+        String successMessage =
             response['message'] ?? 'Лист для відновлення паролю надіслано';
-        _showSnackBarMessage(successMessage);
+        if (_containsVerificationCode(successMessage)) {
+          successMessage = 'Лист для відновлення паролю надіслано';
+        }
 
         Navigator.push(
           context,
@@ -67,7 +74,11 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         );
       } catch (e) {
         Navigator.pop(context);
-        _showSnackBarMessage('$e');
+        if (e is UserNotFoundException) {
+          _showSnackBarMessage(e.message);
+        } else {
+          _showSnackBarMessage('Сталася помилка. Спробуйте ще раз.');
+        }
       }
     } else {
       _showSnackBarMessage('Будь ласка, виправте помилки у формі');

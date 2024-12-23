@@ -100,6 +100,7 @@ class _AuthFieldState extends State<AuthField> {
                         color: Colors.green,
                       )
                     : null,
+            errorMaxLines: 3,
           ),
           validator: widget.validator,
           obscureText: !_isPasswordVisible,

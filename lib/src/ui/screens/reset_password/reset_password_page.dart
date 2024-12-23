@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../services/password_reset_service.dart';
 import '../../../utils/validators.dart';
 
+import '../../shared_pages/success_page.dart.dart';
 import '../../widgets/auth_widgets/auth_field.dart';
 import '../../widgets/auth_widgets/auth_button.dart';
 
@@ -50,7 +51,16 @@ class ResetPasswordPageState extends State<ResetPasswordPage> {
         const SnackBar(content: Text('Пароль успішно змінено!')),
       );
 
-      Navigator.pop(context);
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const SuccessPage(
+            title: 'Пароль змінено!',
+            message:
+                'Ваш пароль успішно змінено. Ви можете увійти, використовуючи новий пароль.',
+          ),
+        ),
+      );
     } catch (e) {
       setState(() {
         _errorMessage = 'Помилка зміни пароля. Спробуйте ще раз.';

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../services/auth_service.dart';
 
+import '../../shared_pages/success_page.dart.dart';
 import '../../widgets/auth_widgets/auth_button.dart';
 import '../../widgets/auth_widgets/auth_field.dart';
 import '../../widgets/auth_widgets/form_header.dart';
@@ -48,11 +49,15 @@ class RegistrationPageState extends State<RegistrationPage> {
       await AuthService.registerUser(formData);
 
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Реєстрація успішна!')),
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const SuccessPage(
+              title: 'Дякуємо, реєстрація успішна!',
+              message: 'Будь ласка, перевірте пошту для підтвердження акаунту.',
+            ),
+          ),
         );
-
-        Navigator.pushReplacementNamed(context, '/succesRegistration');
       }
     }
   }
