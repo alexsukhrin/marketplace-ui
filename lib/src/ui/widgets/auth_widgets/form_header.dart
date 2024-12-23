@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class FormHeader extends StatelessWidget {
   final String text;
   final IconData icon;
   final Color iconColor;
+  final String iconPath;
 
   const FormHeader({
     super.key,
     required this.text,
     this.icon = Icons.beach_access,
     this.iconColor = Colors.red,
+    this.iconPath = 'assets/images/logo.svg',
   });
 
   @override
@@ -19,10 +22,10 @@ class FormHeader extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(
-          icon,
-          size: 28,
-          color: iconColor,
+        SvgPicture.asset(
+          iconPath,
+          width: 28,
+          height: 28,
         ),
         const SizedBox(height: 8),
         Text(

@@ -52,7 +52,6 @@ class AuthService {
 
         if (responseData.containsKey('token')) {
           await AuthStorage.saveToken(responseData['token']);
-          print('Токен збережено: ${responseData['token']}');
         }
 
         print('Логін успішний: $responseData');
