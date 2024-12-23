@@ -13,8 +13,10 @@ class SelectCategoryScreen extends StatefulWidget {
 }
 
 class SelectCategoryScreenState extends State<SelectCategoryScreen> {
-  List<String> categories = []; // List of categories fetched from the backend
-  List<String> selectedCategories = []; // List of selected categories
+  List<Map<String, dynamic>> categories =
+      []; // Updated to store both name and id
+  List<Map<String, dynamic>> selectedCategories =
+      []; // Updated for selected categories
   bool isLoading = true; // Loading state for fetching categories
 
   @override
@@ -44,7 +46,7 @@ class SelectCategoryScreenState extends State<SelectCategoryScreen> {
   }
 
   // Toggle category selection
-  void toggleCategory(String category) {
+  void toggleCategory(Map<String, dynamic> category) {
     setState(() {
       if (selectedCategories.contains(category)) {
         selectedCategories.remove(category);
@@ -54,7 +56,7 @@ class SelectCategoryScreenState extends State<SelectCategoryScreen> {
     });
   }
 
-  // Submit selected categories to the backend
+// Submit selected categories to the backend
   Future<void> submitCategories() async {
     try {
       await CategoryService.submitCategories(selectedCategories);
@@ -63,7 +65,7 @@ class SelectCategoryScreenState extends State<SelectCategoryScreen> {
       );
 
       // Navigate to the main page or desired screen
-      Navigator.pushNamed(context, '/mainPage');
+      Navigator.pushNamed(context, '/main');
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Failed to submit categories: $e')),
@@ -80,6 +82,7 @@ class SelectCategoryScreenState extends State<SelectCategoryScreen> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
               "Яким категоріям надаєш\nперевагу?",
@@ -88,6 +91,7 @@ class SelectCategoryScreenState extends State<SelectCategoryScreen> {
                 fontWeight: FontWeight.bold,
               ),
             ),
+            const SizedBox(height: 8),
             const Text(
               "Твої відповіді допоможуть нам підібрати найкращі товари для тебе.",
               style: TextStyle(
@@ -96,18 +100,19 @@ class SelectCategoryScreenState extends State<SelectCategoryScreen> {
             ),
             const SizedBox(height: 36),
             Wrap(
-              spacing: 10,
-              runSpacing: 10,
+              spacing: 8,
+              runSpacing: 8,
               children: categories.map((category) {
                 final isSelected = selectedCategories.contains(category);
                 return CustomOutlinedButton(
-                  text: category,
+                  text: category['name'],
                   onPressed: () => toggleCategory(category),
                   isSelected: isSelected,
                 );
               }).toList(),
             ),
             const SizedBox(height: 24),
+            const Spacer(),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -140,11 +145,15 @@ class SelectCategoryScreenState extends State<SelectCategoryScreen> {
               ],
             ),
             const SizedBox(height: 14),
-            AuthButton(
-              text: "На головну сторінку",
-              onPressed: () {
-                Navigator.pushNamed(context, '/mainScreen');
-              },
+            Center(
+              child: Column(
+                children: [
+                  AuthButton(
+                    text: "На головну сторінку",
+                    onPressed: submitCategories,
+                  ),
+                ],
+              ),
             ),
             const SizedBox(height: 45),
           ],

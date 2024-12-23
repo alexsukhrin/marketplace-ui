@@ -8,11 +8,11 @@ class CustomOutlinedButton extends StatelessWidget {
   final bool isSelected;
 
   const CustomOutlinedButton({
-    Key? key,
+    super.key,
     required this.text,
     required this.onPressed,
     required this.isSelected,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -20,9 +20,10 @@ class CustomOutlinedButton extends StatelessWidget {
       onPressed: onPressed,
       style: OutlinedButton.styleFrom(
         padding: const EdgeInsets.symmetric(
-          horizontal: 40,
+          horizontal: 20,
           vertical: 11,
         ),
+        minimumSize: const Size(107, 44),
         backgroundColor:
             isSelected ? AppTheme.activeButtonColor : Colors.transparent,
         side: const BorderSide(color: AppTheme.activeButtonColor),

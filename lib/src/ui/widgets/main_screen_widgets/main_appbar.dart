@@ -1,17 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+
+import '../../themes/app_theme.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      backgroundColor: AppTheme.backgroundColorWhite,
       leading: IconButton(
         icon: Icon(Icons.menu),
         onPressed: () {},
       ),
-      title: Image.asset(
-        'assets/images/logo.svg',
-        height: 40,
-        width: 40,
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.center, // Center the logo
+        children: [
+          SvgPicture.asset(
+            'assets/images/logo.svg', // Use SvgPicture.asset for SVG files
+            height: 28,
+            width: 28,
+          ),
+        ],
       ),
       actions: [
         IconButton(

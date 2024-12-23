@@ -1,41 +1,26 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
+import 'auth_storage.dart';
 
 class CategoryService {
   static const String _baseUrl =
-      'http://ec2-3-74-41-70.eu-central-1.compute.amazonaws.com';
+      'http://ec2-18-193-77-42.eu-central-1.compute.amazonaws.com';
+
+  // Utility function to retrieve the JWT token
+  static Future<String> getAuthToken() async {
+    final token =
+        await AuthStorage.getToken(); // Use your method to get the token
+    if (token == null || token.isEmpty) {
+      throw Exception('JWT token is missing.');
+    }
+    return token;
+  }
 
   // Fetch product categories
-  static Future<List<String>> getCategories() async {
-    final url =
-        Uri.parse('$_baseUrl/api/v1/products/categories'); // Adjusted endpoint
-    //   try {
-    //     final response = await http.get(url);
-    //     print('Response status: ${response.statusCode}');
-    //     if (response.statusCode == 200) {
-    //       final data = jsonDecode(response.body);
-    //       print('Fetched data: $data'); // Print the fetched data
-    //       final categoryList = List<String>.from(data['categories']
-    //           .map((category) => category['category-id'].toString()));
-
-    //       return categoryList;
-    //     } else {
-    //       throw Exception('Failed to fetch categories');
-    //     }
-    //   } catch (e) {
-    //     print('Error fetching categories: $e');
-    //     throw Exception('Error fetching categories: $e');
-    //   }
-    // }
-
+  static Future<List<Map<String, dynamic>>> getCategories() async {
+    final url = Uri.parse('$_baseUrl/api/v1/products/categories');
     try {
-      final prefs = await SharedPreferences.getInstance();
-      final token = prefs.getString('authToken') ?? '';
-
-      if (token.isEmpty) {
-        throw Exception('JWT token is missing.');
-      }
+      final token = await getAuthToken();
 
       final response = await http.get(
         url,
@@ -44,12 +29,21 @@ class CategoryService {
           'Accept': 'application/json',
         },
       );
+
       print('Response status: ${response.statusCode}');
-      if (response.statusCode == 200) {
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
         final data = jsonDecode(response.body);
         print('Fetched data: $data');
-        final categoryList = List<String>.from(data['categories']
-            .map((category) => category['category-id'].toString()));
+
+        final categoryList = List<Map<String, dynamic>>.from(
+          data['categories'].map((category) => {
+                'category_id': category['category_id'],
+                'name': category['name'],
+                // 'photo': category['photo'] ?? "",
+              }),
+        );
+
         return categoryList;
       } else {
         throw Exception('Failed to fetch categories: ${response.body}');
@@ -61,43 +55,22 @@ class CategoryService {
   }
 
   // Submit selected categories
-  static Future<void> submitCategories(List<String> categories) async {
+  static Future<void> submitCategories(
+      List<Map<String, dynamic>> categories) async {
     final url = Uri.parse('$_baseUrl/api/v1/users/categories');
-    final body = jsonEncode({'categories': categories});
-
-//     try {
-//       final prefs = await SharedPreferences.getInstance();
-//       final token = prefs.getString('authToken');
-
-//       final response = await http.post(
-//         url,
-//         headers: {
-//           'Content-Type': 'application/json',
-//           'Accept': 'application/json',
-//           'Authorization': 'Bearer $token'
-//         },
-//         body: body,
-//       );
-//       if (response.statusCode == 200) {
-//         final responseData = jsonDecode(response.body);
-//         print('Категорії: $responseData');
-//       } else {
-//         print(
-//             'Помилка отримання категорій: ${response.statusCode} ${response.body}');
-//       }
-//     } catch (e) {
-//       print('Помилка підключення: $e');
-//     }
-//   }
-// }
+    final body = jsonEncode({
+      'categories': categories
+          .map((category) => {
+                'name': category['name'],
+                'category_id': category['category_id'],
+                // 'photo': category['photo'] ?? "",
+              })
+          .toList(),
+    });
+    print("Submitting categories: $body");
 
     try {
-      final prefs = await SharedPreferences.getInstance();
-      final token = prefs.getString('authToken');
-
-      if (token == null || token.isEmpty) {
-        throw Exception('JWT token is missing.');
-      }
+      final token = await getAuthToken();
 
       final response = await http.post(
         url,
@@ -109,16 +82,19 @@ class CategoryService {
         body: body,
       );
 
-      if (response.statusCode == 200) {
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
         final responseData = jsonDecode(response.body);
         print('Categories submitted successfully: $responseData');
       } else {
-        print(
+        throw Exception(
             'Error submitting categories: ${response.statusCode} ${response.body}');
       }
     } catch (e) {
-      print('Error connecting: $e');
-      throw Exception('Error connecting: $e');
+      print('Error submitting categories: $e');
+      throw Exception('Error submitting categories: $e');
     }
   }
 }

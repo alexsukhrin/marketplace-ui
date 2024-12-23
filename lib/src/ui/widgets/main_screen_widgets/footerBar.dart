@@ -59,6 +59,7 @@ class FooterBarWidgetState extends State<FooterBarWidget> {
         border: Border(top: BorderSide(color: Colors.grey.shade300)),
       ),
       child: BottomAppBar(
+        color: AppTheme.backgroundColorWhite,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

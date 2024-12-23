@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 
 class UserRoleService {
   static const String _baseUrl =
-      'http://ec2-3-74-41-70.eu-central-1.compute.amazonaws.com';
+      'http://ec2-18-193-77-42.eu-central-1.compute.amazonaws.com';
 
   static Future<void> sendRole(Map<String, bool> role) async {
     final token = await AuthStorage.getToken();
@@ -26,12 +26,15 @@ class UserRoleService {
       );
 
       print('Response status: ${response.statusCode}');
+      print('Response headers: ${response.headers}');
       print('Response body: ${response.body}');
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         print('Role sent successfully: $role');
+      } else if (response.statusCode == 301 || response.statusCode == 302) {
+        print('Redirected to: ${response.headers['location']}');
+        throw Exception('Failed to send role: Redirect detected');
       } else {
-        print('Error sending role: ${response.statusCode}');
         throw Exception('Failed to send role');
       }
     } catch (e) {
