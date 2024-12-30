@@ -8,8 +8,7 @@ class CategoryService {
 
   // Utility function to retrieve the JWT token
   static Future<String> getAuthToken() async {
-    final token =
-        await AuthStorage.getToken(); // Use your method to get the token
+    final token = await AuthStorage.getToken();
     if (token == null || token.isEmpty) {
       throw Exception('JWT token is missing.');
     }
@@ -38,6 +37,7 @@ class CategoryService {
 
         final categoryList = List<Map<String, dynamic>>.from(
           data['categories'].map((category) => {
+                'name': category['name'],
                 'category_id': category['category_id'],
                 'name': category['name'],
                 'photo': category['photo'] ?? "",
@@ -61,9 +61,8 @@ class CategoryService {
     final body = jsonEncode({
       'categories': categories
           .map((category) => {
-                'name': category['name'],
+                // 'name': category['name'],
                 'category_id': category['category_id'],
-                // 'photo': category['photo'] ?? "",
               })
           .toList(),
     });

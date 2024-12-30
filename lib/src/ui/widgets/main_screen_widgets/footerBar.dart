@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../themes/app_theme.dart';
 
@@ -12,65 +13,114 @@ class FooterBarWidget extends StatefulWidget {
 class FooterBarWidgetState extends State<FooterBarWidget> {
   int _selectedIndex = 0;
 
-  void _onItemTapped(int index) {
+  void _navigateBottomBar(int index) {
     setState(() {
       _selectedIndex = index;
     });
   }
 
-  Widget _buildFooterItem(IconData icon, String label, int index) {
-    bool isActive = _selectedIndex == index;
-    return Expanded(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: const BoxDecoration(
+        color: AppTheme.backgroundColorWhite,
+        border: Border(
+          top: BorderSide(color: AppTheme.progressIndicatorInactive),
+        ),
+      ),
+      child: Stack(
         children: [
-          if (isActive)
-            Container(
-              margin: const EdgeInsets.only(bottom: 4.0),
-              width: 20,
-              height: 2,
-              color: AppTheme.activeButtonColor,
+          BottomNavigationBar(
+            currentIndex: _selectedIndex,
+            type: BottomNavigationBarType.fixed,
+            backgroundColor: AppTheme.backgroundColorWhite,
+            onTap: _navigateBottomBar,
+            selectedItemColor: AppTheme.activeButtonColor,
+            unselectedItemColor: AppTheme.progressIndicatorActive,
+            selectedLabelStyle: const TextStyle(
+              fontSize: 12,
             ),
-          Icon(
-            icon,
-            size: 24,
-            color: isActive
-                ? AppTheme.activeButtonColor
-                : AppTheme.progressIndicatorActive,
+            unselectedLabelStyle: const TextStyle(
+              fontSize: 12,
+            ),
+            items: [
+              BottomNavigationBarItem(
+                icon: _buildIcon('assets/images/footer_icons/home.svg', 0),
+                label: 'Головна',
+              ),
+              BottomNavigationBarItem(
+                icon: _buildIcon('assets/images/footer_icons/search.svg', 1),
+                label: 'Пошук',
+              ),
+              BottomNavigationBarItem(
+                icon: _buildIcon('assets/images/footer_icons/add.svg', 2),
+                label: 'Продати',
+              ),
+              BottomNavigationBarItem(
+                icon: _buildIcon('assets/images/footer_icons/message.svg', 3),
+                label: 'Чат',
+              ),
+              BottomNavigationBarItem(
+                icon: _buildIcon('assets/images/footer_icons/profile.svg', 4),
+                label: 'Акаунт',
+              ),
+            ],
           ),
-          Text(
-            label,
-            style: TextStyle(
-              fontSize: 10,
-              color: isActive
-                  ? AppTheme.activeButtonColor
-                  : AppTheme.progressIndicatorActive,
-            ),
+          AnimatedPositioned(
+            top: 0,
+            left: _getLinePosition(),
+            duration: const Duration(milliseconds: 200),
+            child: _buildDash(),
           ),
         ],
       ),
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
+  Widget _buildDash() {
     return Container(
-      decoration: BoxDecoration(
-        border: Border(top: BorderSide(color: Colors.grey.shade300)),
-      ),
-      child: BottomAppBar(
-        color: AppTheme.backgroundColorWhite,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            _buildFooterItem(Icons.home_outlined, 'Головна', 0),
-            _buildFooterItem(Icons.search_outlined, 'Пошук', 1),
-            _buildFooterItem(Icons.add_box_outlined, 'Продати', 2),
-            _buildFooterItem(Icons.chat_bubble_outline, 'Чат', 3),
-            _buildFooterItem(Icons.account_circle_outlined, 'Акаунт', 4),
-          ],
+      width: 25,
+      height: 2,
+      color: AppTheme.activeButtonColor,
+    );
+  }
+
+  double _getLinePosition() {
+    switch (_selectedIndex) {
+      case 0:
+        return 31.0;
+      case 1:
+        return 116.0;
+      case 2:
+        return 203.0;
+      case 3:
+        return 290.0;
+      case 4:
+        return 376.0;
+      default:
+        return 0.0;
+    }
+  }
+
+  Widget _buildIcon(String assetPath, int index) {
+    bool isSelected = _selectedIndex == index;
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        SvgPicture.asset(
+          assetPath,
+          colorFilter: ColorFilter.mode(
+            isSelected
+                ? AppTheme.activeButtonColor
+                : AppTheme.progressIndicatorActive,
+            BlendMode.srcIn,
+          ),
+          width: 24,
+          height: 24,
         ),
-      ),
+        const SizedBox(height: 4),
+      ],
     );
   }
 }

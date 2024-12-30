@@ -20,14 +20,12 @@ class ChooseRoleScreenState extends State<ChooseRoleScreen> {
   Future<void> submitRole() async {
     if (selectedRole == null) return;
     final roleMap = {
-      'is-seller': selectedRole == 'seller',
-      'is-buyer': selectedRole == 'customer',
+      'is_seller': selectedRole == 'seller',
+      'is_buyer': selectedRole == 'customer',
     };
     try {
-      // Send the selected role using UserRoleService
       await UserRoleService.sendRole(roleMap);
 
-      // Navigate to the next screen
       Navigator.pushNamed(context, '/selectCategory');
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(

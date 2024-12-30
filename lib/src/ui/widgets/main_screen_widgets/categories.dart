@@ -10,7 +10,7 @@ class CategoriesWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
+          const Text(
             'Категорії',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
@@ -18,7 +18,7 @@ class CategoriesWidget extends StatelessWidget {
             onPressed: () {
               Navigator.pushNamed(context, '/categories');
             },
-            child: Text(
+            child: const Text(
               'Дивитись усі',
               style: TextStyle(
                 color: AppTheme.lightBodyColor,

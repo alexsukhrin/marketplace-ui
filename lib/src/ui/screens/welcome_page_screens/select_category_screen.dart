@@ -13,11 +13,9 @@ class SelectCategoryScreen extends StatefulWidget {
 }
 
 class SelectCategoryScreenState extends State<SelectCategoryScreen> {
-  List<Map<String, dynamic>> categories =
-      []; // Updated to store both name and id
-  List<Map<String, dynamic>> selectedCategories =
-      []; // Updated for selected categories
-  bool isLoading = true; // Loading state for fetching categories
+  List<Map<String, dynamic>> categories = [];
+  List<Map<String, dynamic>> selectedCategories = [];
+  bool isLoading = true;
 
   @override
   void initState() {
