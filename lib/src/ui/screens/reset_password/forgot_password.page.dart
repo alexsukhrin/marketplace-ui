@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../../exceptions/user_not_found_exception.dart';
 import '../../../services/password_reset_service.dart';
-import '../../themes/app_theme.dart';
 import '../../widgets/loading_dialog.dart';
 import 'code_validate_page.dart';
 import '../../../utils/validators.dart';

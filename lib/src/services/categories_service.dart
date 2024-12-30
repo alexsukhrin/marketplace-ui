@@ -39,7 +39,6 @@ class CategoryService {
           data['categories'].map((category) => {
                 'name': category['name'],
                 'category_id': category['category_id'],
-                'name': category['name'],
                 'photo': category['photo'] ?? "",
               }),
         );

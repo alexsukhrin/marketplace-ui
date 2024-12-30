@@ -4,7 +4,6 @@ import '../../../services/password_reset_service.dart';
 import '../../../utils/validators.dart';
 
 import '../../shared_pages/success_page.dart.dart';
-import '../../themes/app_theme.dart';
 import '../../widgets/auth_widgets/auth_field.dart';
 import '../../widgets/auth_widgets/auth_button.dart';
 import '../../widgets/loading_dialog.dart';
