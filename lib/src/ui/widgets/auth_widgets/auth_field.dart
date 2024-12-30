@@ -10,6 +10,7 @@ class AuthField extends StatefulWidget {
   final String? Function(String?)? validator;
   final String labelText;
   final bool Function(String)? showSuffixIcon;
+  final String? errorText;
 
   const AuthField({
     super.key,
@@ -20,13 +21,14 @@ class AuthField extends StatefulWidget {
     this.isObscureText = false,
     this.validator,
     this.showSuffixIcon,
+    this.errorText,
   });
 
   @override
-  _AuthFieldState createState() => _AuthFieldState();
+  AuthFieldState createState() => AuthFieldState();
 }
 
-class _AuthFieldState extends State<AuthField> {
+class AuthFieldState extends State<AuthField> {
   late bool _isPasswordVisible;
 
   @override
@@ -48,87 +50,96 @@ class _AuthFieldState extends State<AuthField> {
           style: textTheme.bodyMedium?.copyWith(color: AppTheme.blackText),
         ),
         const SizedBox(height: 8),
-        TextFormField(
-          controller: widget.controller,
-          decoration: InputDecoration(
-            hintText: widget.hintText,
-            hintStyle: const TextStyle(
-              color: AppTheme.hintTesxtGrey,
-            ),
-            fillColor: AppTheme.textFieldBackgroundColor,
-            filled: true,
-            enabledBorder: UnderlineInputBorder(
-              borderSide: const BorderSide(
-                color: Colors.transparent,
-              ),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: const BorderSide(
-                color: AppTheme.activeBorderColor,
-              ),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            errorBorder: OutlineInputBorder(
-              borderSide: const BorderSide(
-                color: AppTheme.textError,
-              ),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            focusedErrorBorder: OutlineInputBorder(
-              borderSide: const BorderSide(
-                color: AppTheme.textError,
-              ),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            suffixIcon: widget.isObscureText
-                ? IconButton(
-                    icon: Icon(
-                      _isPasswordVisible
-                          ? Icons.visibility
-                          : Icons.visibility_off,
+        ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 354),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              TextFormField(
+                controller: widget.controller,
+                decoration: InputDecoration(
+                  hintText: widget.hintText,
+                  hintStyle: const TextStyle(
+                    color: AppTheme.hintTesxtGrey,
+                  ),
+                  fillColor: AppTheme.textFieldBackgroundColor,
+                  filled: true,
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: Colors.transparent,
                     ),
-                    onPressed: () {
-                      setState(() {
-                        _isPasswordVisible = !_isPasswordVisible;
-                      });
-                    },
-                  )
-                : isValid
-                    ? const Icon(
-                        Icons.check_circle_outline,
-                        color: Colors.green,
-                      )
-                    : null,
-            errorMaxLines: 3,
-          ),
-          validator: widget.validator,
-          obscureText: !_isPasswordVisible,
-          onChanged: (_) {
-            setState(() {});
-          },
-        ),
-        if (widget.showCounter == true)
-          Align(
-            alignment: Alignment.bottomRight,
-            child: Padding(
-              padding: const EdgeInsets.only(top: 8.0),
-              child: ValueListenableBuilder<TextEditingValue>(
-                valueListenable: widget.controller,
-                builder: (context, value, child) {
-                  final passwordLength = value.text.length;
-                  return Text(
-                    '$passwordLength/8',
-                    style: TextStyle(
-                      color: passwordLength >= 8
-                          ? AppTheme.textFieldValidColor
-                          : AppTheme.textFieldCounterColor,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: AppTheme.activeBorderColor,
                     ),
-                  );
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: AppTheme.textError,
+                    ),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  focusedErrorBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: AppTheme.textError,
+                    ),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  suffixIcon: widget.isObscureText
+                      ? IconButton(
+                          icon: Icon(
+                            _isPasswordVisible
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _isPasswordVisible = !_isPasswordVisible;
+                            });
+                          },
+                        )
+                      : isValid
+                          ? const Icon(
+                              Icons.check_circle_outline,
+                              color: Colors.green,
+                            )
+                          : null,
+                  errorText: widget.errorText,
+                  errorMaxLines: 3,
+                ),
+                validator: widget.validator,
+                obscureText: !_isPasswordVisible,
+                onChanged: (_) {
+                  setState(() {});
                 },
               ),
-            ),
+              if (widget.showCounter == true)
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: Align(
+                    alignment: Alignment.bottomRight,
+                    child: ValueListenableBuilder<TextEditingValue>(
+                      valueListenable: widget.controller,
+                      builder: (context, value, child) {
+                        final passwordLength = value.text.length;
+                        return Text(
+                          '$passwordLength/8',
+                          style: TextStyle(
+                            color: passwordLength >= 8
+                                ? AppTheme.textFieldValidColor
+                                : AppTheme.textFieldCounterColor,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+            ],
           ),
+        ),
       ],
     );
   }

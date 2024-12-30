@@ -30,6 +30,7 @@ class AppTheme {
   static const Color activeFieldBackgroundColor = Color(0xFFF6EADA);
 
   static const Color codeFieldBackgroundColor = Color(0xFFF2F2F7);
+  static const Color splashColor = Color(0xFFFF9500);
 
   static ThemeData lightTheme() {
     return ThemeData(

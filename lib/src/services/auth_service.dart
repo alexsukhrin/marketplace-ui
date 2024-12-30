@@ -1,6 +1,7 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import '../exceptions/email_already_registered_exception.dart';
 import 'auth_storage.dart';
 
 class AuthService {
@@ -21,12 +22,30 @@ class AuthService {
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        print('Користувача зареєстровано: ${response.body}');
+        final responseBody = jsonDecode(response.body);
+        final token = responseBody['token'];
+        final message = responseBody['message'];
+
+        if (token != null) {
+          await AuthStorage.saveToken(token);
+          print(message);
+        } else {
+          throw Exception('Token not found in the response.');
+        }
+      } else if (response.statusCode == 400) {
+        final responseBody = jsonDecode(response.body);
+        if (responseBody['error'] == "User data not valid.") {
+          throw EmailAlreadyRegisteredException(
+              'Упс, така пошта вже використовується.');
+        } else {
+          throw Exception('Невідома помилка реєстрації');
+        }
       } else {
-        print('Помилка реєстрації: ${response.statusCode} ${response.body}');
+        throw Exception('Помилка реєстрації: ${response.statusCode}');
       }
     } catch (e) {
       print('Помилка підключення: $e');
+      rethrow;
     }
   }
 

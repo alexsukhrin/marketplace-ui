@@ -123,22 +123,35 @@ class CodeValidatePageState extends State<CodeValidatePage> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
+            const SizedBox(height: 100),
             Image.asset('assets/images/logIn_icons/mail_icon.png',
                 width: 50, height: 50),
+            const SizedBox(height: 20),
             Text(
               'Код надіслано',
               style: textTheme.displayLarge,
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 4),
             Text(
-              "Перевірте смс за вказаним номером",
+              "Перевірте лист за вказаною поштою",
               style: textTheme.bodyLarge,
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 8),
+            Text.rich(
+              TextSpan(
+                  text: widget.email.isNotEmpty
+                      ? widget.email
+                          .replaceRange(3, widget.email.indexOf('@'), '***')
+                      : 'Невідомо',
+                  style: textTheme.bodyLarge),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 40),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -208,8 +221,8 @@ class CodeValidatePageState extends State<CodeValidatePage> {
       setState(() {});
     });
     return SizedBox(
-      width: 49,
-      height: 79,
+      width: 52,
+      height: 52,
       child: TextFormField(
         controller: controller,
         focusNode: currentFocusNode,

@@ -4,6 +4,7 @@ import 'package:flutter_application_1/src/ui/screens/main_screen.dart';
 import 'package:flutter_application_1/src/ui/screens/welcome_page_screens/choose_role_screen.dart';
 import 'package:flutter_application_1/src/ui/screens/welcome_page_screens/select_category_screen.dart';
 import 'package:flutter_application_1/src/ui/screens/welcome_page_screens/welcome_screen.dart';
+import 'src/ui/screens/categories/all_categories_page.dart';
 import 'src/ui/screens/login/login_page.dart';
 import './src/ui/themes/app_theme.dart';
 import 'src/ui/shared_pages/success_page.dart.dart';
@@ -35,7 +36,7 @@ class MyAppState extends State<Marcketplace> {
       debugShowCheckedModeBanner: false,
       title: 'SHUM',
       theme: AppTheme.lightTheme(),
-      darkTheme: AppTheme.darkTheme(),
+      // darkTheme: AppTheme.darkTheme(),
       // themeMode: _isDarkMode ? ThemeMode.dark : ThemeMode.light,
       initialRoute: '/',
       routes: {
@@ -47,6 +48,7 @@ class MyAppState extends State<Marcketplace> {
         '/chooseRole': (context) => const ChooseRoleScreen(),
         '/selectCategory': (context) => const SelectCategoryScreen(),
         '/main': (context) => const MainScreen(),
+        '/categories': (context) => const AllCategoriesPage(),
       },
       builder: (context, child) {
         return Scaffold(

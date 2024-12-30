@@ -18,25 +18,28 @@ class AuthButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: isButtonDisabled == true ? null : onPressed,
-      style: ElevatedButton.styleFrom(
-        backgroundColor: isButtonDisabled == true
-            ? AppTheme.disabledButtonColor
-            : AppTheme.activeButtonColor,
-        foregroundColor: AppTheme.witeText,
-        minimumSize: const Size(354, 44),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
+    return ConstrainedBox(
+      constraints: const BoxConstraints(maxWidth: 354),
+      child: ElevatedButton(
+        onPressed: isButtonDisabled == true ? null : onPressed,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: isButtonDisabled == true
+              ? AppTheme.disabledButtonColor
+              : AppTheme.activeButtonColor,
+          foregroundColor: AppTheme.witeText,
+          minimumSize: const Size(354, 44),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+          disabledBackgroundColor: AppTheme.disabledButtonColor,
         ),
-        disabledBackgroundColor: AppTheme.disabledButtonColor,
-      ),
-      child: Text(
-        text,
-        style: const TextStyle(
-          color: AppTheme.witeText,
-          fontSize: 16,
-          fontWeight: FontWeight.w500,
+        child: Text(
+          text,
+          style: const TextStyle(
+            color: AppTheme.witeText,
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+          ),
         ),
       ),
     );

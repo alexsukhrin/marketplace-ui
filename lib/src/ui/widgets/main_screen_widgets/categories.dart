@@ -15,7 +15,9 @@ class CategoriesWidget extends StatelessWidget {
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           TextButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, '/categories');
+            },
             child: const Text(
               'Дивитись усі',
               style: TextStyle(
