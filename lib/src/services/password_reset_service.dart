@@ -59,7 +59,7 @@ class PasswordResetService {
       } else if (response.statusCode == 403) {
         final errorResponse = jsonDecode(response.body);
         if (errorResponse['error'] == 'Otp not verified') {
-          throw InvalidOtpException('Невірний код');
+          throw InvalidOtpException('Упс! Код невірний. Спробуйте знову.');
         }
         throw Exception('Помилка: ${response.body}');
       } else {

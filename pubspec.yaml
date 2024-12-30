@@ -31,5 +31,6 @@ flutter:
   assets:
     - assets/images/
     - assets/images/logIn_icons/
+    - assets/images/signUp_images/
     - assets/images/welcome_page/
     - assets/images/samples/

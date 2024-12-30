@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../../exceptions/user_not_found_exception.dart';
 import '../../../services/password_reset_service.dart';
+import '../../themes/app_theme.dart';
+import '../../widgets/loading_dialog.dart';
 import 'code_validate_page.dart';
 import '../../../utils/validators.dart';
 
@@ -17,6 +19,7 @@ class ForgotPasswordPage extends StatefulWidget {
 }
 
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
+  String? _emailError;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   bool _isButtonDisabled = true;
@@ -45,19 +48,17 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   }
 
   void _onSendCode() async {
+    setState(() {
+      _emailError = null;
+    });
     if (_formKey.currentState?.validate() ?? false) {
       final email = _emailController.text;
 
-      showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) => const Center(
-          child: CircularProgressIndicator(),
-        ),
-      );
+      LoadingDialog.show(context);
 
       try {
         final response = await PasswordResetService.sendRecoveryEmail(email);
+        LoadingDialog.hide(context);
         Navigator.pop(context);
 
         String successMessage =
@@ -73,8 +74,12 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
           ),
         );
       } catch (e) {
+        LoadingDialog.hide(context);
         Navigator.pop(context);
         if (e is UserNotFoundException) {
+          setState(() {
+            _emailError = 'Будь ласка, введіть дійсну адресу електронної пошти';
+          });
           _showSnackBarMessage(e.message);
         } else {
           _showSnackBarMessage('Сталася помилка. Спробуйте ще раз.');
@@ -108,7 +113,6 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         child: Form(
           key: _formKey,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               const Center(
                 child: FormHeader(
@@ -129,13 +133,14 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               ),
               const SizedBox(height: 68),
               AuthField(
-                labelText: "Введіть пошту",
+                labelText: " Ваша пошта",
                 controller: _emailController,
                 validator: validateEmail,
                 hintText: "Введіть пошту",
                 showSuffixIcon: (text) {
                   return validateEmail(text) == null;
                 },
+                errorText: _emailError,
               ),
               const SizedBox(height: 40),
               AuthButton(

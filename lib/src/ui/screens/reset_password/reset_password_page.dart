@@ -4,8 +4,10 @@ import '../../../services/password_reset_service.dart';
 import '../../../utils/validators.dart';
 
 import '../../shared_pages/success_page.dart.dart';
+import '../../themes/app_theme.dart';
 import '../../widgets/auth_widgets/auth_field.dart';
 import '../../widgets/auth_widgets/auth_button.dart';
+import '../../widgets/loading_dialog.dart';
 
 class ResetPasswordPage extends StatefulWidget {
   const ResetPasswordPage({super.key});
@@ -44,8 +46,12 @@ class ResetPasswordPageState extends State<ResetPasswordPage> {
   Future<void> _resetPassword() async {
     final newPassword = _newPasswordController.text;
 
+    LoadingDialog.show(context);
+
     try {
       await PasswordResetService.resetPassword(newPassword);
+
+      LoadingDialog.hide(context);
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Пароль успішно змінено!')),
@@ -62,6 +68,7 @@ class ResetPasswordPageState extends State<ResetPasswordPage> {
         ),
       );
     } catch (e) {
+      LoadingDialog.hide(context);
       setState(() {
         _errorMessage = 'Помилка зміни пароля. Спробуйте ще раз.';
       });
@@ -80,7 +87,6 @@ class ResetPasswordPageState extends State<ResetPasswordPage> {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const SizedBox(height: 72),
             Center(
@@ -102,6 +108,7 @@ class ResetPasswordPageState extends State<ResetPasswordPage> {
               style: textTheme.bodyMedium,
               textAlign: TextAlign.center,
             ),
+            const SizedBox(height: 40),
             AuthField(
               hintText: 'Пароль',
               controller: _newPasswordController,
@@ -134,7 +141,7 @@ class ResetPasswordPageState extends State<ResetPasswordPage> {
               ),
             const SizedBox(height: 40),
             AuthButton(
-              text: 'Зберегти пароль',
+              text: 'Відновити пароль',
               onPressed: _isButtonEnabled
                   ? () {
                       if (_newPasswordController.text ==
