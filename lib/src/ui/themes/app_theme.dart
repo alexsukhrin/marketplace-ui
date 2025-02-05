@@ -32,6 +32,9 @@ class AppTheme {
   static const Color codeFieldBackgroundColor = Color(0xFFF2F2F7);
   static const Color splashColor = Color(0xFFFF9500);
 
+  static const Color sidebarColor = Color(0xFFF7F7F7);
+  static const Color sidebarIconsHover = Color(0xFFFFE8C4);
+
   static ThemeData lightTheme() {
     return ThemeData(
       inputDecorationTheme: const InputDecorationTheme(

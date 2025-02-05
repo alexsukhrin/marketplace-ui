@@ -1,0 +1,35 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/ui/widgets/main_screen_widgets/categories.dart';
+import 'package:flutter_application_1/src/ui/widgets/main_screen_widgets/searh_field.dart';
+import '../../widgets/main_screen_widgets/carousel_widget.dart';
+import '../../widgets/main_screen_widgets/mobile/footerBar.dart';
+import '../../widgets/main_screen_widgets/mobile/main_appbar.dart';
+
+class MainScreenMobile extends StatelessWidget {
+  const MainScreenMobile({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: CustomAppBar(),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              SearchField(
+                onSearch: () {
+                  // Implement search logic
+                  print("Search icon tapped!");
+                },
+              ),
+              // CustomCarousel(),
+              CategoriesWidget(),
+            ],
+          ),
+        ),
+      ),
+      bottomNavigationBar: const FooterBarWidget(),
+    );
+  }
+}

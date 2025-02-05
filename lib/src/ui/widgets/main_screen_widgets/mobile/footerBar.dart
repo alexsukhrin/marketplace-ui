@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../themes/app_theme.dart';
+import '../../../themes/app_theme.dart';
 
 class FooterBarWidget extends StatefulWidget {
   const FooterBarWidget({super.key});
@@ -86,17 +86,18 @@ class FooterBarWidgetState extends State<FooterBarWidget> {
   }
 
   double _getLinePosition() {
+    double screenWidth = MediaQuery.of(context).size.width;
     switch (_selectedIndex) {
       case 0:
-        return 31.0;
+        return screenWidth * 0.075;
       case 1:
-        return 116.0;
+        return screenWidth * 0.275;
       case 2:
-        return 203.0;
+        return screenWidth * 0.475;
       case 3:
-        return 290.0;
+        return screenWidth * 0.675;
       case 4:
-        return 376.0;
+        return screenWidth * 0.875;
       default:
         return 0.0;
     }
