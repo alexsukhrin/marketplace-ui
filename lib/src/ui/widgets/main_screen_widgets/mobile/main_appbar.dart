@@ -1,22 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../themes/app_theme.dart';
+import '../../../themes/app_theme.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const CustomAppBar({super.key});
+
   @override
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: AppTheme.backgroundColorWhite,
       leading: IconButton(
-        icon: Icon(Icons.menu),
+        icon: const Icon(Icons.menu),
         onPressed: () {},
       ),
       title: Row(
-        mainAxisAlignment: MainAxisAlignment.center, // Center the logo
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SvgPicture.asset(
-            'assets/images/logo.svg', // Use SvgPicture.asset for SVG files
+            'assets/images/logo.svg',
             height: 28,
             width: 28,
           ),
@@ -24,11 +26,20 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       actions: [
         IconButton(
-          icon: Icon(Icons.favorite_border),
+          icon: const Icon(Icons.favorite_border),
           onPressed: () {},
+          visualDensity: VisualDensity.compact,
         ),
         IconButton(
-          icon: Icon(Icons.shopping_cart_outlined),
+          icon: SvgPicture.asset(
+            'assets/images/main_icons/cart_icon.svg',
+            height: 24,
+            width: 24,
+            colorFilter: const ColorFilter.mode(
+              Colors.black,
+              BlendMode.srcIn,
+            ),
+          ),
           onPressed: () {},
         ),
       ],

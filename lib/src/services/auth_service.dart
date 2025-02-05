@@ -6,7 +6,7 @@ import 'auth_storage.dart';
 
 class AuthService {
   static const String _baseUrl =
-      'http://ec2-18-193-77-42.eu-central-1.compute.amazonaws.com';
+      'http://ec2-18-197-114-210.eu-central-1.compute.amazonaws.com:8032';
 
   static Future<void> registerUser(Map<String, String> formData) async {
     final url = Uri.parse('$_baseUrl/api/v1/auth/register');

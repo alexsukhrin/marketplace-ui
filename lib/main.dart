@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/ui/screens/registration/registration_page.dart';
-import 'package:flutter_application_1/src/ui/screens/main_screen.dart';
+import 'package:flutter_application_1/src/ui/screens/main/main_screen.dart';
 import 'package:flutter_application_1/src/ui/screens/welcome_page_screens/choose_role_screen.dart';
 import 'package:flutter_application_1/src/ui/screens/welcome_page_screens/select_category_screen.dart';
 import 'package:flutter_application_1/src/ui/screens/welcome_page_screens/welcome_screen.dart';
