@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 
 class UserRoleService {
   static const String _baseUrl =
-      'http://ec2-18-193-106-179.eu-central-1.compute.amazonaws.com:8032';
+      'http://ec2-18-197-114-210.eu-central-1.compute.amazonaws.com:8032';
 
   static Future<void> sendRole(Map<String, bool> role) async {
     final token = await AuthStorage.getToken();

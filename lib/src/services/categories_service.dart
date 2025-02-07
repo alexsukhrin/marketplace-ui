@@ -4,7 +4,7 @@ import 'auth_storage.dart';
 
 class CategoryService {
   static const String _baseUrl =
-      'http://ec2-18-193-106-179.eu-central-1.compute.amazonaws.com:8032';
+      'http://ec2-18-197-114-210.eu-central-1.compute.amazonaws.com:8032';
 
   // Utility function to retrieve the JWT token
   static Future<String> getAuthToken() async {
