@@ -38,7 +38,7 @@ class MyAppState extends State<Marcketplace> {
       theme: AppTheme.lightTheme(),
       // darkTheme: AppTheme.darkTheme(),
       // themeMode: _isDarkMode ? ThemeMode.dark : ThemeMode.light,
-      initialRoute: '/',
+      initialRoute: '/greeting',
       routes: {
         '/': (context) => const WelcomeScreen(),
         '/login': (context) => const LoginPage(),

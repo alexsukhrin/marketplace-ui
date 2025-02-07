@@ -4,7 +4,7 @@ import 'package:flutter_application_1/src/ui/widgets/custom_button.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../widgets/responsive/responsive_design.dart';
-import '../../widgets/welcome_page_widgets/welcome_text.dart';
+import '../../widgets/welcome_page_widgets/left_section.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -31,38 +31,8 @@ class Desktop extends StatelessWidget {
     return Scaffold(
       body: Row(
         children: [
-          // Left Section
-          Container(
-            width: MediaQuery.of(context).size.width * 0.45,
-            decoration: BoxDecoration(
-              color: const Color(0xFFF7F5F2),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Stack(
-              children: [
-                // Logo
-                Positioned(
-                  top: 16,
-                  left: 16,
-                  child: Image.asset(
-                    'assets/images/logo_desktop.png',
-                    width: 48,
-                    height: 69,
-                    fit: BoxFit.contain,
-                  ),
-                ),
-                // Image
-                Center(
-                  child: SvgPicture.asset(
-                    'assets/images/welcome_page/welcome_screen.svg',
-                    width: 631,
-                    height: 620,
-                    fit: BoxFit.contain,
-                  ),
-                ),
-              ],
-            ),
-          ),
+          const LeftSection(
+              imagePath: 'assets/images/welcome_page/welcome_screen.svg'),
 
           // Right Section
           Expanded(
@@ -278,6 +248,35 @@ class Mobile extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class WelcomeText extends StatelessWidget {
+  const WelcomeText({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Text(
+          "Привіт!",
+          style: TextStyle(
+            fontSize: 32,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        SizedBox(height: 8),
+        Text(
+          "Отримай безпечний досвід покупок\n разом з нами",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 16,
+            color: AppTheme.lightBodyColor,
+          ),
+        ),
+      ],
     );
   }
 }

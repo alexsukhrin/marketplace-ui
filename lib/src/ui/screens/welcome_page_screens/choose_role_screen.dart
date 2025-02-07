@@ -3,9 +3,11 @@ import 'package:flutter_application_1/src/services/user_role_service.dart';
 import 'package:flutter_application_1/src/ui/widgets/welcome_page_widgets/welcome_page_header.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../widgets/auth_widgets/auth_button.dart';
-
+import '../../widgets/custom_button.dart';
+import '../../widgets/responsive/responsive_design.dart';
 import '../../widgets/welcome_page_widgets/custom_outlined_button.dart';
+import '../../widgets/welcome_page_widgets/left_section.dart';
+import '../../widgets/welcome_page_widgets/progress_indicator.dart';
 
 class ChooseRoleScreen extends StatefulWidget {
   const ChooseRoleScreen({super.key});
@@ -37,6 +39,183 @@ class ChooseRoleScreenState extends State<ChooseRoleScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      body: TResponsiveWidget(
+          desktop: Padding(
+            padding:
+                const EdgeInsets.symmetric(vertical: 33.0, horizontal: 61.0),
+            child: Desktop(
+              selectedRole: selectedRole,
+              onRoleSelected: (role) {
+                setState(() {
+                  selectedRole = role;
+                });
+              },
+              onSubmitRole: submitRole,
+            ),
+          ),
+          tablet: const Tablet(),
+          mobile: Mobile(
+            selectedRole: selectedRole,
+            onRoleSelected: (role) {
+              setState(() {
+                selectedRole = role;
+              });
+            },
+            onSubmitRole: submitRole,
+          )),
+    );
+  }
+}
+
+class RoleSelectionWidget extends StatelessWidget {
+  final String? selectedRole;
+  final ValueChanged<String> onRoleSelected;
+  final CrossAxisAlignment crossAxisAlignment;
+  final MainAxisAlignment mainAxisAlignment;
+
+  const RoleSelectionWidget({
+    super.key,
+    required this.selectedRole,
+    required this.onRoleSelected,
+    this.crossAxisAlignment = CrossAxisAlignment.start,
+    this.mainAxisAlignment = MainAxisAlignment.start,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: crossAxisAlignment,
+      children: [
+        // const SizedBox(height: 10),
+        const Text(
+          "Обирай ким ти є?",
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 8),
+        const Text(
+          "Це можна змінити у любий момент.",
+          style: TextStyle(
+            fontSize: 16,
+          ),
+        ),
+        const SizedBox(height: 36),
+        Row(
+          mainAxisAlignment: mainAxisAlignment,
+          children: [
+            CustomOutlinedButton(
+              text: "Покупцем",
+              onPressed: () => onRoleSelected('customer'),
+              isSelected: selectedRole == 'customer',
+            ),
+            const SizedBox(width: 20),
+            CustomOutlinedButton(
+              text: "Продавцем",
+              onPressed: () => onRoleSelected('seller'),
+              isSelected: selectedRole == 'seller',
+            ),
+          ],
+        ),
+        // const SizedBox(height: 24),
+      ],
+    );
+  }
+}
+
+class Desktop extends StatelessWidget {
+  final String? selectedRole;
+  final ValueChanged<String> onRoleSelected;
+  final Future<void> Function() onSubmitRole;
+
+  const Desktop({
+    super.key,
+    required this.selectedRole,
+    required this.onRoleSelected,
+    required this.onSubmitRole,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Row(
+        children: [
+          const LeftSection(
+              imagePath: 'assets/images/welcome_page/choose_role_screen.svg'),
+
+          // Right Section
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  // Skip
+                  const WelcomePageHeader(
+                    routeName: '/selectCategory',
+                  ),
+
+                  // Main Content
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      RoleSelectionWidget(
+                        selectedRole: selectedRole,
+                        onRoleSelected: onRoleSelected,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                      ),
+                      const SizedBox(height: 36),
+                      SubmitRoleButton(
+                        selectedRole: selectedRole,
+                        onSubmitRole: onSubmitRole,
+                      ),
+                    ],
+                  ),
+
+                  const ProgressIndicatorRow(order: [
+                    "inactive",
+                    "space",
+                    "active",
+                    "space",
+                    "inactive"
+                  ]),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class Tablet extends StatelessWidget {
+  const Tablet({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    throw UnimplementedError();
+  }
+}
+
+class Mobile extends StatelessWidget {
+  final String? selectedRole;
+  final ValueChanged<String> onRoleSelected;
+  final Future<void> Function() onSubmitRole;
+
+  const Mobile({
+    super.key,
+    required this.selectedRole,
+    required this.onRoleSelected,
+    required this.onSubmitRole,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
       appBar: const WelcomePageHeader(
         routeName: '/selectCategory',
       ),
@@ -46,44 +225,10 @@ class ChooseRoleScreenState extends State<ChooseRoleScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 10),
-            const Text(
-              "Обирай ким ти є?",
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 8),
-            const Text(
-              "Це можна змінити у любий момент.",
-              style: TextStyle(
-                fontSize: 16,
-              ),
-            ),
-            const SizedBox(height: 36),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                CustomOutlinedButton(
-                  text: "Покупцем",
-                  onPressed: () {
-                    setState(() {
-                      selectedRole = 'customer';
-                    });
-                  },
-                  isSelected: selectedRole == 'customer',
-                ),
-                const SizedBox(width: 20),
-                CustomOutlinedButton(
-                  text: "Продавцем",
-                  onPressed: () {
-                    setState(() {
-                      selectedRole = 'seller';
-                    });
-                  },
-                  isSelected: selectedRole == 'seller',
-                ),
-              ],
+            RoleSelectionWidget(
+              selectedRole: selectedRole,
+              onRoleSelected: onRoleSelected,
+              crossAxisAlignment: CrossAxisAlignment.start,
             ),
             const SizedBox(height: 24),
             Expanded(
@@ -93,52 +238,43 @@ class ChooseRoleScreenState extends State<ChooseRoleScreen> {
               ),
             ),
             const SizedBox(height: 18),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  height: 6,
-                  width: 6,
-                  decoration: const BoxDecoration(
-                    color: Color(0xFFEFEFEF),
-                    shape: BoxShape.circle,
-                  ),
-                ),
-                const SizedBox(width: 4),
-                Container(
-                  height: 6,
-                  width: 30,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFB6B6B6),
-                    borderRadius: BorderRadius.circular(3),
-                  ),
-                ),
-                const SizedBox(width: 4),
-                Container(
-                  height: 6,
-                  width: 6,
-                  decoration: const BoxDecoration(
-                    color: Color(0xFFEFEFEF),
-                    shape: BoxShape.circle,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 20),
+            const ProgressIndicatorRow(
+                order: ["inactive", "space", "active", "space", "inactive"]),
+            const SizedBox(height: 12),
             Center(
-              child: Column(
-                children: [
-                  AuthButton(
-                    text: "Далі",
-                    onPressed: selectedRole == null ? null : submitRole,
-                  ),
-                ],
+              child: SubmitRoleButton(
+                selectedRole: selectedRole,
+                onSubmitRole: onSubmitRole,
               ),
             ),
-            const SizedBox(height: 45),
+            const SizedBox(height: 35),
           ],
         ),
       ),
+    );
+  }
+}
+
+class SubmitRoleButton extends StatelessWidget {
+  final String? selectedRole;
+  final Future<void> Function() onSubmitRole;
+
+  const SubmitRoleButton({
+    super.key,
+    required this.selectedRole,
+    required this.onSubmitRole,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomButton(
+      text: "Далі",
+      onPressed: selectedRole == null
+          ? null
+          : onSubmitRole, // Disable if no role selected
+      isButtonDisabled:
+          selectedRole == null, // Disable button if no role selected
+      buttonType: ButtonType.filled, // Filled button
     );
   }
 }
