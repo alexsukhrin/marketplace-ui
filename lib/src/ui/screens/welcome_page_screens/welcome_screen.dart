@@ -230,7 +230,7 @@ class Mobile extends StatelessWidget {
                       Navigator.pushNamed(context, '/registration');
                     },
                     isButtonDisabled: false,
-                    buttonType: ButtonType.filled, // Filled button
+                    buttonType: ButtonType.filled,
                   ),
                   const SizedBox(height: 8),
                   CustomButton(
@@ -239,7 +239,7 @@ class Mobile extends StatelessWidget {
                       Navigator.pushNamed(context, '/login');
                     },
                     isButtonDisabled: false,
-                    buttonType: ButtonType.outlined, // Outlined button
+                    buttonType: ButtonType.outlined,
                   ),
                 ],
               ),
