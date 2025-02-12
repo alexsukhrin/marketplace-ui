@@ -33,8 +33,7 @@ class AppBarWidget extends StatelessWidget {
 
               // Dropdown for Categories
               const Padding(
-                padding:
-                    EdgeInsets.only(top: 28), // Adjust top padding to align
+                padding: EdgeInsets.only(top: 28),
                 child: CategoryDropdown(),
               ),
 
@@ -104,7 +103,7 @@ class AppBarWidget extends StatelessWidget {
               // Login Button
               ElevatedButton(
                 onPressed: () {
-                  // Handle login action
+                  Navigator.pushNamed(context, '/login');
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppTheme.linkTextColor,
