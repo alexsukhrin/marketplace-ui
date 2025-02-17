@@ -27,6 +27,8 @@ class RegistrationPageState extends State<RegistrationPage> {
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
   bool _isButtonDisabled = true;
 
   Map<String, String> getFormData() {
@@ -46,6 +48,7 @@ class RegistrationPageState extends State<RegistrationPage> {
     _lastNameController.addListener(_checkFormFilled);
     _emailController.addListener(_checkFormFilled);
     _passwordController.addListener(_checkFormFilled);
+    _confirmPasswordController.addListener(_checkFormFilled);
   }
 
   @override
@@ -54,6 +57,7 @@ class RegistrationPageState extends State<RegistrationPage> {
     _lastNameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+    _confirmPasswordController.dispose();
     super.dispose();
   }
 
@@ -61,7 +65,8 @@ class RegistrationPageState extends State<RegistrationPage> {
     final isFormFilled = _firstNameController.text.isNotEmpty &&
         _lastNameController.text.isNotEmpty &&
         _emailController.text.isNotEmpty &&
-        _passwordController.text.isNotEmpty;
+        _passwordController.text.isNotEmpty &&
+        _confirmPasswordController.text.isNotEmpty;
 
     setState(() {
       _isButtonDisabled = !isFormFilled;
@@ -173,7 +178,7 @@ class RegistrationPageState extends State<RegistrationPage> {
                           return validateName(text) == null;
                         },
                       ),
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 15),
                       AuthField(
                         labelText: 'Ваше прізвище',
                         validator: validateName,
@@ -183,7 +188,7 @@ class RegistrationPageState extends State<RegistrationPage> {
                           return validateName(text) == null;
                         },
                       ),
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 15),
                       AuthField(
                         labelText: 'Ваша пошта',
                         controller: _emailController,
@@ -194,12 +199,25 @@ class RegistrationPageState extends State<RegistrationPage> {
                         },
                         errorText: _emailError,
                       ),
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 15),
                       AuthField(
                         labelText: 'Пароль',
                         controller: _passwordController,
                         hintText: 'Введіть пароль',
                         validator: validatePassword,
+                        showCounter: true,
+                        isObscureText: true,
+                      ),
+                      AuthField(
+                        labelText: 'Повторіть пароль',
+                        controller: _confirmPasswordController,
+                        hintText: 'Введіть пароль повторно',
+                        validator: (value) {
+                          if (value != _passwordController.text) {
+                            return 'Паролі не співпадають';
+                          }
+                          return validatePassword(value);
+                        },
                         showCounter: true,
                         isObscureText: true,
                       ),
