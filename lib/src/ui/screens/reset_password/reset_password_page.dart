@@ -33,17 +33,44 @@ class ResetPasswordPageState extends State<ResetPasswordPage> {
 
   void _checkFields() {
     setState(() {
-      _isButtonEnabled = _newPasswordController.text.isNotEmpty &&
-          _confirmPasswordController.text.isNotEmpty;
+      String? newPasswordError = validatePassword(_newPasswordController.text);
+      String? confirmPasswordError =
+          validatePassword(_confirmPasswordController.text);
 
-      if (_newPasswordController.text == _confirmPasswordController.text) {
+      if (newPasswordError != null || confirmPasswordError != null) {
+        _errorMessage = newPasswordError ?? confirmPasswordError;
+      } else if (_newPasswordController.text !=
+          _confirmPasswordController.text) {
+        _errorMessage = 'Паролі не співпадають!';
+      } else {
         _errorMessage = null;
       }
+
+      _isButtonEnabled = _newPasswordController.text.isNotEmpty &&
+          _confirmPasswordController.text.isNotEmpty &&
+          newPasswordError == null &&
+          confirmPasswordError == null &&
+          _newPasswordController.text == _confirmPasswordController.text;
     });
   }
 
   Future<void> _resetPassword() async {
     final newPassword = _newPasswordController.text;
+
+    if (validatePassword(newPassword) != null ||
+        validatePassword(_confirmPasswordController.text) != null) {
+      setState(() {
+        _errorMessage = 'Пароль не відповідає вимогам';
+      });
+      return;
+    }
+
+    if (_newPasswordController.text != _confirmPasswordController.text) {
+      setState(() {
+        _errorMessage = 'Паролі не співпадають!';
+      });
+      return;
+    }
 
     LoadingDialog.show(context);
 
@@ -141,16 +168,11 @@ class ResetPasswordPageState extends State<ResetPasswordPage> {
             const SizedBox(height: 40),
             AuthButton(
               text: 'Відновити пароль',
-              onPressed: _isButtonEnabled
+              onPressed: _isButtonEnabled &&
+                      _newPasswordController.text ==
+                          _confirmPasswordController.text
                   ? () {
-                      if (_newPasswordController.text ==
-                          _confirmPasswordController.text) {
-                        _resetPassword();
-                      } else {
-                        setState(() {
-                          _errorMessage = 'Паролі не співпадають!';
-                        });
-                      }
+                      _resetPassword();
                     }
                   : null,
               disabledColor: const Color(0xFFFFCC85),
