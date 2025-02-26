@@ -19,12 +19,12 @@ class CategoryService {
   static Future<List<Map<String, dynamic>>> getCategories() async {
     final url = Uri.parse('$_baseUrl/api/v1/products/categories');
     try {
-      final token = await getAuthToken();
+      // final token = await getAuthToken();
 
       final response = await http.get(
         url,
         headers: {
-          'Authorization': 'Bearer $token',
+          // 'Authorization': 'Bearer $token',
           'Accept': 'application/json',
         },
       );

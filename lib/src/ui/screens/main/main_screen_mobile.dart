@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/src/ui/widgets/main_screen_widgets/categories.dart';
+import 'package:flutter_application_1/src/ui/widgets/main_screen_widgets/mobile/categories.dart';
 import 'package:flutter_application_1/src/ui/widgets/main_screen_widgets/searh_field.dart';
 import '../../widgets/main_screen_widgets/mobile/footerBar.dart';
 import '../../widgets/main_screen_widgets/mobile/main_appbar.dart';
@@ -23,7 +23,7 @@ class MainScreenMobile extends StatelessWidget {
                 },
               ),
               // CustomCarousel(),
-              CategoriesWidget(),
+              const CategoriesWidget(),
             ],
           ),
         ),

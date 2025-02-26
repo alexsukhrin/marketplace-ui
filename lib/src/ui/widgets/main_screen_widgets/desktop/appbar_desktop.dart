@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../themes/app_theme.dart';
+import 'appbar_buttons.dart';
 import 'dropdown.dart';
 
 class AppBarWidget extends StatelessWidget {
@@ -19,50 +19,54 @@ class AppBarWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           // Left: Logo, Categories Dropdown, and Titles
+
           Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              // Logo
-              Image.asset(
-                'assets/images/logo_desktop.png',
-                width: 35,
-                height: 44,
-                fit: BoxFit.contain,
-              ),
-              const SizedBox(width: 24),
-
-              // Dropdown for Categories
-              const Padding(
-                padding: EdgeInsets.only(top: 28),
-                child: CategoryDropdown(),
-              ),
-
-              const SizedBox(width: 24),
-
-              TextButton(
-                onPressed: () {
-                  // Handle "Сезонні пропозиції" click
-                },
-                child: const Text(
-                  'Сезонні пропозиції',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.black,
+              // Left: Logo, Categories Dropdown, and Titles
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  // Logo
+                  Image.asset(
+                    'assets/images/logo_desktop.png',
+                    width: 35,
+                    height: 44,
+                    fit: BoxFit.contain,
                   ),
-                ),
-              ),
-              const SizedBox(width: 24),
-              TextButton(
-                onPressed: () {
-                  // Handle "Рейтинг продавців" click
-                },
-                child: const Text(
-                  'Рейтинг продавців',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.black,
+
+                  // Dropdown for Categories
+                  const Padding(
+                    padding: EdgeInsets.only(top: 28),
+                    child: CategoryDropdown(),
                   ),
-                ),
+
+                  TextButton(
+                    onPressed: () {
+                      // Handle "Сезонні пропозиції" click
+                    },
+                    child: const Text(
+                      'Сезонні пропозиції',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+
+                  TextButton(
+                    onPressed: () {
+                      // Handle "Рейтинг продавців" click
+                    },
+                    child: const Text(
+                      'Рейтинг продавців',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -101,36 +105,7 @@ class AppBarWidget extends StatelessWidget {
               const SizedBox(width: 16),
 
               // Login Button
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/login');
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppTheme.linkTextColor,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-                child: const Text('Увійти'),
-              ),
-              const SizedBox(width: 8),
-
-              // Download App Button
-              OutlinedButton(
-                onPressed: () {
-                  // Handle app download action
-                },
-                style: OutlinedButton.styleFrom(
-                  side: BorderSide(color: AppTheme.linkTextColor),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-                child: const Text(
-                  'Завантажити застосунок',
-                  style: TextStyle(color: AppTheme.linkTextColor),
-                ),
-              ),
+              const MainAuthButtons(),
             ],
           ),
         ],

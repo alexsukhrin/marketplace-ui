@@ -34,6 +34,7 @@ class AppTheme {
 
   static const Color sidebarColor = Color(0xFFF7F7F7);
   static const Color sidebarIconsHover = Color(0xFFFFE8C4);
+  static const Color greyBoxColor = Color(0xFFF4F4F4);
 
   static ThemeData lightTheme() {
     return ThemeData(
