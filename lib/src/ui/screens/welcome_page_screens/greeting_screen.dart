@@ -50,7 +50,7 @@ class Desktop extends StatelessWidget {
                               "This page contains important information."),
                       TextButton(
                         onPressed: () {
-                          Navigator.pushNamed(context, '/chooseRole');
+                          Navigator.pushNamed(context, '/main');
                         },
                         child: const Text(
                           'Пропустити',
