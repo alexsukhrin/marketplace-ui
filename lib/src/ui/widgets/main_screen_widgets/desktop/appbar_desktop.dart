@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'appbar_buttons.dart';
-import 'dropdown.dart';
 
 class AppBarWidget extends StatelessWidget {
   const AppBarWidget({super.key});
@@ -35,11 +34,11 @@ class AppBarWidget extends StatelessWidget {
                     fit: BoxFit.contain,
                   ),
 
-                  // Dropdown for Categories
-                  const Padding(
-                    padding: EdgeInsets.only(top: 28),
-                    child: CategoryDropdown(),
-                  ),
+                  // // Dropdown for Categories
+                  // const Padding(
+                  //   padding: EdgeInsets.only(top: 28),
+                  //   child: CategoryDropdown(),
+                  // ),
 
                   TextButton(
                     onPressed: () {
