@@ -21,16 +21,23 @@ class AuthService {
         body: jsonEncode(formData),
       );
 
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        final responseBody = jsonDecode(response.body);
-        final token = responseBody['token'];
-        final message = responseBody['message'];
+      final responseBody = jsonDecode(response.body);
+      print('Response body: $responseBody');
 
-        if (token != null) {
-          await AuthStorage.saveToken(token);
-          print(message);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        if (responseBody.containsKey('token') &&
+            responseBody.containsKey('message')) {
+          final token = responseBody['token'] ?? '';
+          final message = responseBody['message'] ?? 'Повідомлення не надано';
+
+          if (token.isNotEmpty) {
+            await AuthStorage.saveToken(token);
+            print(message);
+          } else {
+            throw Exception('Token not found in the response.');
+          }
         } else {
-          throw Exception('Token not found in the response.');
+          throw Exception('Response body does not contain expected fields.');
         }
       } else if (response.statusCode == 400) {
         final responseBody = jsonDecode(response.body);
