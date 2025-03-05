@@ -107,49 +107,108 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: <Widget>[
-              const Center(
-                child: FormHeader(
-                  text: 'SHUM',
-                ),
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          bool isDesktop = constraints.maxWidth > 600;
+          return Center(
+            child: Container(
+              width: isDesktop ? 624 : double.infinity,
+              height: isDesktop ? 460 : double.infinity,
+              padding: const EdgeInsets.all(16.0),
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  if (isDesktop)
+                    Container(
+                      width: 624,
+                      height: 460,
+                      decoration: BoxDecoration(
+                        color: Colors.transparent,
+                        borderRadius: BorderRadius.circular(200),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.orange.withOpacity(0.5),
+                            blurRadius: 200,
+                            spreadRadius: 20,
+                            offset: Offset(0, -10),
+                          ),
+                        ],
+                      ),
+                    ),
+                  Container(
+                    width: isDesktop ? 624 : double.infinity,
+                    height: isDesktop ? 460 : double.infinity,
+                    padding: const EdgeInsets.all(16.0),
+                    decoration: isDesktop
+                        ? BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(16),
+                          )
+                        : null,
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          if (!isDesktop)
+                            const Center(
+                              child: FormHeader(
+                                text: 'SHUM',
+                              ),
+                            ),
+                          SizedBox(height: isDesktop ? 0 : 40),
+                          Center(
+                            child: ConstrainedBox(
+                              constraints: BoxConstraints(
+                                maxWidth: isDesktop ? 378 : double.infinity,
+                              ),
+                              child: Column(
+                                children: [
+                                  Text(
+                                    'Відновлення паролю',
+                                    textAlign: TextAlign.center,
+                                    style: textTheme.displayLarge?.copyWith(),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    'Введіть електронну пошту за якою було зареєстровано акаунт',
+                                    textAlign: TextAlign.center,
+                                    style: textTheme.bodyMedium?.copyWith(),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: isDesktop ? 44 : 40),
+                          AuthField(
+                            labelText: "Ваша пошта",
+                            controller: _emailController,
+                            validator: validateEmail,
+                            hintText: "Введіть пошту",
+                            showSuffixIcon: isDesktop
+                                ? (_) => false
+                                : (text) {
+                                    return validateEmail(text) == null;
+                                  },
+                            errorText: _emailError,
+                          ),
+                          SizedBox(height: isDesktop ? 44 : 40),
+                          AuthButton(
+                            text: 'Надіслати код',
+                            onPressed: _onSendCode,
+                            isButtonDisabled: _isButtonDisabled,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(height: 40),
-              Text(
-                'Відновлення паролю',
-                textAlign: TextAlign.center,
-                style: textTheme.displayLarge?.copyWith(),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                'Введіть електронну пошту за якою було зареєстровано акаунт',
-                textAlign: TextAlign.center,
-                style: textTheme.bodyMedium?.copyWith(),
-              ),
-              const SizedBox(height: 68),
-              AuthField(
-                labelText: " Ваша пошта",
-                controller: _emailController,
-                validator: validateEmail,
-                hintText: "Введіть пошту",
-                showSuffixIcon: (text) {
-                  return validateEmail(text) == null;
-                },
-                errorText: _emailError,
-              ),
-              const SizedBox(height: 40),
-              AuthButton(
-                text: 'Надіслати код',
-                onPressed: _onSendCode,
-                isButtonDisabled: _isButtonDisabled,
-              ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }

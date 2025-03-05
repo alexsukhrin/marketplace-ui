@@ -21,53 +21,51 @@ class ResetPasswordPageState extends State<ResetPasswordPage> {
       TextEditingController();
 
   bool _isButtonEnabled = false;
-  String? _errorMessage;
+  String? _newPasswordError;
+  String? _confirmPasswordError;
 
   @override
   void initState() {
     super.initState();
-
     _newPasswordController.addListener(_checkFields);
     _confirmPasswordController.addListener(_checkFields);
   }
 
   void _checkFields() {
     setState(() {
-      String? newPasswordError = validatePassword(_newPasswordController.text);
-      String? confirmPasswordError =
-          validatePassword(_confirmPasswordController.text);
+      _newPasswordError = validatePassword(_newPasswordController.text);
+      _confirmPasswordError = validatePassword(_confirmPasswordController.text);
 
-      if (newPasswordError != null || confirmPasswordError != null) {
-        _errorMessage = newPasswordError ?? confirmPasswordError;
-      } else if (_newPasswordController.text !=
-          _confirmPasswordController.text) {
-        _errorMessage = 'Паролі не співпадають!';
-      } else {
-        _errorMessage = null;
+      if (_newPasswordController.text.isNotEmpty &&
+          _confirmPasswordController.text.isNotEmpty &&
+          _newPasswordController.text != _confirmPasswordController.text) {
+        _confirmPasswordError = 'Паролі не співпадають!';
       }
 
       _isButtonEnabled = _newPasswordController.text.isNotEmpty &&
           _confirmPasswordController.text.isNotEmpty &&
-          newPasswordError == null &&
-          confirmPasswordError == null &&
+          _newPasswordError == null &&
+          _confirmPasswordError == null &&
           _newPasswordController.text == _confirmPasswordController.text;
     });
   }
 
   Future<void> _resetPassword() async {
     final newPassword = _newPasswordController.text;
+    final confirmPassword = _confirmPasswordController.text;
 
-    if (validatePassword(newPassword) != null ||
-        validatePassword(_confirmPasswordController.text) != null) {
-      setState(() {
-        _errorMessage = 'Пароль не відповідає вимогам';
-      });
+    setState(() {
+      _newPasswordError = validatePassword(newPassword);
+      _confirmPasswordError = validatePassword(confirmPassword);
+    });
+
+    if (_newPasswordError != null || _confirmPasswordError != null) {
       return;
     }
 
-    if (_newPasswordController.text != _confirmPasswordController.text) {
+    if (newPassword != confirmPassword) {
       setState(() {
-        _errorMessage = 'Паролі не співпадають!';
+        _confirmPasswordError = 'Паролі не співпадають!';
       });
       return;
     }
@@ -76,7 +74,6 @@ class ResetPasswordPageState extends State<ResetPasswordPage> {
 
     try {
       await PasswordResetService.resetPassword(newPassword);
-
       LoadingDialog.hide(context);
 
       ScaffoldMessenger.of(context).showSnackBar(
@@ -96,7 +93,7 @@ class ResetPasswordPageState extends State<ResetPasswordPage> {
     } catch (e) {
       LoadingDialog.hide(context);
       setState(() {
-        _errorMessage = 'Помилка зміни пароля. Спробуйте ще раз.';
+        _confirmPasswordError = 'Помилка зміни пароля. Спробуйте ще раз.';
       });
     }
   }
@@ -110,76 +107,96 @@ class ResetPasswordPageState extends State<ResetPasswordPage> {
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: Column(
-          children: [
-            const SizedBox(height: 72),
-            Center(
-              child: Image.asset(
-                'assets/images/logIn_icons/key_icon.png',
-                width: 50,
-                height: 50,
-              ),
-            ),
-            const SizedBox(height: 20),
-            Text(
-              'Відновлення паролю',
-              style: textTheme.displayLarge,
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 4),
-            Text(
-              'Введіть новий пароль',
-              style: textTheme.bodyMedium,
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 40),
-            AuthField(
-              hintText: 'Пароль',
-              controller: _newPasswordController,
-              showCounter: true,
-              labelText: 'Введіть пароль',
-              validator: validatePassword,
-              isObscureText: true,
-              showSuffixIcon: (text) {
-                return validatePassword(text) == null;
-              },
-            ),
-            AuthField(
-              hintText: 'Повторіть пароль',
-              controller: _confirmPasswordController,
-              labelText: 'Поворіть пароль',
-              validator: validatePassword,
-              isObscureText: true,
-              showSuffixIcon: (text) {
-                return validatePassword(text) == null;
-              },
-            ),
-            const SizedBox(height: 10),
-            if (_errorMessage != null)
-              Text(
-                _errorMessage!,
-                style: const TextStyle(
-                  color: Colors.red,
-                  fontSize: 14,
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          bool isDesktop = constraints.maxWidth > 600;
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Center(
+              child: Container(
+                width: isDesktop ? 624 : double.infinity,
+                height: isDesktop ? 549 : double.infinity,
+                padding: const EdgeInsets.all(16.0),
+                decoration: isDesktop
+                    ? BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(16),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.orange.withOpacity(0.5),
+                            blurRadius: 200,
+                            spreadRadius: 20,
+                            offset: const Offset(0, -10),
+                          ),
+                        ],
+                      )
+                    : null,
+                child: Column(
+                  children: [
+                    SizedBox(height: isDesktop ? 0 : 72),
+                    Center(
+                      child: Image.asset(
+                        'assets/images/logIn_icons/key_icon.png',
+                        width: 50,
+                        height: 50,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Text(
+                      'Відновлення паролю',
+                      style: textTheme.displayLarge,
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      'Введіть новий пароль',
+                      style: textTheme.bodyMedium,
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: isDesktop ? 44 : 40),
+                    AuthField(
+                      hintText: 'Пароль',
+                      controller: _newPasswordController,
+                      showCounter: true,
+                      labelText: 'Введіть пароль',
+                      validator: validatePassword,
+                      isObscureText: true,
+                      showSuffixIcon: (text) {
+                        return validatePassword(text) == null;
+                      },
+                      errorText: _newPasswordError,
+                    ),
+                    AuthField(
+                      hintText: 'Повторіть пароль',
+                      controller: _confirmPasswordController,
+                      labelText: 'Поворіть пароль',
+                      validator: validatePassword,
+                      isObscureText: true,
+                      showCounter: true,
+                      showSuffixIcon: (text) {
+                        return validatePassword(text) == null;
+                      },
+                      errorText: _confirmPasswordError,
+                    ),
+                    SizedBox(height: isDesktop ? 44 : 40),
+                    AuthButton(
+                      text: 'Відновити пароль',
+                      onPressed: _isButtonEnabled &&
+                              _newPasswordController.text ==
+                                  _confirmPasswordController.text
+                          ? () {
+                              _resetPassword();
+                            }
+                          : null,
+                      disabledColor: const Color(0xFFFFCC85),
+                    ),
+                    SizedBox(height: isDesktop ? 0 : 50),
+                  ],
                 ),
               ),
-            const SizedBox(height: 40),
-            AuthButton(
-              text: 'Відновити пароль',
-              onPressed: _isButtonEnabled &&
-                      _newPasswordController.text ==
-                          _confirmPasswordController.text
-                  ? () {
-                      _resetPassword();
-                    }
-                  : null,
-              disabledColor: const Color(0xFFFFCC85),
             ),
-            const SizedBox(height: 50),
-          ],
-        ),
+          );
+        },
       ),
     );
   }

@@ -120,97 +120,133 @@ class CodeValidatePageState extends State<CodeValidatePage> {
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            const SizedBox(height: 100),
-            Image.asset('assets/images/logIn_icons/mail_icon.png',
-                width: 50, height: 50),
-            const SizedBox(height: 20),
-            Text(
-              'Код надіслано',
-              style: textTheme.displayLarge,
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 4),
-            Text(
-              "Перевірте лист за вказаною поштою",
-              style: textTheme.bodyLarge,
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 8),
-            Text.rich(
-              TextSpan(
-                  text: widget.email.isNotEmpty
-                      ? widget.email
-                          .replaceRange(3, widget.email.indexOf('@'), '***')
-                      : 'Невідомо',
-                  style: textTheme.bodyLarge),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 40),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _buildOtpField(_field1Controller, _focusNode1, _focusNode2),
-                const SizedBox(width: 10),
-                _buildOtpField(_field2Controller, _focusNode2, _focusNode3),
-                const SizedBox(width: 10),
-                _buildOtpField(_field3Controller, _focusNode3, _focusNode4),
-                const SizedBox(width: 10),
-                _buildOtpField(_field4Controller, _focusNode4, _focusNode5),
-                const SizedBox(width: 10),
-                _buildOtpField(_field5Controller, _focusNode5, _focusNode6),
-                const SizedBox(width: 10),
-                _buildOtpField(_field6Controller, _focusNode6, _focusNode6),
-              ],
-            ),
-            const SizedBox(height: 20),
-            if (_errorMessage.isNotEmpty)
-              Text(
-                _errorMessage,
-                style: const TextStyle(color: Colors.red),
-                textAlign: TextAlign.center,
-              ),
-            const Spacer(),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 50.0),
-              child: Column(
-                children: [
-                  AuthButton(
-                    text: 'Підтвердити',
-                    onPressed: _isButtonEnabled
-                        ? () {
-                            String code = _field1Controller.text +
-                                _field2Controller.text +
-                                _field3Controller.text +
-                                _field4Controller.text +
-                                _field5Controller.text +
-                                _field6Controller.text;
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          bool isDesktop = constraints.maxWidth > 600;
+          return Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Center(
+              child: Container(
+                width: isDesktop ? 624 : double.infinity,
+                height: isDesktop ? 460 : double.infinity,
+                padding: const EdgeInsets.all(16.0),
+                decoration: isDesktop
+                    ? BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(16),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.orange.withOpacity(0.5),
+                            blurRadius: 200,
+                            spreadRadius: 20,
+                            offset: Offset(0, -10),
+                          ),
+                        ],
+                      )
+                    : null,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(height: isDesktop ? 0 : 100),
+                    Image.asset(
+                      'assets/images/logIn_icons/mail_icon.png',
+                      width: 50,
+                      height: 50,
+                    ),
+                    const SizedBox(height: 20),
+                    Text(
+                      'Код надіслано',
+                      style: textTheme.displayLarge,
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      "Перевірте лист за вказаною поштою",
+                      style: textTheme.bodyLarge,
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 8),
+                    Text.rich(
+                      TextSpan(
+                        text: widget.email.isNotEmpty
+                            ? widget.email.replaceRange(
+                                3, widget.email.indexOf('@'), '***')
+                            : 'Невідомо',
+                        style: textTheme.bodyLarge,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: isDesktop ? 44 : 40),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        _buildOtpField(
+                            _field1Controller, _focusNode1, _focusNode2),
+                        const SizedBox(width: 10),
+                        _buildOtpField(
+                            _field2Controller, _focusNode2, _focusNode3),
+                        const SizedBox(width: 10),
+                        _buildOtpField(
+                            _field3Controller, _focusNode3, _focusNode4),
+                        const SizedBox(width: 10),
+                        _buildOtpField(
+                            _field4Controller, _focusNode4, _focusNode5),
+                        const SizedBox(width: 10),
+                        _buildOtpField(
+                            _field5Controller, _focusNode5, _focusNode6),
+                        const SizedBox(width: 10),
+                        _buildOtpField(
+                            _field6Controller, _focusNode6, _focusNode6),
+                      ],
+                    ),
+                    SizedBox(height: isDesktop ? 44 : 20),
+                    if (_errorMessage.isNotEmpty)
+                      Text(
+                        _errorMessage,
+                        style: const TextStyle(color: Colors.red),
+                        textAlign: TextAlign.center,
+                      ),
+                    const Spacer(),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 50.0),
+                      child: Column(
+                        children: [
+                          AuthButton(
+                            text: 'Підтвердити',
+                            onPressed: _isButtonEnabled
+                                ? () {
+                                    String code = _field1Controller.text +
+                                        _field2Controller.text +
+                                        _field3Controller.text +
+                                        _field4Controller.text +
+                                        _field5Controller.text +
+                                        _field6Controller.text;
 
-                            _sendCodeToServer(code);
-                          }
-                        : null,
-                    isButtonDisabled: !_isButtonEnabled,
-                  ),
-                  const SizedBox(height: 12),
-                  GestureDetector(
-                    onTap: _resendCode,
-                    child: Text(
-                      _timerText,
-                      style: textTheme.bodyMedium?.copyWith(
-                        color: AppTheme.linkTextColor,
+                                    _sendCodeToServer(code);
+                                  }
+                                : null,
+                            isButtonDisabled: !_isButtonEnabled,
+                          ),
+                          const SizedBox(height: 12),
+                          GestureDetector(
+                            onTap: _resendCode,
+                            child: Text(
+                              _timerText,
+                              style: textTheme.bodyMedium?.copyWith(
+                                color: AppTheme.linkTextColor,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
