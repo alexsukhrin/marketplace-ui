@@ -3,6 +3,7 @@ import 'package:flutter_application_1/src/ui/themes/app_theme.dart';
 import 'package:flutter_application_1/src/ui/widgets/custom_button.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../widgets/main_screen_widgets/desktop/language_selector.dart';
 import '../../widgets/responsive/responsive_design.dart';
 import '../../widgets/welcome_page_widgets/left_section.dart';
 
@@ -42,58 +43,7 @@ class Desktop extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   // Language Selector
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      TextButton(
-                        onPressed: () {
-                          // Switch to Ukrainian
-                        },
-                        style: TextButton.styleFrom(
-                          padding: EdgeInsets.zero,
-                          minimumSize: const Size(0, 0),
-                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        ),
-                        child: const Text(
-                          'UA',
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 4),
-                      const Text(
-                        '|',
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
-                      ),
-                      const SizedBox(width: 4),
-                      TextButton(
-                        onPressed: () {
-                          // Switch to English
-                        },
-                        style: TextButton.styleFrom(
-                          padding: EdgeInsets.zero,
-                          minimumSize: const Size(0, 0),
-                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        ),
-                        child: const Text(
-                          'ENG',
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            color: AppTheme
-                                .activeButtonColor, // Non-selected color
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                  const LanguageSelector(),
 
                   // Main Content
                   Column(
