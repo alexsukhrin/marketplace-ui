@@ -64,15 +64,19 @@ class AuthFieldState extends State<AuthField> {
                   ),
                   fillColor: AppTheme.textFieldBackgroundColor,
                   filled: true,
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: const BorderSide(
-                      color: Colors.transparent,
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: widget.errorText != null
+                          ? AppTheme.textError
+                          : Colors.transparent,
                     ),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                      color: AppTheme.activeBorderColor,
+                    borderSide: BorderSide(
+                      color: widget.errorText != null
+                          ? AppTheme.textError
+                          : AppTheme.activeBorderColor,
                     ),
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -107,7 +111,7 @@ class AuthFieldState extends State<AuthField> {
                               color: Colors.green,
                             )
                           : null,
-                  errorText: widget.errorText,
+                  // errorText: widget.errorText,
                   errorMaxLines: 3,
                 ),
                 validator: widget.validator,
@@ -116,25 +120,41 @@ class AuthFieldState extends State<AuthField> {
                   setState(() {});
                 },
               ),
-              if (widget.showCounter == true)
+              if (widget.showCounter == true || widget.errorText != null)
                 Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
-                  child: Align(
-                    alignment: Alignment.bottomRight,
-                    child: ValueListenableBuilder<TextEditingValue>(
-                      valueListenable: widget.controller,
-                      builder: (context, value, child) {
-                        final passwordLength = value.text.length;
-                        return Text(
-                          '$passwordLength/8',
-                          style: TextStyle(
-                            color: passwordLength >= 8
-                                ? AppTheme.textFieldValidColor
-                                : AppTheme.textFieldCounterColor,
+                  padding: const EdgeInsets.only(top: 0.0),
+                  child: Row(
+                    children: [
+                      if (widget.errorText != null)
+                        Expanded(
+                          child: Text(
+                            widget.errorText!,
+                            style: const TextStyle(
+                              color: AppTheme.textError,
+                              fontSize: 13,
+                            ),
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis,
                           ),
-                        );
-                      },
-                    ),
+                        )
+                      else
+                        const Spacer(),
+                      if (widget.showCounter == true)
+                        ValueListenableBuilder<TextEditingValue>(
+                          valueListenable: widget.controller,
+                          builder: (context, value, child) {
+                            final passwordLength = value.text.length;
+                            return Text(
+                              '$passwordLength/8',
+                              style: TextStyle(
+                                color: passwordLength >= 8
+                                    ? AppTheme.textFieldValidColor
+                                    : AppTheme.textFieldCounterColor,
+                              ),
+                            );
+                          },
+                        ),
+                    ],
                   ),
                 ),
             ],
