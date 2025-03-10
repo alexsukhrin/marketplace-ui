@@ -9,7 +9,7 @@ class UserRoleService {
   static Future<void> sendRole(Map<String, bool> role) async {
     final token = await AuthStorage.getToken();
     print('Retrieved token: $token');
-    if (token == null) {
+    if (token == null || token.isEmpty) {
       throw Exception('Authorization token is missing');
     }
 
