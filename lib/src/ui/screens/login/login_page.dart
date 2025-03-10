@@ -154,11 +154,6 @@ class _LoginPageState extends State<LoginPage> {
                       textAlign: TextAlign.center,
                       style: textTheme.displayLarge,
                     ),
-                    Text(
-                      'Вхід',
-                      textAlign: TextAlign.center,
-                      style: textTheme.displayLarge,
-                    ),
                     const SizedBox(height: 8),
                   ],
                 ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/ui/screens/login/login_page.dart';
 
 import '../../../exceptions/email_already_registered_exception.dart';
 import '../../../services/auth_service.dart';
@@ -7,10 +8,9 @@ import '../../widgets/auth_widgets/auth_button.dart';
 import '../../widgets/auth_widgets/auth_field.dart';
 import '../../widgets/auth_widgets/form_header.dart';
 import '../../../utils/validators.dart';
+import '../../widgets/loading_dialog.dart';
 
 import '../../themes/app_theme.dart';
-import '../../widgets/loading_dialog.dart';
-import '../welcome_page_screens/greeting_screen.dart';
 
 class RegistrationPage extends StatefulWidget {
   const RegistrationPage({super.key});
@@ -79,20 +79,31 @@ class RegistrationPageState extends State<RegistrationPage> {
       LoadingDialog.show(context);
       try {
         await AuthService.registerUser(formData);
-
         LoadingDialog.hide(context);
 
         if (mounted) {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const GreetingScreen(),
-            ),
-          );
+          Navigator.pushReplacementNamed(context, '/greeting');
         }
-      } catch (e) {
+      } catch (e, stackTrace) {
         LoadingDialog.hide(context);
         print('Caught error: $e');
+        print('Stack trace: $stackTrace');
+
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text('Помилка'),
+            content: SingleChildScrollView(
+              child: Text('$e\n\n$stackTrace'),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('OK'),
+              ),
+            ],
+          ),
+        );
 
         if (e is EmailAlreadyRegisteredException) {
           setState(() {
@@ -231,7 +242,12 @@ class RegistrationPageState extends State<RegistrationPage> {
                       ),
                       TextButton(
                         onPressed: () {
-                          Navigator.pop(context);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const LoginPage(),
+                            ),
+                          );
                         },
                         child: RichText(
                           text: const TextSpan(

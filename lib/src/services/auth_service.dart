@@ -50,8 +50,9 @@ class AuthService {
       } else {
         throw Exception('Помилка реєстрації: ${response.statusCode}');
       }
-    } catch (e) {
+    } catch (e, stackTrace) {
       print('Помилка підключення: $e');
+      print('Stack trace:\n$stackTrace');
       rethrow;
     }
   }

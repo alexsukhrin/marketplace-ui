@@ -145,7 +145,7 @@ class AuthFieldState extends State<AuthField> {
                           builder: (context, value, child) {
                             final passwordLength = value.text.length;
                             return Text(
-                              '$passwordLength/8',
+                              '8/$passwordLength',
                               style: TextStyle(
                                 color: passwordLength >= 8
                                     ? AppTheme.textFieldValidColor
