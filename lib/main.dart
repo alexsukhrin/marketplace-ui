@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/services/auth_storage.dart';
 import 'package:flutter_application_1/src/ui/screens/registration/registration_page.dart';
 import 'package:flutter_application_1/src/ui/screens/main/main_screen.dart';
 import 'package:flutter_application_1/src/ui/screens/welcome_page_screens/choose_role_screen.dart';
@@ -10,7 +11,9 @@ import './src/ui/themes/app_theme.dart';
 import 'src/ui/shared_pages/success_page.dart.dart';
 import 'src/ui/screens/welcome_page_screens/greeting_screen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await AuthStorage.init();
   runApp(const Marcketplace());
 }
 
