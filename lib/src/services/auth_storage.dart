@@ -38,6 +38,5 @@ class AuthStorage {
     } else {
       await _secureStorage?.delete(key: _tokenKey);
     }
-    print('Token deleted');
   }
 }
