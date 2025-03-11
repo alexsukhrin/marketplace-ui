@@ -74,12 +74,11 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         );
       } catch (e) {
         LoadingDialog.hide(context);
-        Navigator.pop(context);
         if (e is UserNotFoundException) {
           setState(() {
-            _emailError = 'Будь ласка, введіть дійсну адресу електронної пошти';
+            _emailError =
+                'Ця електронна пошта не зареєстрована. Будь ласка, перевірте свою пошту або зареєструйтесь';
           });
-          _showSnackBarMessage(e.message);
         } else {
           _showSnackBarMessage('Сталася помилка. Спробуйте ще раз.');
         }

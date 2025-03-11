@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 
 import '../../../exceptions/invalid_opt_exception.dart';
@@ -36,7 +37,7 @@ class CodeValidatePageState extends State<CodeValidatePage> {
   String _errorMessage = '';
   String _timerText = 'Надіслати код знову';
   bool _isResendDisabled = false;
-  late Timer _timer;
+  Timer? _timer;
 
   bool get _isButtonEnabled {
     return _field1Controller.text.isNotEmpty &&
@@ -101,14 +102,27 @@ class CodeValidatePageState extends State<CodeValidatePage> {
           _isResendDisabled = false;
           _timerText = 'Надіслати код знову';
         });
-        _timer.cancel();
+        _timer?.cancel();
       }
     });
   }
 
+  void _handlePaste(String value) {
+    if (value.length == 6) {
+      _field1Controller.text = value[0];
+      _field2Controller.text = value[1];
+      _field3Controller.text = value[2];
+      _field4Controller.text = value[3];
+      _field5Controller.text = value[4];
+      _field6Controller.text = value[5];
+
+      FocusScope.of(context).unfocus();
+    }
+  }
+
   @override
   void dispose() {
-    _timer.cancel();
+    _timer?.cancel();
     super.dispose();
   }
 
@@ -256,6 +270,7 @@ class CodeValidatePageState extends State<CodeValidatePage> {
     currentFocusNode.addListener(() {
       setState(() {});
     });
+
     return SizedBox(
       width: 52,
       height: 52,
@@ -263,8 +278,10 @@ class CodeValidatePageState extends State<CodeValidatePage> {
         controller: controller,
         focusNode: currentFocusNode,
         keyboardType: TextInputType.number,
-        maxLength: 1,
         textAlign: TextAlign.center,
+        inputFormatters: [
+          FilteringTextInputFormatter.digitsOnly,
+        ],
         decoration: InputDecoration(
           counterText: "",
           border: InputBorder.none,
@@ -284,8 +301,9 @@ class CodeValidatePageState extends State<CodeValidatePage> {
         ),
         style: const TextStyle(fontSize: 24),
         onChanged: (value) {
-          setState(() {});
-          if (value.length == 1) {
+          if (value.length > 1) {
+            _handlePaste(value);
+          } else if (value.isNotEmpty) {
             FocusScope.of(context).requestFocus(nextFocusNode);
           }
         },
