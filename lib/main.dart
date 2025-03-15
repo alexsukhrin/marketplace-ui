@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/services/auth_storage.dart';
+import 'package:flutter_application_1/src/ui/screens/notFoundScreen/pageNotFoundScreen.dart';
 import 'package:flutter_application_1/src/ui/screens/registration/registration_page.dart';
 import 'package:flutter_application_1/src/ui/screens/main/main_screen.dart';
 import 'package:flutter_application_1/src/ui/screens/welcome_page_screens/choose_role_screen.dart';
@@ -52,6 +53,7 @@ class MyAppState extends State<Marcketplace> {
         '/selectCategory': (context) => const SelectCategoryScreen(),
         '/main': (context) => const MainScreen(),
         '/categories': (context) => const AllCategoriesPage(),
+        '/notFoundScreen': (context) => PageNotFoundScreen()
       },
       builder: (context, child) {
         return Scaffold(

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/ui/screens/login/login_page.dart';
+import 'package:flutter_application_1/src/ui/widgets/main_screen_widgets/desktop/language_selector.dart';
 
 import '../../../exceptions/email_already_registered_exception.dart';
 import '../../../services/auth_service.dart';
 
 import '../../widgets/auth_widgets/auth_button.dart';
 import '../../widgets/auth_widgets/auth_field.dart';
-import '../../widgets/auth_widgets/form_header.dart';
+// import '../../widgets/auth_widgets/form_header.dart';
 import '../../../utils/validators.dart';
 import '../../widgets/loading_dialog.dart';
 
@@ -123,17 +124,23 @@ class RegistrationPageState extends State<RegistrationPage> {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-
     return Scaffold(
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          if (constraints.maxWidth < 600) {
-            return _buildMobileLayout(textTheme);
-          } else {
-            return _buildDesktopLayout(textTheme);
-          }
-        },
+      body: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(
+            maxWidth: 1440,
+            maxHeight: 1024,
+          ),
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              if (constraints.maxWidth < 600) {
+                return _buildMobileLayout(Theme.of(context).textTheme);
+              } else {
+                return _buildDesktopLayout(Theme.of(context).textTheme);
+              }
+            },
+          ),
+        ),
       ),
     );
   }
@@ -145,23 +152,26 @@ class RegistrationPageState extends State<RegistrationPage> {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
+          actions: const [
+            LanguageSelector(),
+          ],
         ),
         body: Center(
           child: SingleChildScrollView(
             padding: const EdgeInsets.all(16.0),
             child: Column(
               children: <Widget>[
-                const FormHeader(
-                  text: 'SHUM',
-                ),
-                const SizedBox(height: 30),
+                // const FormHeader(
+                //   text: 'SHUM',
+                // ),
+                // const SizedBox(height: 30),
                 Column(
                   children: [
                     Text(
                       'Реєстрація',
                       textAlign: TextAlign.center,
                       style: textTheme.displayLarge?.copyWith(
-                        fontSize: 24,
+                        fontSize: 32,
                       ),
                     ),
                     const SizedBox(height: 8),
@@ -169,13 +179,13 @@ class RegistrationPageState extends State<RegistrationPage> {
                       'Отримайте більше можливостей\nстворивши акаунт',
                       textAlign: TextAlign.center,
                       style: textTheme.bodyMedium?.copyWith(
-                        fontSize: 14,
-                        color: Colors.grey,
+                        fontSize: 20,
+                        color: Colors.black,
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 50),
+                const SizedBox(height: 48),
                 Form(
                   key: _formKey,
                   child: Column(
@@ -189,7 +199,7 @@ class RegistrationPageState extends State<RegistrationPage> {
                           return validateName(text) == null;
                         },
                       ),
-                      const SizedBox(height: 15),
+                      const SizedBox(height: 12),
                       AuthField(
                         labelText: 'Ваше прізвище',
                         validator: validateName,
@@ -199,7 +209,7 @@ class RegistrationPageState extends State<RegistrationPage> {
                           return validateName(text) == null;
                         },
                       ),
-                      const SizedBox(height: 15),
+                      const SizedBox(height: 12),
                       AuthField(
                         labelText: 'Ваша пошта',
                         controller: _emailController,
@@ -210,7 +220,7 @@ class RegistrationPageState extends State<RegistrationPage> {
                         },
                         errorText: _emailError,
                       ),
-                      const SizedBox(height: 15),
+                      const SizedBox(height: 12),
                       AuthField(
                         labelText: 'Пароль',
                         controller: _passwordController,

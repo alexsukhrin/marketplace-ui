@@ -27,7 +27,7 @@ class AuthButton extends StatelessWidget {
               ? AppTheme.disabledButtonColor
               : AppTheme.activeButtonColor,
           foregroundColor: AppTheme.witeText,
-          minimumSize: const Size(354, 44),
+          minimumSize: const Size(354, 52),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
           ),
@@ -37,8 +37,8 @@ class AuthButton extends StatelessWidget {
           text,
           style: const TextStyle(
             color: AppTheme.witeText,
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
+            fontSize: 18,
+            fontWeight: FontWeight.w400,
           ),
         ),
       ),

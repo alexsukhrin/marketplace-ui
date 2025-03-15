@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/ui/widgets/main_screen_widgets/desktop/language_selector.dart';
+import 'package:flutter_application_1/src/ui/widgets/social_media/social_media.dart';
 
 import '../../../services/auth_service.dart';
 import '../../../services/auth_storage.dart';
@@ -110,14 +112,22 @@ class _LoginPageState extends State<LoginPage> {
     final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          if (constraints.maxWidth < 600) {
-            return _buildMobileLayout(textTheme);
-          } else {
-            return _buildDesktopLayout(textTheme);
-          }
-        },
+      body: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(
+            maxWidth: 1440,
+            maxHeight: 1024,
+          ),
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              if (constraints.maxWidth < 600) {
+                return _buildMobileLayout(textTheme);
+              } else {
+                return _buildDesktopLayout(textTheme);
+              }
+            },
+          ),
+        ),
       ),
     );
   }
@@ -132,6 +142,9 @@ class _LoginPageState extends State<LoginPage> {
             Navigator.pop(context);
           },
         ),
+        actions: const [
+          LanguageSelector(),
+        ],
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
@@ -141,20 +154,32 @@ class _LoginPageState extends State<LoginPage> {
           child: Form(
             key: _formKey,
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                const SizedBox(height: 111),
-                const FormHeader(
-                  text: 'SHUM',
-                ),
+                // const SizedBox(height: 111),
+                // const FormHeader(
+                //   text: 'SHUM',
+                // ),
                 const SizedBox(height: 40),
-                Column(
+                const Column(
                   children: [
                     Text(
                       'Вхід',
                       textAlign: TextAlign.center,
-                      style: textTheme.displayLarge,
+                      style: TextStyle(
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8),
+                    Text(
+                      'Вітаємо знову у Shum! ',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Color(0xFF757575),
+                      ),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 40),
@@ -167,7 +192,7 @@ class _LoginPageState extends State<LoginPage> {
                     return validateEmail(text) == null;
                   },
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 12),
                 AuthField(
                   labelText: 'Пароль',
                   hintText: "Введіть пароль",
@@ -198,13 +223,13 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 40),
+                const SizedBox(height: 30),
                 AuthButton(
                   text: 'Увійти в акаунт',
                   onPressed: _handleLogin,
                   isButtonDisabled: _isButtonDisabled,
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: 5),
                 TextButton(
                   onPressed: () {
                     Navigator.push(
@@ -233,6 +258,55 @@ class _LoginPageState extends State<LoginPage> {
                       ],
                     ),
                   ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 40.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: 155,
+                        child: Divider(
+                          thickness: 1.5,
+                          color: Colors.grey.shade300,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                        child: Text(
+                          'Або',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.grey.shade500,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 155,
+                        child: Divider(
+                          thickness: 1.5,
+                          color: Colors.grey.shade300,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SocialButton(
+                        icon: 'assets/images/social_media/icon_google.png',
+                        onTap: () {}),
+                    const SizedBox(width: 16),
+                    SocialButton(
+                        icon: 'assets/images/social_media/icon_facebook.png',
+                        onTap: () {}),
+                    const SizedBox(width: 16),
+                    SocialButton(
+                        icon: 'assets/images/social_media/icon_x.png',
+                        onTap: () {}),
+                  ],
                 ),
               ],
             ),
