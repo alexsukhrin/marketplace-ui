@@ -25,8 +25,8 @@ String? validatePassword(String? value) {
 String? validateName(String? value) {
   if (value == null || value.isEmpty) {
     return 'Це поле обов’язкове для заповнення';
-  } else if (value.length < 3) {
-    return 'Ім’я/прізвище має бути довше 3 символів';
+  } else if (value.length <= 2) {
+    return 'Ім’я/прізвище має бути довше 2 символів';
   } else if (!RegExp(r'^[a-zA-Zа-яА-ЯїЇєЄіІґҐʼ]+$').hasMatch(value)) {
     return 'Ім’я/прізвище може містити тільки літери';
   }
