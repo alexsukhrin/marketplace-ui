@@ -152,6 +152,7 @@ class RegistrationPageState extends State<RegistrationPage> {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
+          scrolledUnderElevation: 0,
           actions: const [
             LanguageSelector(),
           ],
@@ -247,6 +248,10 @@ class RegistrationPageState extends State<RegistrationPage> {
                         text: 'Зареєструватися',
                         isButtonDisabled: _isButtonDisabled,
                         onPressed: () {
+                          _firstNameController.text =
+                              _firstNameController.text.replaceAll(' ', '');
+                          _lastNameController.text =
+                              _lastNameController.text.replaceAll(' ', '');
                           registerUser(context);
                         },
                       ),
