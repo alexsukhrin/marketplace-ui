@@ -53,7 +53,7 @@ class MyAppState extends State<Marcketplace> {
         '/selectCategory': (context) => const SelectCategoryScreen(),
         '/main': (context) => const MainScreen(),
         '/categories': (context) => const AllCategoriesPage(),
-        '/notFoundScreen': (context) => PageNotFoundScreen()
+        '/notFoundScreen': (context) => const PageNotFoundScreen()
       },
       builder: (context, child) {
         return Scaffold(
