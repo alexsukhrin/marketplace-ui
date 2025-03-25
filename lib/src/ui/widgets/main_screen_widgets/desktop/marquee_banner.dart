@@ -1,15 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../../utils/auth_validator.dart';
 import '../../../themes/app_theme.dart';
-
-class TokenBasedBanner extends StatelessWidget {
-  const TokenBasedBanner({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return TokenBasedWidget(child: MarqueeBanner());
-  }
-}
 
 class MarqueeBanner extends StatelessWidget {
   final List<String> words = [
