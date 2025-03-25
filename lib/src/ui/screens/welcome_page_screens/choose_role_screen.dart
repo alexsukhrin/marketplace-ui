@@ -3,6 +3,7 @@ import 'package:flutter_application_1/src/services/user_role_service.dart';
 import 'package:flutter_application_1/src/ui/widgets/welcome_page_widgets/welcome_page_header.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../themes/app_theme.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/responsive/responsive_design.dart';
 import '../../widgets/welcome_page_widgets/custom_outlined_button.dart';
@@ -152,8 +153,16 @@ class Desktop extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   // Skip
-                  const WelcomePageHeader(
-                    routeName: '/selectCategory',
+                  AppBar(
+                    backgroundColor: AppTheme.backgroundColorWhite,
+                    toolbarHeight: 28,
+                    leading: IconButton(
+                      icon: const Icon(Icons.arrow_back,
+                          color: AppTheme.lightBodyColor),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
                   ),
 
                   // Main Content
@@ -196,7 +205,7 @@ class Tablet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+    // implement build
     throw UnimplementedError();
   }
 }
@@ -274,7 +283,7 @@ class SubmitRoleButton extends StatelessWidget {
           : onSubmitRole, // Disable if no role selected
       isButtonDisabled:
           selectedRole == null, // Disable button if no role selected
-      buttonType: ButtonType.filled, // Filled button
+      buttonType: ButtonType.filled,
     );
   }
 }

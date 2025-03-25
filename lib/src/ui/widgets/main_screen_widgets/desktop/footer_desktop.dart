@@ -29,7 +29,6 @@ class FooterSection extends StatelessWidget {
         'Продати',
         'Чат',
         'Обране',
-        'Вхід та реєстрація',
       ],
     },
     {
@@ -161,19 +160,19 @@ class _HoverableLinkState extends State<HoverableLink> {
 }
 
 Widget _buildStoreLinks() {
-  return Row(
+  return Wrap(
+    spacing: 10, // Horizontal space between children
+    runSpacing: 10,
     children: [
       // Google Play Link
       GestureDetector(
         onTap: () {
           // link
         },
-        child: Expanded(
-          child: Image.asset(
-            'assets/images/main_icons/google_play.png',
-            width: 162,
-            height: 60,
-          ),
+        child: Image.asset(
+          'assets/images/main_icons/google_play.png',
+          width: 162,
+          height: 60,
         ),
       ),
       const SizedBox(width: 10),
@@ -182,12 +181,10 @@ Widget _buildStoreLinks() {
         onTap: () {
           // link
         },
-        child: Expanded(
-          child: Image.asset(
-            'assets/images/main_icons/app_store.png',
-            width: 162,
-            height: 60,
-          ),
+        child: Image.asset(
+          'assets/images/main_icons/app_store.png',
+          width: 162,
+          height: 60,
         ),
       ),
     ],

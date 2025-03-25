@@ -22,15 +22,17 @@ class _TokenBasedWidgetState extends State<TokenBasedWidget> {
   Future<void> _checkToken() async {
     final token = await AuthStorage.getToken();
     setState(() {
-      hasToken = token != null && token.isNotEmpty;
+      // hasToken = token != null && token.isNotEmpty;
+      hasToken = token != null;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    if (!hasToken) {
-      return Center(child: Text("No token found, please log in."));
-    }
-    return widget.child;
+    return hasToken ? const SizedBox.shrink() : widget.child;
+    // if (!hasToken) {
+    //   return Center(child: Text("No token found, please log in."));
+    // }
+    // return widget.child;
   }
 }
