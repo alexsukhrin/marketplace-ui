@@ -10,29 +10,27 @@ class AppBarWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 80,
-      padding: const EdgeInsets.symmetric(horizontal: 24.0),
+      padding: const EdgeInsets.symmetric(horizontal: 55.0),
       decoration: const BoxDecoration(
         color: Colors.white,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          // Left: Logo, Categories Dropdown, and Titles
-
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              // Left: Logo, Categories Dropdown, and Titles
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  // Logo
                   Image.asset(
                     'assets/images/logo_desktop.png',
                     width: 35,
                     height: 44,
                     fit: BoxFit.contain,
                   ),
+
+                  const SizedBox(width: 30),
 
                   // // Dropdown for Categories
                   // const Padding(
@@ -52,7 +50,7 @@ class AppBarWidget extends StatelessWidget {
                       ),
                     ),
                   ),
-
+                  const SizedBox(width: 20),
                   TextButton(
                     onPressed: () {
                       // Handle "Рейтинг продавців" click
@@ -69,8 +67,6 @@ class AppBarWidget extends StatelessWidget {
               ),
             ],
           ),
-
-          // Right: Action Buttons
           Row(
             children: [
               IconButton(

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import '../../widgets/main_screen_widgets/desktop/appbar_desktop.dart';
+import '../../widgets/main_screen_widgets/desktop/categories_list.dart';
 import '../../widgets/main_screen_widgets/desktop/feature_cards.dart';
 import '../../widgets/main_screen_widgets/desktop/footer_desktop.dart';
 import '../../widgets/main_screen_widgets/desktop/fqa_section.dart';
 import '../../widgets/main_screen_widgets/desktop/marquee_banner.dart';
+import '../../widgets/main_screen_widgets/desktop/new_offers.dart';
+import '../../widgets/main_screen_widgets/desktop/season_of_offers.dart';
 import '../../widgets/main_screen_widgets/desktop/sidebar_desktop.dart';
-import '../../widgets/main_screen_widgets/desktop/status_rewiew_section.dart';
 
 class MainScreenDesktop extends StatelessWidget {
   const MainScreenDesktop({super.key});
@@ -16,7 +18,7 @@ class MainScreenDesktop extends StatelessWidget {
       body: Column(
         children: [
           // Display the banner at the top
-          const TokenBasedBanner(),
+          MarqueeBanner(),
 
           Expanded(
             child: Row(
@@ -38,11 +40,15 @@ class MainScreenDesktop extends StatelessWidget {
                                 left: 55, right: 55, bottom: 50),
                             child: Column(
                               children: [
+                                const CategoryWidget(),
+                                const SizedBox(height: 60),
+                                SeasonalOffersWidget(),
+                                const SizedBox(height: 60),
+                                NewOffersWidget(),
+                                const SizedBox(height: 40),
                                 FeaturesSection(),
                                 const SizedBox(height: 80),
                                 FAQSection(),
-                                const SizedBox(height: 80),
-                                StatsAndReviewsSection(),
                                 const SizedBox(height: 80),
                                 FooterSection(),
                               ],

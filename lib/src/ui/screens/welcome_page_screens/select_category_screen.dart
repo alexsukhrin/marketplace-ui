@@ -27,7 +27,6 @@ class SelectCategoryScreenState extends State<SelectCategoryScreen> {
     fetchCategories();
   }
 
-// Fetch categories from the backend
   Future<void> fetchCategories() async {
     try {
       final fetchedCategories = await CategoryService.getCategories();
@@ -46,7 +45,6 @@ class SelectCategoryScreenState extends State<SelectCategoryScreen> {
     }
   }
 
-  // Toggle category selection
   void toggleCategory(Map<String, dynamic> category) {
     setState(() {
       if (selectedCategories.contains(category)) {
@@ -57,15 +55,10 @@ class SelectCategoryScreenState extends State<SelectCategoryScreen> {
     });
   }
 
-// Submit selected categories to the backend
   Future<void> submitCategories() async {
     try {
       await CategoryService.submitCategories(selectedCategories);
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Categories submitted successfully!')),
-      );
 
-      // Navigate to the main page or desired screen
       Navigator.pushNamed(context, '/main');
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -104,6 +97,8 @@ class CategorySelectionWidget extends StatelessWidget {
   final List<Map<String, dynamic>> selectedCategories;
   final Function(Map<String, dynamic>) toggleCategory;
   final CrossAxisAlignment crossAxisAlignment;
+  final TextAlign textAlign;
+  final WrapAlignment wrapAlignment;
 
   const CategorySelectionWidget({
     super.key,
@@ -111,6 +106,8 @@ class CategorySelectionWidget extends StatelessWidget {
     required this.selectedCategories,
     required this.toggleCategory,
     this.crossAxisAlignment = CrossAxisAlignment.start,
+    this.textAlign = TextAlign.start,
+    this.wrapAlignment = WrapAlignment.start,
   });
 
   @override
@@ -118,22 +115,25 @@ class CategorySelectionWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: crossAxisAlignment,
       children: [
-        const Text(
+        Text(
           "Яким категоріям надаєш\nперевагу?",
-          style: TextStyle(
+          textAlign: textAlign,
+          style: const TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
           ),
         ),
         const SizedBox(height: 8),
-        const Text(
-          "Твої відповіді допоможуть нам підібрати найкращі пропозиції для тебе.",
-          style: TextStyle(
+        Text(
+          "Твої відповіді допоможуть нам підібрати\nнайкращі пропозиції для тебе.",
+          textAlign: textAlign,
+          style: const TextStyle(
             fontSize: 16,
           ),
         ),
         const SizedBox(height: 36),
         Wrap(
+          alignment: wrapAlignment,
           spacing: 8,
           runSpacing: 8,
           children: categories.map((category) {
@@ -182,21 +182,30 @@ class Desktop extends StatelessWidget {
                   // Skip
                   const WelcomePageHeader(
                     routeName: '/main',
+                    toolbarHeight: 28,
                   ),
 
                   // Main Content
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CategorySelectionWidget(
-                        categories: categories,
-                        selectedCategories: selectedCategories,
-                        toggleCategory: toggleCategory,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                      ),
-                      const SizedBox(height: 36),
-                      SubmitCategoriesButton(submitCategories: submitCategories)
-                    ],
+                  SizedBox(
+                    width: 440,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CategorySelectionWidget(
+                          categories: categories,
+                          selectedCategories: selectedCategories,
+                          toggleCategory: toggleCategory,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          textAlign: TextAlign.center,
+                          wrapAlignment: WrapAlignment.center,
+                        ),
+                        const SizedBox(height: 36),
+                        SubmitCategoriesButton(
+                          submitCategories: submitCategories,
+                          isCategorySelected: selectedCategories.isNotEmpty,
+                        )
+                      ],
+                    ),
                   ),
 
                   const ProgressIndicatorRow(order: [
@@ -221,7 +230,7 @@ class Tablet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+    //implement build
     throw UnimplementedError();
   }
 }
@@ -264,7 +273,10 @@ class Mobile extends StatelessWidget {
             Center(
               child: Column(
                 children: [
-                  SubmitCategoriesButton(submitCategories: submitCategories),
+                  SubmitCategoriesButton(
+                    submitCategories: submitCategories,
+                    isCategorySelected: selectedCategories.isNotEmpty,
+                  ),
                 ],
               ),
             ),
@@ -278,18 +290,20 @@ class Mobile extends StatelessWidget {
 
 class SubmitCategoriesButton extends StatelessWidget {
   final Function() submitCategories;
+  final bool isCategorySelected;
 
   const SubmitCategoriesButton({
     super.key,
     required this.submitCategories,
+    required this.isCategorySelected,
   });
 
   @override
   Widget build(BuildContext context) {
     return CustomButton(
       text: "На головну сторінку",
-      onPressed: submitCategories,
-      buttonType: ButtonType.filled, // Filled button
+      onPressed: isCategorySelected ? submitCategories : null,
+      buttonType: ButtonType.filled,
     );
   }
 }
