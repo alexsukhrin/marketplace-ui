@@ -161,7 +161,7 @@ class _HoverableLinkState extends State<HoverableLink> {
 
 Widget _buildStoreLinks() {
   return Wrap(
-    spacing: 10, // Horizontal space between children
+    spacing: 10,
     runSpacing: 10,
     children: [
       // Google Play Link

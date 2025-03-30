@@ -12,6 +12,7 @@ class CategoryWidget extends StatefulWidget {
 class _CategoryWidgetState extends State<CategoryWidget> {
   List<Map<String, dynamic>> _categories = [];
   bool _expanded = false;
+
   final List<Color> _bgColors = [
     Color(0xFFF2F2F7),
     Color(0xFFECDFCC),
@@ -43,7 +44,7 @@ class _CategoryWidgetState extends State<CategoryWidget> {
   }
 
   void _navigateToCategory(int categoryId) {
-    // Implement navigation logic here
+    // navigation logic
     print('Navigating to category: $categoryId');
   }
 
@@ -60,8 +61,7 @@ class _CategoryWidgetState extends State<CategoryWidget> {
         : (_categories.length < itemsPerRow ? _categories.length : itemsPerRow);
 
     if (_categories.isEmpty) {
-      return Center(
-          child: CircularProgressIndicator()); // Show a loader while fetching
+      return const Center(child: CircularProgressIndicator());
     }
 
     return Column(
@@ -92,25 +92,6 @@ class _CategoryWidgetState extends State<CategoryWidget> {
 
             return ConstrainedBox(
               constraints: BoxConstraints(maxWidth: 110),
-              // LayoutBuilder(builder: (context, constraints) {
-              //   final screenWidth = constraints.maxWidth;
-              //   final itemWidth = 110 + 16; // Category width + spacing
-              //   final itemsPerRow =
-              //       (screenWidth / itemWidth).floor(); // Max items that fit
-              //   final displayCount = _categories.length < itemsPerRow
-              //       ? _categories.length
-              //       : itemsPerRow;
-
-              //   return SizedBox(
-              //     width: screenWidth, // Prevents overflow
-              //     child: Row(
-              //       mainAxisAlignment: MainAxisAlignment.start,
-              //       children: List.generate(displayCount, (index) {
-              //         final category = _categories[index];
-              //         final bgColor = _bgColors[index % _bgColors.length];
-
-              //         return Padding(
-              //           padding: const EdgeInsets.only(right: 16),
               child: MouseRegion(
                 cursor: SystemMouseCursors.click,
                 child: GestureDetector(
@@ -122,26 +103,36 @@ class _CategoryWidgetState extends State<CategoryWidget> {
                       color: bgColor,
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Image.network(
-                          category['photo'],
-                          width: 94,
-                          height: 108,
-                          fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) {
-                            // print('Error loading image: $error');
-                            // print('Stack trace: $stackTrace');
-                            return Icon(Icons.image, size: 94);
-                          },
-                        ),
-                        Text(
-                          category['name'],
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 14),
-                        ),
-                      ],
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          left: 8.0, right: 8.0, top: 8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: Image.network(
+                              category['photo'],
+                              width: 94,
+                              height: 108,
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) {
+                                return Icon(Icons.image, size: 94);
+                              },
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              category['name'],
+                              style: TextStyle(fontSize: 14),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
