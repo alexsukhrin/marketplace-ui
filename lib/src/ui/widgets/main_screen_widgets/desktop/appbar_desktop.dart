@@ -23,11 +23,16 @@ class AppBarWidget extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Image.asset(
-                    'assets/images/logo_desktop.png',
-                    width: 35,
-                    height: 44,
-                    fit: BoxFit.contain,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/main');
+                    },
+                    child: Image.asset(
+                      'assets/images/logo_desktop.png',
+                      width: 35,
+                      height: 44,
+                      fit: BoxFit.contain,
+                    ),
                   ),
 
                   const SizedBox(width: 30),
@@ -83,20 +88,20 @@ class AppBarWidget extends StatelessWidget {
                   // Handle search action
                 },
               ),
-              IconButton(
-                icon: SvgPicture.asset(
-                  'assets/images/main_icons/cart_icon.svg',
-                  height: 24,
-                  width: 24,
-                  colorFilter: const ColorFilter.mode(
-                    Colors.black,
-                    BlendMode.srcIn,
-                  ),
-                ),
-                onPressed: () {
-                  // Handle search action
-                },
-              ),
+              // IconButton(
+              //   icon: SvgPicture.asset(
+              //     'assets/images/main_icons/cart_icon.svg',
+              //     height: 24,
+              //     width: 24,
+              //     colorFilter: const ColorFilter.mode(
+              //       Colors.black,
+              //       BlendMode.srcIn,
+              //     ),
+              //   ),
+              //   onPressed: () {
+              //     // Handle search action
+              //   },
+              // ),
               const SizedBox(width: 16),
 
               // Login Button

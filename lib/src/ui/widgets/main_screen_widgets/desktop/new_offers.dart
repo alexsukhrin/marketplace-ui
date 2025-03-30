@@ -29,7 +29,7 @@ class _NewOffersWidgetState extends State<NewOffersWidget> {
       "price": "350 UAH"
     },
     {
-      "name": "Шляпа",
+      "name": "Капелюх",
       "image": "./../../../../../../assets/images/main_icons/mock_photo4.png",
       "condition": "Нове",
       "price": "320 UAH"
@@ -154,7 +154,7 @@ class _NewOffersWidgetState extends State<NewOffersWidget> {
                                       : Icons.favorite_border,
                                   color: isFavorite[i]
                                       ? AppTheme.activeButtonColor
-                                      : const Color.fromARGB(255, 35, 34, 34),
+                                      : AppTheme.backgroundColorWhite,
                                   size: 28,
                                 ),
                               ),
