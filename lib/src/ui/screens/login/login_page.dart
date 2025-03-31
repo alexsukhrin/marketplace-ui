@@ -63,7 +63,7 @@ class _LoginPageState extends State<LoginPage> {
         await AuthStorage.saveToken(token);
 
         if (mounted) {
-          Navigator.pushReplacementNamed(context, '/greeting');
+          Navigator.pushReplacementNamed(context, '/main');
         }
       } else {
         final errorMessage =
