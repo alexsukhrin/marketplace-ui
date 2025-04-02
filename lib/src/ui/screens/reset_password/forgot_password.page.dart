@@ -11,7 +11,8 @@ import '../../widgets/auth_widgets/auth_field.dart';
 import '../../widgets/auth_widgets/auth_button.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
-  const ForgotPasswordPage({super.key});
+  final String? email;
+  const ForgotPasswordPage({super.key, this.email});
 
   @override
   State<ForgotPasswordPage> createState() => _ForgotPasswordPageState();
@@ -20,13 +21,15 @@ class ForgotPasswordPage extends StatefulWidget {
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   String? _emailError;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController _emailController = TextEditingController();
   bool _isButtonDisabled = true;
+  late final TextEditingController _emailController;
 
   @override
   void initState() {
     super.initState();
+    _emailController = TextEditingController(text: widget.email ?? "");
     _emailController.addListener(_updateButtonState);
+    _updateButtonState();
   }
 
   void _updateButtonState() {

@@ -79,7 +79,10 @@ class LoginMobileLayout extends StatelessWidget {
                         validator: validatePassword,
                         isObscureText: true,
                       ),
-                      const ForgotPasswordButton(),
+                      ForgotPasswordButton(
+                          email: emailController.text.isNotEmpty
+                              ? emailController.text
+                              : null),
                       const SizedBox(height: 30),
                       AuthButton(
                         text: 'Увійти в акаунт',
