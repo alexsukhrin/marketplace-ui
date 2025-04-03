@@ -16,12 +16,20 @@ class ReviewWidget extends StatelessWidget {
       );
     }
 
-    return Scrollbar(
-      thumbVisibility: true,
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Row(
-          children: reviews.map((review) => _buildReviewItem(review)).toList(),
+    ScrollController controller = ScrollController();
+
+    return SizedBox(
+      width: double.infinity,
+      child: Scrollbar(
+        thumbVisibility: true,
+        controller: controller,
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          controller: controller,
+          child: Row(
+            children:
+                reviews.map((review) => _buildReviewItem(review)).toList(),
+          ),
         ),
       ),
     );
