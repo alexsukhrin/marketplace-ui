@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../utils/auth_validator.dart';
 import '../../../themes/app_theme.dart';
-import 'language_selector.dart';
+import '../../shared_widgets/language_selector.dart';
 
 class FooterSection extends StatelessWidget {
   FooterSection({super.key});

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../../services/categories_service.dart';
 import '../../../themes/app_theme.dart';
+import '../../shared_widgets/title_text.dart';
 
 class CategoryWidget extends StatefulWidget {
   const CategoryWidget({super.key});
@@ -67,20 +68,8 @@ class _CategoryWidgetState extends State<CategoryWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Align(
-          alignment: Alignment.centerLeft,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Категорії",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
-          ),
+        const ReusableTextWidget(
+          mainText: "Категорії",
         ),
         const SizedBox(height: 10),
         Wrap(
@@ -91,7 +80,7 @@ class _CategoryWidgetState extends State<CategoryWidget> {
             final bgColor = _bgColors[index % _bgColors.length];
 
             return ConstrainedBox(
-              constraints: BoxConstraints(maxWidth: 110),
+              constraints: const BoxConstraints(maxWidth: 110),
               child: MouseRegion(
                 cursor: SystemMouseCursors.click,
                 child: GestureDetector(
@@ -153,7 +142,7 @@ class _CategoryWidgetState extends State<CategoryWidget> {
             ),
             child: Text(
               _expanded ? "Показати менше" : "Показати більше",
-              style: TextStyle(color: Colors.white),
+              style: const TextStyle(color: Colors.white),
             ),
           ),
         ),

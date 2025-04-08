@@ -16,7 +16,6 @@ import 'sidebar_screens/chat.dart';
 import 'sidebar_screens/delivery.dart';
 import 'sidebar_screens/favotites.dart';
 import 'sidebar_screens/notifications.dart';
-import 'sidebar_screens/sell.dart';
 
 class MainScreenDesktop extends StatefulWidget {
   const MainScreenDesktop({super.key});
@@ -45,7 +44,7 @@ class _MainScreenDesktopState extends State<MainScreenDesktop> {
       case 'chat':
         return const ChatScreen();
       case 'sell':
-        return const SellScreen();
+      // return CreateProduct();
       case 'notifications':
         return const NotificationsScreen();
       case 'delivery':
@@ -97,44 +96,44 @@ class _MainScreenDesktopState extends State<MainScreenDesktop> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                if (_selectedPage != 'productDetails' &&
-                                    _selectedPage != 'imageUploader')
-                                  TextButton(
-                                    onPressed: () {
-                                      _onMenuItemSelected('productDetails');
-                                    },
-                                    child: RichText(
-                                      text: const TextSpan(
-                                        children: [
-                                          TextSpan(
-                                              text:
-                                                  'Сторінка продукту!  <-- Click on me)',
-                                              style: TextStyle(
-                                                fontSize: 15,
-                                              )),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                if (_selectedPage != 'productDetails' &&
-                                    _selectedPage != 'imageUploader')
-                                  TextButton(
-                                    onPressed: () {
-                                      _onMenuItemSelected('imageUploader');
-                                    },
-                                    child: RichText(
-                                      text: const TextSpan(
-                                        children: [
-                                          TextSpan(
-                                              text:
-                                                  'Сторінка додавання фото!  <-- Click on me)',
-                                              style: TextStyle(
-                                                fontSize: 15,
-                                              )),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
+                                // if (_selectedPage != 'productDetails' &&
+                                //     _selectedPage != 'imageUploader')
+                                //   TextButton(
+                                //     onPressed: () {
+                                //       _onMenuItemSelected('productDetails');
+                                //     },
+                                //     child: RichText(
+                                //       text: const TextSpan(
+                                //         children: [
+                                //           TextSpan(
+                                //               text:
+                                //                   'Сторінка продукту!  <-- Click on me)',
+                                //               style: TextStyle(
+                                //                 fontSize: 15,
+                                //               )),
+                                //         ],
+                                //       ),
+                                //     ),
+                                //   ),
+                                // if (_selectedPage != 'productDetails' &&
+                                //     _selectedPage != 'imageUploader')
+                                //   TextButton(
+                                //     onPressed: () {
+                                //       _onMenuItemSelected('imageUploader');
+                                //     },
+                                //     child: RichText(
+                                //       text: const TextSpan(
+                                //         children: [
+                                //           TextSpan(
+                                //               text:
+                                //                   'Сторінка додавання фото!  <-- Click on me)',
+                                //               style: TextStyle(
+                                //                 fontSize: 15,
+                                //               )),
+                                //         ],
+                                //       ),
+                                //     ),
+                                //   ),
                                 _getSelectedPageContent(),
                                 const SizedBox(height: 80),
                                 FooterSection(),

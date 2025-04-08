@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../themes/app_theme.dart';
+import '../../shared_widgets/title_text.dart';
 
 class FAQSection extends StatefulWidget {
   FAQSection({super.key});
@@ -26,27 +27,9 @@ class _FAQSectionState extends State<FAQSection> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Align(
-          alignment: Alignment.centerLeft,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Часті питання",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 4),
-              Text(
-                "Отримай відповідь на своє запитання",
-                style: TextStyle(
-                  fontSize: 16,
-                ),
-              ),
-            ],
-          ),
+        const ReusableTextWidget(
+          mainText: "Часті питання",
+          secondaryText: "Отримай відповідь на своє запитання",
         ),
         const SizedBox(height: 10),
         SizedBox(

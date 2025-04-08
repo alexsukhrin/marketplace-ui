@@ -4,7 +4,7 @@ import 'package:flutter_application_1/src/ui/widgets/login_widgets/forgot_passwo
 import 'package:flutter_application_1/src/ui/widgets/login_widgets/login_header.dart';
 import 'package:flutter_application_1/src/ui/widgets/auth_widgets/auth_field.dart';
 import 'package:flutter_application_1/src/ui/widgets/auth_widgets/auth_button.dart';
-import 'package:flutter_application_1/src/ui/widgets/main_screen_widgets/desktop/language_selector.dart';
+import 'package:flutter_application_1/src/ui/widgets/shared_widgets/language_selector.dart';
 import 'package:flutter_application_1/src/ui/widgets/social_media/social_media.dart';
 import 'package:flutter_application_1/src/ui/themes/app_theme.dart';
 import 'package:flutter_application_1/src/utils/validators.dart';

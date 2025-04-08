@@ -4,7 +4,7 @@ import 'package:flutter_application_1/src/ui/widgets/welcome_page_widgets/welcom
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../themes/app_theme.dart';
-import '../../widgets/custom_button.dart';
+import '../../widgets/shared_widgets/custom_button.dart';
 import '../../widgets/responsive/responsive_design.dart';
 import '../../widgets/welcome_page_widgets/custom_outlined_button.dart';
 import '../../widgets/welcome_page_widgets/left_section.dart';

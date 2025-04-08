@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/ui/themes/app_theme.dart';
 
+import '../../shared_widgets/title_text.dart';
+
 class NewOffersWidget extends StatefulWidget {
   const NewOffersWidget({super.key});
 
@@ -49,27 +51,9 @@ class _NewOffersWidgetState extends State<NewOffersWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Align(
-          alignment: Alignment.centerLeft,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Нові оголошення",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 4),
-              Text(
-                "Перегляньте ці товари першими",
-                style: TextStyle(
-                  fontSize: 16,
-                ),
-              ),
-            ],
-          ),
+        const ReusableTextWidget(
+          mainText: "Нові оголошення",
+          secondaryText: "Перегляньте ці товари першими",
         ),
         const SizedBox(height: 15),
         LayoutBuilder(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/ui/screens/login/login_page.dart';
-import 'package:flutter_application_1/src/ui/widgets/main_screen_widgets/desktop/language_selector.dart';
+import 'package:flutter_application_1/src/ui/widgets/shared_widgets/language_selector.dart';
 
 import '../../../exceptions/email_already_registered_exception.dart';
 import '../../../services/auth_service.dart';
