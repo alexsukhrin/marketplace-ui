@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/ui/widgets/product_details_widgets/show_full_screen_slider.dart';
 
 class ImageSlider extends StatefulWidget {
   const ImageSlider({super.key});
@@ -16,6 +17,16 @@ class ImageSliderState extends State<ImageSlider> {
   ];
 
   PageController pageController = PageController();
+
+  void _openFullScreenSlider() {
+    showDialog(
+      context: context,
+      builder: (_) => FullScreenImageSlider(
+        images: _images,
+        initialIndex: _currentIndex,
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,13 +46,19 @@ class ImageSliderState extends State<ImageSlider> {
                   });
                 },
                 itemBuilder: (context, index) {
-                  return ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: Image.asset(
-                      _images[index],
-                      width: double.infinity,
-                      height: 509,
-                      fit: BoxFit.fill,
+                  return MouseRegion(
+                    cursor: SystemMouseCursors.click,
+                    child: GestureDetector(
+                      onTap: _openFullScreenSlider,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Image.asset(
+                          _images[index],
+                          width: double.infinity,
+                          height: 509,
+                          fit: BoxFit.fill,
+                        ),
+                      ),
                     ),
                   );
                 },
@@ -50,15 +67,18 @@ class ImageSliderState extends State<ImageSlider> {
             Positioned(
               right: 21,
               top: 21,
-              child: GestureDetector(
-                onTap: () {},
-                child: const SizedBox(
-                  width: 14,
-                  height: 14,
-                  child: Icon(
-                    Icons.open_in_full,
-                    color: Colors.white,
-                    size: 16,
+              child: MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: GestureDetector(
+                  onTap: _openFullScreenSlider,
+                  child: const SizedBox(
+                    width: 14,
+                    height: 14,
+                    child: Icon(
+                      Icons.open_in_full,
+                      color: Colors.white,
+                      size: 16,
+                    ),
                   ),
                 ),
               ),
@@ -66,29 +86,32 @@ class ImageSliderState extends State<ImageSlider> {
             Positioned(
               left: 16,
               top: MediaQuery.of(context).size.height * 0.3,
-              child: GestureDetector(
-                onTap: _currentIndex > 0
-                    ? () {
-                        pageController.previousPage(
-                          duration: const Duration(milliseconds: 300),
-                          curve: Curves.easeInOut,
-                        );
-                      }
-                    : null,
-                child: Container(
-                  width: 24,
-                  height: 24,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: _currentIndex > 0 ? Colors.white : Colors.grey,
-                      width: 2,
+              child: MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: GestureDetector(
+                  onTap: _currentIndex > 0
+                      ? () {
+                          pageController.previousPage(
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeInOut,
+                          );
+                        }
+                      : null,
+                  child: Container(
+                    width: 24,
+                    height: 24,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: _currentIndex > 0 ? Colors.white : Colors.grey,
+                        width: 2,
+                      ),
                     ),
-                  ),
-                  child: Icon(
-                    Icons.navigate_before,
-                    color: _currentIndex > 0 ? Colors.white : Colors.grey,
-                    size: 20,
+                    child: Icon(
+                      Icons.navigate_before,
+                      color: _currentIndex > 0 ? Colors.white : Colors.grey,
+                      size: 20,
+                    ),
                   ),
                 ),
               ),
@@ -96,33 +119,36 @@ class ImageSliderState extends State<ImageSlider> {
             Positioned(
               right: 16,
               top: MediaQuery.of(context).size.height * 0.3,
-              child: GestureDetector(
-                onTap: _currentIndex < _images.length - 1
-                    ? () {
-                        pageController.nextPage(
-                          duration: const Duration(milliseconds: 300),
-                          curve: Curves.easeInOut,
-                        );
-                      }
-                    : null,
-                child: Container(
-                  width: 24,
-                  height: 24,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(
+              child: MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: GestureDetector(
+                  onTap: _currentIndex < _images.length - 1
+                      ? () {
+                          pageController.nextPage(
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeInOut,
+                          );
+                        }
+                      : null,
+                  child: Container(
+                    width: 24,
+                    height: 24,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: _currentIndex < _images.length - 1
+                            ? Colors.white
+                            : Colors.grey,
+                        width: 2,
+                      ),
+                    ),
+                    child: Icon(
+                      Icons.navigate_next,
                       color: _currentIndex < _images.length - 1
                           ? Colors.white
                           : Colors.grey,
-                      width: 2,
+                      size: 20,
                     ),
-                  ),
-                  child: Icon(
-                    Icons.navigate_next,
-                    color: _currentIndex < _images.length - 1
-                        ? Colors.white
-                        : Colors.grey,
-                    size: 20,
                   ),
                 ),
               ),
