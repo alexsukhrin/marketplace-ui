@@ -3,7 +3,8 @@ import 'package:flutter_application_1/src/ui/screens/reset_password/forgot_passw
 import '../../themes/app_theme.dart';
 
 class ForgotPasswordButton extends StatelessWidget {
-  const ForgotPasswordButton({super.key});
+  final String? email;
+  const ForgotPasswordButton({super.key, this.email});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,7 @@ class ForgotPasswordButton extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const ForgotPasswordPage(),
+                builder: (context) => ForgotPasswordPage(email: email),
               ),
             );
           },

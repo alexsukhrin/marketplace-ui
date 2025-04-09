@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
 import 'package:flutter_application_1/src/ui/widgets/favorite_button.dart';
 import 'package:flutter_application_1/src/ui/widgets/product_details_widgets/product_details_button.dart';
 
@@ -24,23 +25,31 @@ class ProductInfoState extends State<ProductInfo> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
+              const Text(
                 'Vans off the wall',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               Row(
                 children: [
-                  FavoriteButton(
+                  const FavoriteButton(
                     borderColor: Colors.black,
                   ),
-                  SizedBox(width: 10),
-                  Icon(
-                    Icons.timeline,
-                    color: Colors.black,
-                    size: 24,
+                  const SizedBox(width: 10),
+                  MouseRegion(
+                    onEnter: (_) => print('Cursor is over the icon'),
+                    cursor: SystemMouseCursors.click,
+                    child: Transform(
+                      alignment: Alignment.center,
+                      transform: Matrix4.rotationY(pi),
+                      child: const Icon(
+                        Icons.copy,
+                        color: Colors.black,
+                        size: 20,
+                      ),
+                    ),
                   ),
                 ],
               ),

@@ -24,6 +24,7 @@ class FavoriteButtonState extends State<FavoriteButton> {
     return MouseRegion(
       onEnter: (_) => setState(() => isHovered = true),
       onExit: (_) => setState(() => isHovered = false),
+      cursor: SystemMouseCursors.click,
       child: GestureDetector(
         onTap: toggleFavorite,
         child: AnimatedContainer(
