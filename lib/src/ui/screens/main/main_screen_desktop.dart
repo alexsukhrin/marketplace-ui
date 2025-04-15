@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/ui/screens/productDetailsScreen/product_details_screen.dart';
-import 'package:flutter_application_1/src/ui/widgets/product_creation/image_up_loader.dart';
 import '../../widgets/main_screen_widgets/desktop/appbar_desktop.dart';
 import '../../widgets/main_screen_widgets/desktop/categories_list.dart';
 import '../../widgets/main_screen_widgets/desktop/feature_cards.dart';
@@ -54,8 +53,6 @@ class _MainScreenDesktopState extends State<MainScreenDesktop> {
         return const AboutScreen();
       case 'productDetails':
         return const ProductDetailsScreen();
-      case 'imageUploader':
-        return const ImageUploader();
       default:
         return Column(
           children: [
@@ -98,7 +95,7 @@ class _MainScreenDesktopState extends State<MainScreenDesktop> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 if (_selectedPage != 'productDetails' &&
-                                    _selectedPage != 'imageUploader')
+                                    _selectedPage != 'sell')
                                   TextButton(
                                     onPressed: () {
                                       _onMenuItemSelected('productDetails');
@@ -109,25 +106,6 @@ class _MainScreenDesktopState extends State<MainScreenDesktop> {
                                           TextSpan(
                                               text:
                                                   'Сторінка продукту!  <-- Click on me)',
-                                              style: TextStyle(
-                                                fontSize: 15,
-                                              )),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                if (_selectedPage != 'productDetails' &&
-                                    _selectedPage != 'imageUploader')
-                                  TextButton(
-                                    onPressed: () {
-                                      _onMenuItemSelected('imageUploader');
-                                    },
-                                    child: RichText(
-                                      text: const TextSpan(
-                                        children: [
-                                          TextSpan(
-                                              text:
-                                                  'Сторінка додавання фото!  <-- Click on me)',
                                               style: TextStyle(
                                                 fontSize: 15,
                                               )),

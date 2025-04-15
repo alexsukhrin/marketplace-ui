@@ -4,7 +4,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/ui/widgets/product_creation/image_info_text.dart';
 import 'package:flutter_application_1/src/ui/widgets/product_creation/img_thumbnail.dart';
-import 'package:flutter_application_1/src/ui/widgets/product_creation/img_viewer_dialog.dart';
+import 'package:flutter_application_1/src/ui/widgets/product_details_widgets/show_full_screen_slider.dart';
 
 class ImageUploader extends StatefulWidget {
   const ImageUploader({super.key});
@@ -71,8 +71,10 @@ class ImageUploaderState extends State<ImageUploader> {
   void _showImageViewer(int initialIndex) {
     showDialog(
       context: context,
-      builder: (context) => ImageViewerDialog(
-        images: _images,
+      builder: (_) => FullScreenImageSlider(
+        images: _images
+            .map((bytes) => MemoryImage(bytes) as ImageProvider)
+            .toList(),
         initialIndex: initialIndex,
       ),
     );
