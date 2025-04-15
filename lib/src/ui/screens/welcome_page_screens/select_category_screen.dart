@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/ui/widgets/welcome_page_widgets/welcome_page_header.dart';
 
 import '../../../services/categories_service.dart';
-import '../../widgets/custom_button.dart';
+import '../../widgets/shared_widgets/custom_button.dart';
 import '../../widgets/responsive/responsive_design.dart';
 import '../../widgets/welcome_page_widgets/custom_outlined_button.dart';
 import '../../widgets/welcome_page_widgets/left_section.dart';

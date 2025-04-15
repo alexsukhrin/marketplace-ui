@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../themes/app_theme.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../shared_widgets/title_text.dart';
+
 class FeaturesSection extends StatelessWidget {
   final List<Map<String, String>> features = [
     {
@@ -32,27 +34,9 @@ class FeaturesSection extends StatelessWidget {
     return Column(
       children: [
         // Top text section
-        const Align(
-          alignment: Alignment.centerLeft,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Чому варто обрати нас",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 4),
-              Text(
-                "Дізнайтесь про наші особливості",
-                style: TextStyle(
-                  fontSize: 16,
-                ),
-              ),
-            ],
-          ),
+        const ReusableTextWidget(
+          mainText: "Чому варто обрати нас",
+          secondaryText: "Дізнайтесь про наші особливості",
         ),
         const SizedBox(height: 20),
 

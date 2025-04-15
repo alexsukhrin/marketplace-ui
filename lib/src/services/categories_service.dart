@@ -33,7 +33,6 @@ class CategoryService {
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         final data = jsonDecode(response.body);
-        print('Fetched data: $data');
 
         final categoryList = List<Map<String, dynamic>>.from(
           data['categories'].map((category) => {
