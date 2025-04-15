@@ -33,8 +33,8 @@ class ImageThumbnail extends StatelessWidget {
               onTap: onTap,
               child: Image.memory(
                 image,
-                width: 80,
-                height: 80,
+                width: 150,
+                height: 150,
                 fit: BoxFit.cover,
               ),
             ),
