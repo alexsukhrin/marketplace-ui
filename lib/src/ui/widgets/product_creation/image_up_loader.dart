@@ -15,6 +15,7 @@ class ImageUploader extends StatefulWidget {
 
 class ImageUploaderState extends State<ImageUploader> {
   final List<Uint8List> _images = [];
+  String? _errorText;
 
   Future<void> _pickImages() async {
     if (_images.length >= 3) return;
@@ -26,20 +27,30 @@ class ImageUploaderState extends State<ImageUploader> {
     );
 
     if (result != null) {
-      List<Uint8List> selectedImages = result.files
-          .where((file) => file.bytes != null)
-          .map((file) => file.bytes!)
-          .toList();
+      for (var file in result.files) {
+        if (file.bytes == null) continue;
 
-      if (_images.length + selectedImages.length > 3) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("You can upload up to 3 images")),
-        );
-        return;
+        if (file.size > 12 * 1024 * 1024) {
+          setState(() {
+            _errorText = 'Зображення надто великого розміру';
+          });
+          return;
+        }
+
+        final ext = file.extension?.toLowerCase();
+        if (!(ext == 'png' || ext == 'jpg' || ext == 'jpeg' || ext == 'heic')) {
+          setState(() {
+            _errorText = 'Невідповідний формат зображення';
+          });
+          return;
+        }
       }
 
       setState(() {
-        _images.addAll(selectedImages);
+        _errorText = null;
+        _images.addAll(
+          result.files.where((f) => f.bytes != null).map((f) => f.bytes!),
+        );
       });
     }
   }
@@ -69,132 +80,165 @@ class ImageUploaderState extends State<ImageUploader> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        if (_images.isEmpty)
-          GestureDetector(
-            onTap: _pickImages,
-            child: Container(
-              width: 409,
-              height: 152,
-              decoration: BoxDecoration(
-                color: Colors.grey[200],
-                borderRadius: BorderRadius.circular(10),
+    return SizedBox(
+      width: 781,
+      height: 236,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          if (_images.isEmpty)
+            GestureDetector(
+              onTap: _pickImages,
+              child: Container(
+                width: double.infinity,
+                height: 212,
+                decoration: BoxDecoration(
+                  color: const Color(0xFFFEFCF7),
+                  border: Border.all(color: const Color(0xFFFFC66B), width: 1),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(Icons.cloud_upload_outlined,
+                        size: 24, color: Colors.black54),
+                    const SizedBox(height: 8),
+                    const Text(
+                      "Макс. 12 MB, у форматах PNG, JPG, HEIC",
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.black87,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    ElevatedButton(
+                      onPressed: _pickImages,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFFFF9F2C),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 24, vertical: 12),
+                        elevation: 0,
+                        fixedSize: const Size(200, 40),
+                      ),
+                      child: const Text(
+                        "Вибрати файл",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+            )
+          else
+            Container(
+              padding: const EdgeInsets.all(10),
+              height: 212,
+              decoration: BoxDecoration(
+                color: const Color(0xFFFEFCF7),
+                border: Border.all(color: const Color(0xFFFFC66B), width: 1),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Row(
+                mainAxisAlignment: _images.length == 3
+                    ? MainAxisAlignment.center
+                    : MainAxisAlignment.start,
                 children: [
-                  Container(
-                    width: 18,
-                    height: 18,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.orange, width: 2),
-                      borderRadius: BorderRadius.circular(4),
-                      color: Colors.transparent,
-                    ),
-                    child: const Center(
-                      child: Icon(Icons.add, color: Colors.orange, size: 12),
+                  Expanded(
+                    child: Wrap(
+                      spacing: 10,
+                      alignment: _images.length == 3
+                          ? WrapAlignment.center
+                          : WrapAlignment.start,
+                      children: List.generate(_images.length, (index) {
+                        return MouseRegion(
+                          cursor: SystemMouseCursors.grab,
+                          child: Draggable<int>(
+                            data: index,
+                            feedback: Material(
+                              child: SizedBox(
+                                width: 150,
+                                height: 150,
+                                child: Image.memory(
+                                  _images[index],
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                            childWhenDragging: Opacity(
+                              opacity: 0.4,
+                              child: SizedBox(
+                                width: 150,
+                                height: 150,
+                                child: Image.memory(
+                                  _images[index],
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                            child: DragTarget<int>(
+                              onAccept: (oldIndex) =>
+                                  _onReorder(oldIndex, index),
+                              builder: (context, candidateData, rejectedData) {
+                                return MouseRegion(
+                                  cursor: candidateData.isNotEmpty
+                                      ? SystemMouseCursors.grabbing
+                                      : SystemMouseCursors.grab,
+                                  child: SizedBox(
+                                    width: 150,
+                                    height: 150,
+                                    child: ImageThumbnail(
+                                      image: _images[index],
+                                      isFirst: index == 0,
+                                      onTap: () => _showImageViewer(index),
+                                      onRemove: () => _removeImage(index),
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        );
+                      }),
                     ),
                   ),
-                  const SizedBox(height: 5),
-                  const Text(
-                    "Оберіть файл або перенесіть сюди",
-                    style: TextStyle(color: Colors.black54, fontSize: 17),
-                  ),
+                  const SizedBox(width: 10),
+                  if (_images.length < 3)
+                    GestureDetector(
+                      onTap: _pickImages,
+                      child: Container(
+                        width: 150,
+                        height: 150,
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.orange, width: 2),
+                          borderRadius: BorderRadius.circular(8),
+                          color: Colors.transparent,
+                        ),
+                        child: const Center(
+                          child: Icon(
+                            Icons.add,
+                            color: Colors.orange,
+                            size: 32,
+                          ),
+                        ),
+                      ),
+                    ),
                 ],
               ),
             ),
-          )
-        else
-          Container(
-            width: 409,
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: Colors.grey[200],
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Row(
-              mainAxisAlignment: _images.length == 3
-                  ? MainAxisAlignment.center
-                  : MainAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: Wrap(
-                    spacing: 10,
-                    alignment: _images.length == 3
-                        ? WrapAlignment.center
-                        : WrapAlignment.start,
-                    children: List.generate(_images.length, (index) {
-                      return MouseRegion(
-                        cursor: SystemMouseCursors.grab,
-                        child: Draggable<int>(
-                          data: index,
-                          feedback: Material(
-                            child: Image.memory(
-                              _images[index],
-                              width: 80,
-                              height: 80,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          childWhenDragging: Opacity(
-                            opacity: 0.4,
-                            child: ImageThumbnail(
-                              image: _images[index],
-                              isFirst: index == 0,
-                              onTap: () => _showImageViewer(index),
-                              onRemove: () => _removeImage(index),
-                            ),
-                          ),
-                          child: DragTarget<int>(
-                            onAccept: (oldIndex) => _onReorder(oldIndex, index),
-                            builder: (context, candidateData, rejectedData) {
-                              return MouseRegion(
-                                cursor: candidateData.isNotEmpty
-                                    ? SystemMouseCursors.grabbing
-                                    : SystemMouseCursors.grab,
-                                child: ImageThumbnail(
-                                  image: _images[index],
-                                  isFirst: index == 0,
-                                  onTap: () => _showImageViewer(index),
-                                  onRemove: () => _removeImage(index),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                      );
-                    }),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                if (_images.length < 3)
-                  GestureDetector(
-                    onTap: _pickImages,
-                    child: Container(
-                      width: 80,
-                      height: 80,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.orange, width: 2),
-                        borderRadius: BorderRadius.circular(8),
-                        color: Colors.transparent,
-                      ),
-                      child: const Center(
-                        child: Icon(
-                          Icons.add,
-                          color: Colors.orange,
-                          size: 32,
-                        ),
-                      ),
-                    ),
-                  ),
-              ],
-            ),
+          Align(
+            alignment: Alignment.bottomRight,
+            child: ImageInfoText(
+                imageCount: _images.length, errorText: _errorText),
           ),
-        const SizedBox(height: 10),
-        ImageInfoText(imageCount: _images.length),
-      ],
+        ],
+      ),
     );
   }
 }
