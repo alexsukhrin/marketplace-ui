@@ -22,8 +22,9 @@ class ImageSliderState extends State<ImageSlider> {
     showDialog(
       context: context,
       builder: (_) => FullScreenImageSlider(
-        images: _images,
-        initialIndex: _currentIndex,
+        images:
+            _images.map((path) => AssetImage(path) as ImageProvider).toList(),
+        initialIndex: 0,
       ),
     );
   }

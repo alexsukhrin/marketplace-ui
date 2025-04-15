@@ -151,6 +151,7 @@ class _CreateProductState extends State<CreateProduct> {
                       validator: validateProductName,
                       showSuffixIcon: (_) => false,
                       showCounter: false,
+                      maxWidth: 781,
                     ),
                     const SizedBox(height: 4),
                     CharacterCounter(
@@ -194,6 +195,7 @@ class _CreateProductState extends State<CreateProduct> {
                       hintText: 'Наприклад, Nike Air.',
                       showSuffixIcon: (_) => false,
                       showCounter: false,
+                      maxWidth: 781,
                     ),
                     const SizedBox(height: 20),
 
@@ -257,6 +259,7 @@ class _CreateProductState extends State<CreateProduct> {
                           validator: validatePrice,
                           showCounter: false,
                           showSuffixIcon: (_) => false,
+                          maxWidth: 781,
                         ),
                         const Positioned(
                           right: 16,
@@ -310,6 +313,7 @@ class _CreateProductState extends State<CreateProduct> {
                       validator: validatePhoneNumber,
                       showCounter: false,
                       showSuffixIcon: (_) => false,
+                      maxWidth: 781,
                     ),
                     const SizedBox(height: 4),
                     CharacterCounter(

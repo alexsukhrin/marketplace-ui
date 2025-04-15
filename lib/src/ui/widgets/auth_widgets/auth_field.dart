@@ -11,6 +11,7 @@ class AuthField extends StatefulWidget {
   final String labelText;
   final bool Function(String)? showSuffixIcon;
   final String? errorText;
+  final double? maxWidth;
 
   const AuthField({
     super.key,
@@ -22,6 +23,7 @@ class AuthField extends StatefulWidget {
     this.validator,
     this.showSuffixIcon,
     this.errorText,
+    this.maxWidth,
   });
 
   @override
@@ -51,7 +53,9 @@ class AuthFieldState extends State<AuthField> {
         ),
         const SizedBox(height: 8),
         ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 354),
+          constraints: BoxConstraints(
+            maxWidth: widget.maxWidth ?? 354,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [

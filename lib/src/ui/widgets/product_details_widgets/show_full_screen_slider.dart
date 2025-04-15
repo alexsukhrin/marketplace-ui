@@ -2,7 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class FullScreenImageSlider extends StatefulWidget {
-  final List<String> images;
+  final List<ImageProvider> images;
   final int initialIndex;
 
   const FullScreenImageSlider({
@@ -106,13 +106,12 @@ class _FullScreenImageSliderState extends State<FullScreenImageSlider> {
                               return Align(
                                 alignment: Alignment.center,
                                 child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(8),
-                                  child: Image.asset(
-                                    widget.images[index],
-                                    width: imageWidth,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
+                                    borderRadius: BorderRadius.circular(8),
+                                    child: Image(
+                                      image: widget.images[index],
+                                      width: imageWidth,
+                                      fit: BoxFit.cover,
+                                    )),
                               );
                             },
                           ),
@@ -253,12 +252,11 @@ class _FullScreenImageSliderState extends State<FullScreenImageSlider> {
                               ),
                             ),
                             child: ClipRRect(
-                              borderRadius: BorderRadius.circular(8),
-                              child: Image.asset(
-                                widget.images[index],
-                                fit: BoxFit.cover,
-                              ),
-                            ),
+                                borderRadius: BorderRadius.circular(8),
+                                child: Image(
+                                  image: widget.images[index],
+                                  fit: BoxFit.cover,
+                                )),
                           ),
                         );
                       },
