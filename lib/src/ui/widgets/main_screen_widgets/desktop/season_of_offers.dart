@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../themes/app_theme.dart';
+import '../../shared_widgets/title_text.dart';
 
 class SeasonalOffersWidget extends StatelessWidget {
   final List<Map<String, String>> seasonalOffers = [
@@ -33,27 +34,9 @@ class SeasonalOffersWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Align(
-          alignment: Alignment.centerLeft,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Сезонні пропозиції",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 4),
-              Text(
-                "Підібрані товари на кожен сезон",
-                style: TextStyle(
-                  fontSize: 16,
-                ),
-              ),
-            ],
-          ),
+        const ReusableTextWidget(
+          mainText: "Сезонні пропозиції",
+          secondaryText: "Підібрані товари на кожен сезон",
         ),
         const SizedBox(height: 15),
         LayoutBuilder(

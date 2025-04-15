@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/ui/themes/app_theme.dart';
-import 'package:flutter_application_1/src/ui/widgets/custom_button.dart';
+import 'package:flutter_application_1/src/ui/widgets/shared_widgets/custom_button.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../widgets/main_screen_widgets/desktop/language_selector.dart';
+import '../../widgets/shared_widgets/language_selector.dart';
 import '../../widgets/responsive/responsive_design.dart';
 import '../../widgets/welcome_page_widgets/left_section.dart';
 

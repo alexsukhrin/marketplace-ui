@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../themes/app_theme.dart';
+import '../../themes/app_theme.dart';
 
 class LanguageSelector extends StatelessWidget {
   const LanguageSelector({super.key});
