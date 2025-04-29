@@ -83,8 +83,8 @@ class CategoryService {
       print('Response body: ${response.body}');
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        final responseData = jsonDecode(response.body);
-        print('Categories submitted successfully: $responseData');
+        // final responseData = jsonDecode(response.body);
+        print('Categories submitted successfully: ${response.body}');
       } else {
         throw Exception(
             'Error submitting categories: ${response.statusCode} ${response.body}');

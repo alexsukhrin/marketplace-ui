@@ -12,7 +12,7 @@ import '../../widgets/main_screen_widgets/desktop/sidebar_desktop.dart';
 import 'sidebar_screens/about.dart';
 import 'sidebar_screens/cart.dart';
 import 'sidebar_screens/chat.dart';
-import 'sidebar_screens/create_product.dart';
+import 'sidebar_screens/listing_page.dart';
 import 'sidebar_screens/delivery.dart';
 import 'sidebar_screens/favotites.dart';
 import 'sidebar_screens/notifications.dart';
@@ -44,7 +44,7 @@ class _MainScreenDesktopState extends State<MainScreenDesktop> {
       case 'chat':
         return const ChatScreen();
       case 'sell':
-        return const CreateProduct();
+        return const ListingPage();
       case 'notifications':
         return const NotificationsScreen();
       case 'delivery':

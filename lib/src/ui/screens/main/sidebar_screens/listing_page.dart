@@ -1,28 +1,33 @@
 import 'package:flutter/material.dart';
 
 import '../../../../services/categories_service.dart';
+import '../../../../services/delivery_options_service.dart';
 import '../../../../services/listing_page_service.dart';
+import '../../../../services/payment_option_service.dart';
 import '../../../themes/app_theme.dart';
 import '../../../widgets/auth_widgets/auth_field.dart';
 import '../../../widgets/product_creation/category_dropdown.dart';
 import '../../../widgets/product_creation/character_counter.dart';
-import '../../../widgets/product_creation/create_product_validator.dart';
+import '../../../../utils/listing_page_validator.dart';
 import '../../../widgets/product_creation/description_field.dart';
 import '../../../widgets/product_creation/image_up_loader.dart';
-import '../../../widgets/product_creation/payment_option.dart';
+import '../../../widgets/product_creation/option_field.dart';
 import '../../../widgets/shared_widgets/custom_button.dart';
 import '../../../widgets/shared_widgets/title_text.dart';
 import '../../../widgets/welcome_page_widgets/custom_outlined_button.dart';
+import 'dart:typed_data';
 
-class CreateProduct extends StatefulWidget {
-  const CreateProduct({super.key});
+class ListingPage extends StatefulWidget {
+  const ListingPage({super.key});
 
   @override
-  _CreateProductState createState() => _CreateProductState();
+  _ListingPageState createState() => _ListingPageState();
 }
 
-class _CreateProductState extends State<CreateProduct> {
+class _ListingPageState extends State<ListingPage> {
   final _formKey = GlobalKey<FormState>();
+  final GlobalKey<ImageUploaderState> _imageUploaderKey =
+      GlobalKey<ImageUploaderState>();
   bool _isButtonDisabled = true;
   final TextEditingController productNameController = TextEditingController();
   final TextEditingController productDescriptionController =
@@ -31,6 +36,7 @@ class _CreateProductState extends State<CreateProduct> {
   final TextEditingController priceController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
   final paymentController = TextEditingController();
+  final deliveryController = TextEditingController();
 
   List<Map<String, dynamic>> _categories = [];
 
@@ -44,7 +50,6 @@ class _CreateProductState extends State<CreateProduct> {
     _fetchCategories();
   }
 
-  // Fetch product categories
   Future<void> _fetchCategories() async {
     try {
       final categories = await CategoryService.getCategories();
@@ -74,45 +79,65 @@ class _CreateProductState extends State<CreateProduct> {
     });
   }
 
-  final List<Map<String, dynamic>> deliveryOptions = [
-    {'name': 'Нова Пошта', 'category_id': 'nova'},
-    {'name': 'Укрпошта', 'category_id': 'ukr'},
-    {'name': 'Міст Експрес', 'category_id': 'mist'},
-  ];
+  Future<void> _onSubmit() async {
+    if (selectedCategory == null || selectedCategory!.isEmpty) {
+      print("Категорія не вибрана");
+      return;
+    }
+    print("Selected Category before submit: $selectedCategory");
 
-  void _onSubmit() {
-    if (_formKey.currentState?.validate() ?? false) {
-      // Створюємо обʼєкт з даними форми
-      Map<String, dynamic> productData = {
-        'name': productNameController.text,
-        'description': productDescriptionController.text,
-        'brand': productBrandController.text,
-        'price': priceController.text,
-        'phone': phoneController.text,
-        'payment_option': paymentController.text,
-        'category': selectedCategory,
-        'condition': _selectedCondition,
-        'delivery': selectedDelivery,
-      };
+    final List<Uint8List> images = _imageUploaderKey.currentState?.images ?? [];
 
-      // Викликаємо метод сервісу для відправки даних
-      ProductService.createProduct(productData, context);
+    if ((_formKey.currentState?.validate() ?? false) && images.isNotEmpty) {
+      try {
+        print("Sending product with category: $selectedCategory");
 
-      // Очищаємо форму
-      productNameController.clear();
-      productDescriptionController.clear();
-      productBrandController.clear();
-      priceController.clear();
-      phoneController.clear();
-      paymentController.clear();
-      setState(() {
-        selectedCategory = null;
-        _selectedCondition = null;
-        selectedDelivery = null;
-      });
+        final Map<String, dynamic> productData = {
+          'title': productNameController.text,
+          'description': productDescriptionController.text,
+          'brand': productBrandController.text,
+          'price': priceController.text,
+          'phoneNumber': phoneController.text,
+          'paymentOption': paymentController.text,
+          'category': selectedCategory ?? '',
+          'condition': _selectedCondition ?? '',
+          'deliveryOption': deliveryController.text,
+          'imagesCount': images.length,
+        };
 
-      // Переходимо на головну сторінку
-      Navigator.pushReplacementNamed(context, '/home');
+        print('Body we send: $productData');
+        await ListingPageService.createProduct(
+          title: productNameController.text,
+          description: productDescriptionController.text,
+          brand: productBrandController.text,
+          price: double.parse(priceController.text),
+          phoneNumber: phoneController.text,
+          paymentOption: paymentController.text,
+          category: selectedCategory ?? '',
+          condition: _selectedCondition ?? '',
+          deliveryOption: deliveryController.text,
+          images: images,
+          context: context,
+        );
+
+        productNameController.clear();
+        productDescriptionController.clear();
+        productBrandController.clear();
+        priceController.clear();
+        phoneController.clear();
+        paymentController.clear();
+        deliveryController.clear();
+        _imageUploaderKey.currentState?.clearImages();
+
+        setState(() {
+          selectedCategory = null;
+          _selectedCondition = null;
+        });
+
+        Navigator.pushReplacementNamed(context, '/main');
+      } catch (e) {
+        print('Failed to create product: $e');
+      }
     }
   }
 
@@ -140,7 +165,7 @@ class _CreateProductState extends State<CreateProduct> {
                     //photo
                     const Text('Фото товару *'),
                     const SizedBox(height: 8),
-                    const ImageUploader(),
+                    ImageUploader(key: _imageUploaderKey),
                     const SizedBox(height: 20),
 
                     //product name
@@ -216,19 +241,19 @@ class _CreateProductState extends State<CreateProduct> {
                                 CustomOutlinedButton(
                                   text: "Новий",
                                   onPressed: () {
-                                    _onConditionSelected('new');
-                                    formFieldState.didChange('new');
+                                    _onConditionSelected('NEW');
+                                    formFieldState.didChange('NEW');
                                   },
-                                  isSelected: _selectedCondition == 'new',
+                                  isSelected: _selectedCondition == 'NEW',
                                 ),
                                 const SizedBox(width: 20),
                                 CustomOutlinedButton(
                                   text: "Вживаний",
                                   onPressed: () {
-                                    _onConditionSelected('used');
-                                    formFieldState.didChange('used');
+                                    _onConditionSelected('USED');
+                                    formFieldState.didChange('USED');
                                   },
-                                  isSelected: _selectedCondition == 'used',
+                                  isSelected: _selectedCondition == 'USED',
                                 ),
                               ],
                             ),
@@ -286,23 +311,27 @@ class _CreateProductState extends State<CreateProduct> {
                     const SizedBox(height: 20),
 
                     //delivery
-                    const Text('Варіанти доставки *'),
-                    const SizedBox(height: 8),
-                    CategoryDropdown(
-                      categories: deliveryOptions,
-                      onCategorySelected: (value) {
-                        selectedDelivery = value;
-                      },
-                      hintText: 'Оберіть тут',
+                    OptionField<DeliveryOption>(
+                      labelText: 'Способи доставки *',
+                      controller: deliveryController,
+                      getOptions: DeliveryOptionService.getDeliveryOptions,
+                      getOptionName: (DeliveryOption option) => option.name,
+                      getOptionId: (DeliveryOption option) => option.id,
+                      validator: validateDeliveryOption,
                     ),
+
                     const SizedBox(height: 20),
 
                     // //payment
-                    PaymentOptionField(
-                      labelText: 'Спосіб оплати *',
+                    OptionField<PaymentOption>(
+                      labelText: 'Способи оплати *',
                       controller: paymentController,
+                      getOptions: PaymentOptionService.getPaymentOptions,
+                      getOptionName: (PaymentOption option) => option.name,
+                      getOptionId: (PaymentOption option) => option.id,
                       validator: validatePaymentOption,
                     ),
+
                     const SizedBox(height: 20),
 
                     //phone number
@@ -317,7 +346,7 @@ class _CreateProductState extends State<CreateProduct> {
                     ),
                     const SizedBox(height: 4),
                     CharacterCounter(
-                      controller: productNameController,
+                      controller: phoneController,
                       maxLength: 10,
                     ),
 

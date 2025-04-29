@@ -56,9 +56,16 @@ String? validatePhoneNumber(String? value) {
   return null;
 }
 
-String? validatePaymentOption(String? value) {
+String? validatePaymentOption(List<int>? value) {
   if (value == null || value.isEmpty) {
     return 'Оберіть спосіб оплати';
+  }
+  return null;
+}
+
+String? validateDeliveryOption(List<int>? value) {
+  if (value == null || value.isEmpty) {
+    return 'Оберіть спосіб доставки';
   }
   return null;
 }
