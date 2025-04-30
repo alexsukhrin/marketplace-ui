@@ -5,7 +5,9 @@ import 'package:flutter_application_1/src/ui/widgets/product_details_widgets/oth
 import 'package:flutter_application_1/src/ui/widgets/product_details_widgets/product_info.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
-  const ProductDetailsScreen({super.key});
+  final Map<String, dynamic> product;
+
+  const ProductDetailsScreen({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
@@ -44,15 +46,20 @@ class ProductDetailsScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Row(
+        Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
               width: 582,
-              child: ImageSlider(),
+              child: ImageSlider(
+                images: List<String>.from(
+                  (product['photos'] as List<dynamic>)
+                      .map((photo) => photo['url']),
+                ),
+              ),
             ),
-            SizedBox(width: 70),
-            Expanded(child: ProductInfo()),
+            const SizedBox(width: 70),
+            Expanded(child: ProductInfo(product: product)),
           ],
         ),
         const SizedBox(height: 44),

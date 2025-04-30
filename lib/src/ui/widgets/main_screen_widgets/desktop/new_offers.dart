@@ -144,13 +144,14 @@ import '../../shared_widgets/title_text.dart';
 // }
 
 class NewOffersWidget extends StatefulWidget {
-  const NewOffersWidget({super.key});
+  final Function(Map<String, dynamic>) onProductTap;
+  const NewOffersWidget({super.key, required this.onProductTap});
 
   @override
-  _NewOffersWidgetState createState() => _NewOffersWidgetState();
+  NewOffersWidgetState createState() => NewOffersWidgetState();
 }
 
-class _NewOffersWidgetState extends State<NewOffersWidget> {
+class NewOffersWidgetState extends State<NewOffersWidget> {
   List<dynamic> newOffers = [];
   List<bool> isFavorite = [];
 
@@ -205,84 +206,85 @@ class _NewOffersWidgetState extends State<NewOffersWidget> {
 
                   return Padding(
                     padding: const EdgeInsets.only(right: 10),
-                    child: SizedBox(
-                      width: 235,
-                      child: Stack(
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                    child: GestureDetector(
+                      onTap: () {
+                        widget.onProductTap(product);
+                      },
+                      child: MouseRegion(
+                        cursor: SystemMouseCursors.click,
+                        child: SizedBox(
+                          width: 235,
+                          child: Stack(
                             children: [
-                              ClipRRect(
-                                borderRadius: const BorderRadius.vertical(
-                                    top: Radius.circular(8)),
-                                child: Image.network(
-                                  imageUrl,
-                                  width: 235,
-                                  height: 128,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 4.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    MouseRegion(
-                                      cursor: SystemMouseCursors.click,
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          //сторінка продукту
-                                        },
-                                        child: Text(
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: const BorderRadius.vertical(
+                                        top: Radius.circular(8)),
+                                    child: Image.network(
+                                      imageUrl,
+                                      width: 235,
+                                      height: 128,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 4.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
                                           product['title'] ?? 'Без назви',
                                           style: const TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.w500,
                                           ),
                                         ),
-                                      ),
+                                        Text(
+                                          product['condition'] ?? '—',
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                            color: Color(0xFF464646),
+                                          ),
+                                        ),
+                                        Text(
+                                          '${product['price']} UAH',
+                                          style: const TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                    Text(
-                                      product['condition'] ?? '—',
-                                      style: const TextStyle(
-                                        fontSize: 14,
-                                        color: Color(0xFF464646),
-                                      ),
-                                    ),
-                                    Text(
-                                      '${product['price']} UAH',
-                                      style: const TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ],
+                                  ),
+                                ],
+                              ),
+                              Positioned(
+                                top: 6,
+                                right: 14,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      isFavorite[i] = !isFavorite[i];
+                                    });
+                                  },
+                                  child: Icon(
+                                    isFavorite[i]
+                                        ? Icons.favorite
+                                        : Icons.favorite_border,
+                                    color: isFavorite[i]
+                                        ? AppTheme.activeButtonColor
+                                        : AppTheme.backgroundColorWhite,
+                                    size: 28,
+                                  ),
                                 ),
                               ),
                             ],
                           ),
-                          Positioned(
-                            top: 6,
-                            right: 14,
-                            child: GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  isFavorite[i] = !isFavorite[i];
-                                });
-                              },
-                              child: Icon(
-                                isFavorite[i]
-                                    ? Icons.favorite
-                                    : Icons.favorite_border,
-                                color: isFavorite[i]
-                                    ? AppTheme.activeButtonColor
-                                    : AppTheme.backgroundColorWhite,
-                                size: 28,
-                              ),
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
                     ),
                   );
