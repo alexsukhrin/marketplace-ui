@@ -15,6 +15,8 @@ class ImageUploader extends StatefulWidget {
 
 class ImageUploaderState extends State<ImageUploader> {
   final List<Uint8List> _images = [];
+
+  List<Uint8List> get images => _images; //added
   String? _errorText;
 
   Future<void> _pickImages() async {
@@ -79,6 +81,12 @@ class ImageUploaderState extends State<ImageUploader> {
       ),
     );
   }
+
+  void clearImages() {
+    setState(() {
+      _images.clear();
+    });
+  } //added
 
   @override
   Widget build(BuildContext context) {
