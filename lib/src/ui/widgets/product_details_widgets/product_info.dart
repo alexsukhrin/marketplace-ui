@@ -4,7 +4,8 @@ import 'package:flutter_application_1/src/ui/widgets/favorite_button.dart';
 import 'package:flutter_application_1/src/ui/widgets/product_details_widgets/product_details_button.dart';
 
 class ProductInfo extends StatefulWidget {
-  const ProductInfo({super.key});
+  final Map<String, dynamic> product;
+  const ProductInfo({super.key, required this.product});
 
   @override
   ProductInfoState createState() => ProductInfoState();
@@ -28,9 +29,10 @@ class ProductInfoState extends State<ProductInfo> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                'Vans off the wall',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              Text(
+                widget.product['title'] ?? 'Без назви',
+                style:
+                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               Row(
                 children: [
@@ -65,16 +67,15 @@ class ProductInfoState extends State<ProductInfo> {
               ),
               const SizedBox(width: 8),
               Container(
-                width: 43,
-                height: 22,
+                padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 5),
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.grey),
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: const Center(
+                child: Center(
                   child: Text(
-                    'Vans',
-                    style: TextStyle(fontSize: 14),
+                    widget.product['brand'],
+                    style: const TextStyle(fontSize: 14),
                   ),
                 ),
               ),
@@ -132,9 +133,9 @@ class ProductInfoState extends State<ProductInfo> {
             ],
           ),
           const SizedBox(height: 12),
-          const Text(
-            '2399 ₴',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          Text(
+            '${widget.product['price']} ₴',
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 24),
           const Text(
@@ -146,24 +147,24 @@ class ProductInfoState extends State<ProductInfo> {
             thickness: 1,
           ),
           const SizedBox(height: 8),
-          const Text(
-            'Продаю нові кросівки, фірма Vans. Причина продажу - не підійшов розмір. Відправлю завтра.',
-            style: TextStyle(fontSize: 16),
+          Text(
+            widget.product['description'],
+            style: const TextStyle(fontSize: 16),
           ),
           const SizedBox(height: 20),
-          const Text(
-            'Додаткової інформація',
-            style: TextStyle(fontSize: 14),
-          ),
-          const Divider(
-            color: Color(0xFFEFEFEF),
-            thickness: 1,
-          ),
-          const SizedBox(height: 8),
-          const Text(
-            'Куплені в оригінальному магазині. Рік 2023.',
-            style: TextStyle(fontSize: 16),
-          ),
+          // const Text(
+          //   'Додаткової інформація',
+          //   style: TextStyle(fontSize: 14),
+          // ),
+          // const Divider(
+          //   color: Color(0xFFEFEFEF),
+          //   thickness: 1,
+          // ),
+          // const SizedBox(height: 8),
+          // const Text(
+          //   'Куплені в оригінальному магазині. Рік 2023.',
+          //   style: TextStyle(fontSize: 16),
+          // ),
           const Spacer(),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,

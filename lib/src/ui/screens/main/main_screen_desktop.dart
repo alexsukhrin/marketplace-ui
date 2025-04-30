@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/ui/screens/productDetailsScreen/product_details_screen.dart';
+import 'package:flutter_application_1/src/ui/widgets/bread_crumb_navigation.dart';
 import '../../widgets/main_screen_widgets/desktop/appbar_desktop.dart';
 import '../../widgets/main_screen_widgets/desktop/categories_list.dart';
 import '../../widgets/main_screen_widgets/desktop/feature_cards.dart';
@@ -26,11 +27,37 @@ class MainScreenDesktop extends StatefulWidget {
 
 class _MainScreenDesktopState extends State<MainScreenDesktop> {
   String _selectedPage = 'home';
+  Map<String, dynamic>? _selectedProduct;
+  late final ScrollController _scrollController;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   void _onMenuItemSelected(String page) {
     setState(() {
       _selectedPage = page;
     });
+  }
+
+  void _openProductDetails(Map<String, dynamic> product) {
+    setState(() {
+      _selectedProduct = product;
+      _selectedPage = 'productDetails';
+    });
+    _scrollController.animateTo(
+      0,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
   }
 
   Widget _getSelectedPageContent() {
@@ -52,7 +79,11 @@ class _MainScreenDesktopState extends State<MainScreenDesktop> {
       case 'about':
         return const AboutScreen();
       case 'productDetails':
-        return const ProductDetailsScreen();
+        if (_selectedProduct != null) {
+          return ProductDetailsScreen(product: _selectedProduct!);
+        } else {
+          return const Center(child: Text("Продукт не знайдено"));
+        }
       default:
         return Column(
           children: [
@@ -60,7 +91,7 @@ class _MainScreenDesktopState extends State<MainScreenDesktop> {
             const SizedBox(height: 60),
             SeasonalOffersWidget(),
             const SizedBox(height: 60),
-            const NewOffersWidget(),
+            NewOffersWidget(onProductTap: _openProductDetails),
             const SizedBox(height: 40),
             FeaturesSection(),
             const SizedBox(height: 80),
@@ -88,29 +119,34 @@ class _MainScreenDesktopState extends State<MainScreenDesktop> {
                       const AppBarWidget(),
                       Expanded(
                         child: SingleChildScrollView(
+                          controller: _scrollController,
                           child: Padding(
                             padding: const EdgeInsets.only(
                                 left: 55, right: 55, bottom: 50),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                if (_selectedPage != 'productDetails' &&
-                                    _selectedPage != 'sell')
-                                  TextButton(
-                                    onPressed: () {
-                                      _onMenuItemSelected('productDetails');
-                                    },
-                                    child: RichText(
-                                      text: const TextSpan(
-                                        children: [
-                                          TextSpan(
-                                              text:
-                                                  'Сторінка продукту!  <-- Click on me)',
-                                              style: TextStyle(
-                                                fontSize: 15,
-                                              )),
-                                        ],
-                                      ),
+                                if (_selectedPage == 'productDetails')
+                                  Padding(
+                                    padding: const EdgeInsetsDirectional.only(
+                                        bottom: 24),
+                                    child: BreadcrumbNavigation(
+                                      items: [
+                                        BreadcrumbItem(
+                                          label: 'Головна',
+                                          onTap: () =>
+                                              _onMenuItemSelected('home'),
+                                        ),
+                                        // BreadcrumbItem(
+                                        //   label: 'Взуття',
+                                        //   onTap: () => _onMenuItemSelected(
+                                        //       'categoryShoes'),
+                                        // ),
+                                        BreadcrumbItem(
+                                          label:
+                                              _selectedProduct?['title'] ?? '',
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 _getSelectedPageContent(),
