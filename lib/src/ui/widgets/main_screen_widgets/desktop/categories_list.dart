@@ -15,10 +15,19 @@ class _CategoryWidgetState extends State<CategoryWidget> {
   bool _expanded = false;
 
   final List<Color> _bgColors = [
-    Color(0xFFF2F2F7),
-    Color(0xFFECDFCC),
-    Color(0xFFC2D0AF),
-    Color(0xFFBED7DC),
+    const Color(0xFFC2D0AF),
+    const Color(0xFFF2F2F7),
+    const Color(0xFFF2F2F7),
+    const Color(0xFFBED7DC),
+    const Color(0xFFECDFCC),
+    const Color(0xFFF2F2F7),
+    const Color(0xFFBED7DC),
+    const Color(0xFFECDFCC),
+    const Color(0xFFF2F2F7),
+    const Color(0xFFBED7DC),
+    const Color(0xFFC2D0AF),
+    const Color(0xFFECDFCC),
+    const Color(0xFFC2D0AF),
   ];
 
   @override
