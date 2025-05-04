@@ -30,7 +30,7 @@ class ImageInfoText extends StatelessWidget {
           ),
           const SizedBox(width: 10),
           Text(
-            "3/$imageCount",
+            "$imageCount/5",
             style: const TextStyle(color: Colors.grey),
           ),
         ],
