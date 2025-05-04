@@ -70,13 +70,19 @@ class ImageSliderState extends State<ImageSlider> {
                 cursor: SystemMouseCursors.click,
                 child: GestureDetector(
                   onTap: _openFullScreenSlider,
-                  child: const SizedBox(
-                    width: 14,
-                    height: 14,
-                    child: Icon(
-                      Icons.open_in_full,
-                      color: Colors.white,
-                      size: 16,
+                  child: Container(
+                    width: 28,
+                    height: 28,
+                    decoration: const BoxDecoration(
+                      color: Color(0x8FA8A8A8),
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Center(
+                      child: Icon(
+                        Icons.open_in_full,
+                        color: Colors.white,
+                        size: 20,
+                      ),
                     ),
                   ),
                 ),
@@ -99,16 +105,11 @@ class ImageSliderState extends State<ImageSlider> {
                   child: Container(
                     width: 24,
                     height: 24,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: _currentIndex > 0 ? Colors.white : Colors.grey,
-                        width: 2,
-                      ),
-                    ),
-                    child: Icon(
+                    decoration: const BoxDecoration(
+                        shape: BoxShape.circle, color: Color(0x8FA8A8A8)),
+                    child: const Icon(
                       Icons.navigate_before,
-                      color: _currentIndex > 0 ? Colors.white : Colors.grey,
+                      color: Colors.white,
                       size: 20,
                     ),
                   ),
@@ -132,20 +133,11 @@ class ImageSliderState extends State<ImageSlider> {
                   child: Container(
                     width: 24,
                     height: 24,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: _currentIndex < images.length - 1
-                            ? Colors.white
-                            : Colors.grey,
-                        width: 2,
-                      ),
-                    ),
-                    child: Icon(
+                    decoration: const BoxDecoration(
+                        shape: BoxShape.circle, color: Color(0x8FA8A8A8)),
+                    child: const Icon(
                       Icons.navigate_next,
-                      color: _currentIndex < images.length - 1
-                          ? Colors.white
-                          : Colors.grey,
+                      color: Colors.white,
                       size: 20,
                     ),
                   ),

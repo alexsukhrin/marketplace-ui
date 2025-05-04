@@ -16,11 +16,11 @@ class ImageUploader extends StatefulWidget {
 class ImageUploaderState extends State<ImageUploader> {
   final List<Uint8List> _images = [];
 
-  List<Uint8List> get images => _images; //added
+  List<Uint8List> get images => _images;
   String? _errorText;
 
   Future<void> _pickImages() async {
-    if (_images.length >= 3) return;
+    if (_images.length >= 5) return;
 
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
@@ -29,6 +29,8 @@ class ImageUploaderState extends State<ImageUploader> {
     );
 
     if (result != null) {
+      final List<Uint8List> validNewImages = [];
+
       for (var file in result.files) {
         if (file.bytes == null) continue;
 
@@ -46,13 +48,17 @@ class ImageUploaderState extends State<ImageUploader> {
           });
           return;
         }
+
+        validNewImages.add(file.bytes!);
       }
+
+      final int availableSlots = 5 - _images.length;
+      final List<Uint8List> imagesToAdd =
+          validNewImages.take(availableSlots).toList();
 
       setState(() {
         _errorText = null;
-        _images.addAll(
-          result.files.where((f) => f.bytes != null).map((f) => f.bytes!),
-        );
+        _images.addAll(imagesToAdd);
       });
     }
   }
@@ -86,7 +92,7 @@ class ImageUploaderState extends State<ImageUploader> {
     setState(() {
       _images.clear();
     });
-  } //added
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -156,70 +162,70 @@ class ImageUploaderState extends State<ImageUploader> {
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Row(
-                mainAxisAlignment: _images.length == 3
+                mainAxisAlignment: _images.length == 5
                     ? MainAxisAlignment.center
                     : MainAxisAlignment.start,
                 children: [
                   Expanded(
-                    child: Wrap(
-                      spacing: 10,
-                      alignment: _images.length == 3
-                          ? WrapAlignment.center
-                          : WrapAlignment.start,
-                      children: List.generate(_images.length, (index) {
-                        return MouseRegion(
-                          cursor: SystemMouseCursors.grab,
-                          child: Draggable<int>(
-                            data: index,
-                            feedback: Material(
-                              child: SizedBox(
-                                width: 150,
-                                height: 150,
-                                child: Image.memory(
-                                  _images[index],
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                            childWhenDragging: Opacity(
-                              opacity: 0.4,
-                              child: SizedBox(
-                                width: 150,
-                                height: 150,
-                                child: Image.memory(
-                                  _images[index],
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                            child: DragTarget<int>(
-                              onAccept: (oldIndex) =>
-                                  _onReorder(oldIndex, index),
-                              builder: (context, candidateData, rejectedData) {
-                                return MouseRegion(
-                                  cursor: candidateData.isNotEmpty
-                                      ? SystemMouseCursors.grabbing
-                                      : SystemMouseCursors.grab,
-                                  child: SizedBox(
-                                    width: 150,
-                                    height: 150,
-                                    child: ImageThumbnail(
-                                      image: _images[index],
-                                      isFirst: index == 0,
-                                      onTap: () => _showImageViewer(index),
-                                      onRemove: () => _removeImage(index),
-                                    ),
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: List.generate(_images.length, (index) {
+                          return MouseRegion(
+                            cursor: SystemMouseCursors.grab,
+                            child: Draggable<int>(
+                              data: index,
+                              feedback: Material(
+                                child: SizedBox(
+                                  width: 150,
+                                  height: 150,
+                                  child: Image.memory(
+                                    _images[index],
+                                    fit: BoxFit.cover,
                                   ),
-                                );
-                              },
+                                ),
+                              ),
+                              childWhenDragging: Opacity(
+                                opacity: 0.4,
+                                child: SizedBox(
+                                  width: 150,
+                                  height: 150,
+                                  child: Image.memory(
+                                    _images[index],
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                              child: DragTarget<int>(
+                                onAccept: (oldIndex) =>
+                                    _onReorder(oldIndex, index),
+                                builder:
+                                    (context, candidateData, rejectedData) {
+                                  return MouseRegion(
+                                    cursor: candidateData.isNotEmpty
+                                        ? SystemMouseCursors.grabbing
+                                        : SystemMouseCursors.grab,
+                                    child: SizedBox(
+                                      width: 150,
+                                      height: 150,
+                                      child: ImageThumbnail(
+                                        image: _images[index],
+                                        isFirst: index == 0,
+                                        onTap: () => _showImageViewer(index),
+                                        onRemove: () => _removeImage(index),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
                             ),
-                          ),
-                        );
-                      }),
+                          );
+                        }),
+                      ),
                     ),
                   ),
                   const SizedBox(width: 10),
-                  if (_images.length < 3)
+                  if (_images.length < 5)
                     GestureDetector(
                       onTap: _pickImages,
                       child: Container(
