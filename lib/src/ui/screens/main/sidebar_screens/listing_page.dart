@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/services/product_options_service.dart'
+    show DeliveryOptionService, OptionItem, PaymentOptionService;
+import 'package:flutter_application_1/src/services/shoe_size_option_service.dart'
+    show ShoeSizeOption, ShoeSizeService;
 
 import '../../../../services/categories_service.dart';
-import '../../../../services/delivery_options_service.dart';
+
 import '../../../../services/listing_page_service.dart';
-import '../../../../services/payment_option_service.dart';
+
 import '../../../themes/app_theme.dart';
 import '../../../widgets/auth_widgets/auth_field.dart';
 import '../../../widgets/product_creation/category_dropdown.dart';
@@ -39,15 +43,18 @@ class _ListingPageState extends State<ListingPage> {
   final deliveryController = TextEditingController();
 
   List<Map<String, dynamic>> _categories = [];
+  List<ShoeSizeOption> shoeSizeOptions = [];
 
   String? selectedCategory;
   String? _selectedCondition;
   String? selectedDelivery;
+  String? selectedShoeSize;
 
   @override
   void initState() {
     super.initState();
     _fetchCategories();
+    _fetchShoSizes();
   }
 
   Future<void> _fetchCategories() async {
@@ -58,6 +65,17 @@ class _ListingPageState extends State<ListingPage> {
       });
     } catch (e) {
       print('Error loading categories: $e');
+    }
+  }
+
+  Future<void> _fetchShoSizes() async {
+    try {
+      final options = await ShoeSizeService.getShoeSizes();
+      setState(() {
+        shoeSizeOptions = options;
+      });
+    } catch (e) {
+      print('Error loading shoe sizes: $e');
     }
   }
 
@@ -193,6 +211,7 @@ class _ListingPageState extends State<ListingPage> {
                         setState(() {
                           selectedCategory = value;
                         });
+                        print('selectedCategory: $selectedCategory');
                       },
                       hintText: 'Усі категорії тут',
                     ),
@@ -212,6 +231,25 @@ class _ListingPageState extends State<ListingPage> {
                       minLength: 30,
                       showMinLength: true,
                     ),
+
+                    //shoe size
+                    if (selectedCategory == '14') ...[
+                      const Text('Оберіть розмір взуття *'),
+                      const SizedBox(height: 8),
+                      CategoryDropdown(
+                        categories: shoeSizeOptions
+                            .map((item) =>
+                                {'id': item.id, 'name': item.sizeLabel})
+                            .toList(),
+                        onCategorySelected: (value) {
+                          setState(() {
+                            selectedShoeSize = value;
+                          });
+                        },
+                        hintText: 'Оберіть розмір',
+                      ),
+                    ],
+                    const SizedBox(height: 16),
 
                     //brand
                     AuthField(
@@ -311,24 +349,24 @@ class _ListingPageState extends State<ListingPage> {
                     const SizedBox(height: 20),
 
                     //delivery
-                    OptionField<DeliveryOption>(
+                    OptionField<OptionItem>(
                       labelText: 'Способи доставки *',
                       controller: deliveryController,
-                      getOptions: DeliveryOptionService.getDeliveryOptions,
-                      getOptionName: (DeliveryOption option) => option.name,
-                      getOptionId: (DeliveryOption option) => option.id,
+                      getOptions: DeliveryOptionService.getOptions,
+                      getOptionName: (OptionItem option) => option.name,
+                      getOptionId: (OptionItem option) => option.id,
                       validator: validateDeliveryOption,
                     ),
 
                     const SizedBox(height: 20),
 
                     // //payment
-                    OptionField<PaymentOption>(
+                    OptionField<OptionItem>(
                       labelText: 'Способи оплати *',
                       controller: paymentController,
-                      getOptions: PaymentOptionService.getPaymentOptions,
-                      getOptionName: (PaymentOption option) => option.name,
-                      getOptionId: (PaymentOption option) => option.id,
+                      getOptions: PaymentOptionService.getOptions,
+                      getOptionName: (OptionItem option) => option.name,
+                      getOptionId: (OptionItem option) => option.id,
                       validator: validatePaymentOption,
                     ),
 

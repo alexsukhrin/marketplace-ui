@@ -97,14 +97,36 @@ class _SidebarWidgetState extends State<SidebarWidget> {
                 onTap: () => _selectMenuItem('chat'),
               ),
               const SizedBox(height: 10),
-              _SidebarIcon(
-                svgPath: 'assets/images/footer_icons/add.svg',
-                label: 'Продати',
-                isExpanded: isExpanded,
-                isActive: selectedMenuItem == 'sell',
-                onTap: () => _selectMenuItem('sell'),
+              // _SidebarIcon(
+              //   svgPath: 'assets/images/footer_icons/add.svg',
+              //   label: 'Продати',
+              //   isExpanded: isExpanded,
+              //   isActive: selectedMenuItem == 'sell',
+              //   onTap: () => _selectMenuItem('sell'),
+              // ),
+              FutureBuilder<bool>(
+                future: _isUserLoggedIn(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const SizedBox();
+                  } else if (snapshot.hasData && snapshot.data == true) {
+                    return Column(
+                      children: [
+                        _SidebarIcon(
+                          svgPath: 'assets/images/footer_icons/add.svg',
+                          label: 'Продати',
+                          isExpanded: isExpanded,
+                          isActive: selectedMenuItem == 'sell',
+                          onTap: () => _selectMenuItem('sell'),
+                        ),
+                        const SizedBox(height: 10),
+                      ],
+                    );
+                  } else {
+                    return const SizedBox.shrink();
+                  }
+                },
               ),
-              const SizedBox(height: 10),
               _SidebarIcon(
                 svgPath: 'assets/images/main_icons/notification.svg',
                 label: 'Сповіщення',
