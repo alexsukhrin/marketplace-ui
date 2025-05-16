@@ -44,6 +44,23 @@ class ListingPageService {
       request.fields['delivery_option'] = deliveryOption;
       request.fields['payment_option'] = paymentOption;
 
+      // Необов’язкові поля
+      if (color != null && color.isNotEmpty) {
+        request.fields['color'] = color;
+      }
+      if (material != null && material.isNotEmpty) {
+        request.fields['material'] = material;
+      }
+      if (gender != null && gender.isNotEmpty) {
+        request.fields['gender'] = gender;
+      }
+      if (clothingSize != null && clothingSize.isNotEmpty) {
+        request.fields['clothing_size'] = clothingSize;
+      }
+      if (shoeSize != null && shoeSize.isNotEmpty) {
+        request.fields['shoe_size'] = shoeSize;
+      }
+
       // файли
       for (int i = 0; i < images.length; i++) {
         request.files.add(
