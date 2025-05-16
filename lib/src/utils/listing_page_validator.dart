@@ -1,8 +1,8 @@
 String? validateProductName(String? value) {
   if (value == null || value.isEmpty) {
     return 'Це поле обов’язкове для заповнення';
-  } else if (value.length > 20) {
-    return 'Назва товару не може перевищувати 20 символів';
+  } else if (value.length > 30) {
+    return 'Назва товару не може перевищувати 30 символів';
   }
   return null;
 }
