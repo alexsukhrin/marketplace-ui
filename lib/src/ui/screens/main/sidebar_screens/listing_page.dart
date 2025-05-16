@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/src/services/product_options_service.dart'
+import 'package:flutter_application_1/src/services/delivery_payment_service.dart'
     show DeliveryOptionService, OptionItem, PaymentOptionService;
-import 'package:flutter_application_1/src/services/shoe_size_option_service.dart'
-    show ShoeSizeOption, ShoeSizeService;
+import 'package:flutter_application_1/src/services/additional_fields_service.dart'
+    show
+        AdditionalFieldsOptionItem,
+        ClothSizeService,
+        ColorsService,
+        GenderService,
+        MaterialService,
+        ShoeSizeOption;
 
 import '../../../../services/categories_service.dart';
 
@@ -43,18 +49,30 @@ class _ListingPageState extends State<ListingPage> {
   final deliveryController = TextEditingController();
 
   List<Map<String, dynamic>> _categories = [];
-  List<ShoeSizeOption> shoeSizeOptions = [];
+  List<AdditionalFieldsOptionItem> shoeSizeOptions = [];
+  List<AdditionalFieldsOptionItem> clothingSizeOptions = [];
+  List<AdditionalFieldsOptionItem> colorsOptions = [];
+  List<AdditionalFieldsOptionItem> materialOptions = [];
+  List<AdditionalFieldsOptionItem> genderOptions = [];
 
   String? selectedCategory;
   String? _selectedCondition;
   String? selectedDelivery;
   String? selectedShoeSize;
+  String? selectedClothingSize;
+  String? selectedColor;
+  String? selectedMaterial;
+  String? selectedGender;
 
   @override
   void initState() {
     super.initState();
     _fetchCategories();
     _fetchShoSizes();
+    _fetchClothingSizes();
+    _fetchColor();
+    _fetchMaterial();
+    _fetchGender();
   }
 
   Future<void> _fetchCategories() async {
@@ -70,12 +88,56 @@ class _ListingPageState extends State<ListingPage> {
 
   Future<void> _fetchShoSizes() async {
     try {
-      final options = await ShoeSizeService.getShoeSizes();
+      final options = await ShoeSizeOption.getOptions();
       setState(() {
         shoeSizeOptions = options;
       });
     } catch (e) {
       print('Error loading shoe sizes: $e');
+    }
+  }
+
+  Future<void> _fetchClothingSizes() async {
+    try {
+      final options = await ClothSizeService.getOptions();
+      setState(() {
+        clothingSizeOptions = options;
+      });
+    } catch (e) {
+      print('Error loading clothing sizes: $e');
+    }
+  }
+
+  Future<void> _fetchColor() async {
+    try {
+      final options = await ColorsService.getOptions();
+      setState(() {
+        colorsOptions = options;
+      });
+    } catch (e) {
+      print('Error loading clothing sizes: $e');
+    }
+  }
+
+  Future<void> _fetchMaterial() async {
+    try {
+      final options = await MaterialService.getOptions();
+      setState(() {
+        materialOptions = options;
+      });
+    } catch (e) {
+      print('Error loading clothing sizes: $e');
+    }
+  }
+
+  Future<void> _fetchGender() async {
+    try {
+      final options = await GenderService.getOptions();
+      setState(() {
+        genderOptions = options;
+      });
+    } catch (e) {
+      print('Error loading clothing sizes: $e');
     }
   }
 
@@ -123,6 +185,22 @@ class _ListingPageState extends State<ListingPage> {
           'imagesCount': images.length,
         };
 
+        if (selectedColor != null && selectedColor!.isNotEmpty) {
+          productData['color'] = selectedColor;
+        }
+        if (selectedMaterial != null && selectedMaterial!.isNotEmpty) {
+          productData['material'] = selectedMaterial;
+        }
+        if (selectedGender != null && selectedGender!.isNotEmpty) {
+          productData['gender'] = selectedGender;
+        }
+        if (selectedClothingSize != null && selectedClothingSize!.isNotEmpty) {
+          productData['clothingSize'] = selectedClothingSize;
+        }
+        if (selectedShoeSize != null && selectedShoeSize!.isNotEmpty) {
+          productData['shoeSize'] = selectedShoeSize;
+        }
+
         print('Body we send: $productData');
         await ListingPageService.createProduct(
           title: productNameController.text,
@@ -136,6 +214,11 @@ class _ListingPageState extends State<ListingPage> {
           deliveryOption: deliveryController.text,
           images: images,
           context: context,
+          color: selectedColor,
+          material: selectedMaterial,
+          gender: selectedGender,
+          clothingSize: selectedClothingSize,
+          shoeSize: selectedShoeSize,
         );
 
         productNameController.clear();
@@ -150,6 +233,11 @@ class _ListingPageState extends State<ListingPage> {
         setState(() {
           selectedCategory = null;
           _selectedCondition = null;
+          selectedColor = null;
+          selectedMaterial = null;
+          selectedGender = null;
+          selectedClothingSize = null;
+          selectedShoeSize = null;
         });
 
         Navigator.pushReplacementNamed(context, '/main');
@@ -199,7 +287,7 @@ class _ListingPageState extends State<ListingPage> {
                     const SizedBox(height: 4),
                     CharacterCounter(
                       controller: productNameController,
-                      maxLength: 20,
+                      maxLength: 30,
                     ),
 
                     //category dropdown
@@ -210,6 +298,10 @@ class _ListingPageState extends State<ListingPage> {
                       onCategorySelected: (value) {
                         setState(() {
                           selectedCategory = value;
+
+                          selectedColor = null;
+                          selectedClothingSize = null;
+                          selectedShoeSize = null;
                         });
                         print('selectedCategory: $selectedCategory');
                       },
@@ -232,6 +324,27 @@ class _ListingPageState extends State<ListingPage> {
                       showMinLength: true,
                     ),
 
+                    //gender
+                    if (selectedCategory == '2' ||
+                        selectedCategory == '14') ...[
+                      const Text('Оберіть стать *'),
+                      const SizedBox(height: 8),
+                      CategoryDropdown(
+                        categories: genderOptions
+                            .map((item) =>
+                                {'category_id': item.value, 'name': item.name})
+                            .toList(),
+                        value: selectedGender,
+                        onCategorySelected: (value) {
+                          setState(() {
+                            selectedGender = value;
+                          });
+                        },
+                        hintText: 'Оберіть стать',
+                      ),
+                      const SizedBox(height: 16),
+                    ],
+
                     //shoe size
                     if (selectedCategory == '14') ...[
                       const Text('Оберіть розмір взуття *'),
@@ -239,8 +352,9 @@ class _ListingPageState extends State<ListingPage> {
                       CategoryDropdown(
                         categories: shoeSizeOptions
                             .map((item) =>
-                                {'id': item.id, 'name': item.sizeLabel})
+                                {'category_id': item.name, 'name': item.name})
                             .toList(),
+                        value: selectedShoeSize,
                         onCategorySelected: (value) {
                           setState(() {
                             selectedShoeSize = value;
@@ -248,8 +362,70 @@ class _ListingPageState extends State<ListingPage> {
                         },
                         hintText: 'Оберіть розмір',
                       ),
+                      const SizedBox(height: 16),
                     ],
-                    const SizedBox(height: 16),
+
+                    //clothes size
+                    if (selectedCategory == '2') ...[
+                      const Text('Оберіть розмір одягу *'),
+                      const SizedBox(height: 8),
+                      CategoryDropdown(
+                        categories: clothingSizeOptions
+                            .map((item) =>
+                                {'category_id': item.value, 'name': item.name})
+                            .toList(),
+                        value: selectedClothingSize,
+                        onCategorySelected: (value) {
+                          setState(() {
+                            selectedClothingSize = value;
+                          });
+                        },
+                        hintText: 'Оберіть розмір',
+                      ),
+                      const SizedBox(height: 16),
+                    ],
+
+                    //color
+                    if (selectedCategory == '2' ||
+                        selectedCategory == '14') ...[
+                      const Text('Оберіть колір *'),
+                      const SizedBox(height: 8),
+                      CategoryDropdown(
+                        categories: colorsOptions
+                            .map((item) =>
+                                {'category_id': item.value, 'name': item.name})
+                            .toList(),
+                        value: selectedColor,
+                        onCategorySelected: (value) {
+                          setState(() {
+                            selectedColor = value;
+                          });
+                        },
+                        hintText: 'Оберіть колір',
+                      ),
+                      const SizedBox(height: 16),
+                    ],
+
+                    //materal
+                    if (selectedCategory == '2' ||
+                        selectedCategory == '14') ...[
+                      const Text('Оберіть матеріал *'),
+                      const SizedBox(height: 8),
+                      CategoryDropdown(
+                        categories: materialOptions
+                            .map((item) =>
+                                {'category_id': item.value, 'name': item.name})
+                            .toList(),
+                        value: selectedMaterial,
+                        onCategorySelected: (value) {
+                          setState(() {
+                            selectedMaterial = value;
+                          });
+                        },
+                        hintText: 'Оберіть матеріал',
+                      ),
+                      const SizedBox(height: 16),
+                    ],
 
                     //brand
                     AuthField(

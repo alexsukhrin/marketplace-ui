@@ -21,6 +21,11 @@ class ListingPageService {
     required String paymentOption,
     required List<Uint8List> images,
     required BuildContext context,
+    String? color,
+    String? material,
+    String? gender,
+    String? clothingSize,
+    String? shoeSize,
   }) async {
     try {
       final token = await AuthStorage.getToken();
