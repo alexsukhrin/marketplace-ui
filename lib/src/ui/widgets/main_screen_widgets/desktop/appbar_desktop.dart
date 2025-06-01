@@ -4,7 +4,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'appbar_buttons.dart';
 
 class AppBarWidget extends StatelessWidget {
-  const AppBarWidget({super.key});
+  const AppBarWidget({super.key, required this.onMenuItemSelected});
+
+  final Function(String) onMenuItemSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -87,6 +89,14 @@ class AppBarWidget extends StatelessWidget {
                 onPressed: () {
                   // Handle search action
                 },
+              ),
+              IconButton(
+                onPressed: () {
+                  onMenuItemSelected('sellerProfile');
+                },
+                icon: const Icon(Icons.account_circle_rounded),
+                color: Colors.orange,
+                iconSize: 40,
               ),
               // IconButton(
               //   icon: SvgPicture.asset(
