@@ -19,9 +19,6 @@ class ProductService {
         },
       );
 
-      print('🔵 Response status: ${response.statusCode}');
-      print('🔵 Response body: ${utf8.decode(response.bodyBytes)}');
-
       if (response.statusCode == 200) {
         final List<dynamic> products =
             jsonDecode(utf8.decode(response.bodyBytes));

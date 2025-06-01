@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import 'auth_storage.dart';
@@ -22,6 +21,11 @@ class ListingPageService {
     required String paymentOption,
     required List<Uint8List> images,
     required BuildContext context,
+    String? color,
+    String? material,
+    String? gender,
+    String? clothingSize,
+    String? shoeSize,
   }) async {
     try {
       final token = await AuthStorage.getToken();
@@ -39,6 +43,23 @@ class ListingPageService {
       request.fields['phone_number'] = phoneNumber;
       request.fields['delivery_option'] = deliveryOption;
       request.fields['payment_option'] = paymentOption;
+
+      // Необов’язкові поля
+      if (color != null && color.isNotEmpty) {
+        request.fields['color'] = color;
+      }
+      if (material != null && material.isNotEmpty) {
+        request.fields['material'] = material;
+      }
+      if (gender != null && gender.isNotEmpty) {
+        request.fields['gender'] = gender;
+      }
+      if (clothingSize != null && clothingSize.isNotEmpty) {
+        request.fields['clothing_size'] = clothingSize;
+      }
+      if (shoeSize != null && shoeSize.isNotEmpty) {
+        request.fields['shoe_size'] = shoeSize;
+      }
 
       // файли
       for (int i = 0; i < images.length; i++) {
