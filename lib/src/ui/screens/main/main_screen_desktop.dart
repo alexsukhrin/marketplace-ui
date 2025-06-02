@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/ui/screens/notFoundScreen/pageNotFoundScreen.dart';
 import 'package:flutter_application_1/src/ui/screens/productDetailsScreen/product_details_screen.dart';
+import 'package:flutter_application_1/src/ui/screens/seller_profile/seller_profile_screen.dart';
 import 'package:flutter_application_1/src/ui/widgets/bread_crumb_navigation.dart';
 import '../../widgets/main_screen_widgets/desktop/appbar_desktop.dart';
 import '../../widgets/main_screen_widgets/desktop/categories_list.dart';
@@ -82,8 +84,10 @@ class _MainScreenDesktopState extends State<MainScreenDesktop> {
         if (_selectedProduct != null) {
           return ProductDetailsScreen(product: _selectedProduct!);
         } else {
-          return const Center(child: Text("Продукт не знайдено"));
+          return const PageNotFoundScreen();
         }
+      case 'sellerProfile':
+        return const SellerProfileScreen();
       default:
         return Column(
           children: [
@@ -116,13 +120,16 @@ class _MainScreenDesktopState extends State<MainScreenDesktop> {
                 Expanded(
                   child: Column(
                     children: [
-                      const AppBarWidget(),
+                      AppBarWidget(onMenuItemSelected: _onMenuItemSelected),
                       Expanded(
                         child: SingleChildScrollView(
                           controller: _scrollController,
                           child: Padding(
-                            padding: const EdgeInsets.only(
-                                left: 55, right: 55, bottom: 50),
+                            padding: EdgeInsets.only(
+                              left: 55,
+                              right: 55,
+                              bottom: _selectedPage == 'sellerProfile' ? 0 : 50,
+                            ),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -150,8 +157,10 @@ class _MainScreenDesktopState extends State<MainScreenDesktop> {
                                     ),
                                   ),
                                 _getSelectedPageContent(),
-                                const SizedBox(height: 80),
-                                FooterSection(),
+                                if (_selectedPage != 'sellerProfile') ...[
+                                  const SizedBox(height: 80),
+                                  FooterSection(),
+                                ],
                               ],
                             ),
                           ),
