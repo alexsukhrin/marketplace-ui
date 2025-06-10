@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/constants/account_data_menu.dart';
+import 'package:flutter_application_1/models/account_menu.dart';
 
 class SellerSidebar extends StatelessWidget {
   final int selectedIndex;
   final Function(int) onItemSelected;
+  final List<AccountMenu> menuItems;
 
   const SellerSidebar({
     super.key,
     required this.selectedIndex,
     required this.onItemSelected,
+    required this.menuItems,
   });
 
   @override
@@ -18,49 +22,42 @@ class SellerSidebar extends StatelessWidget {
       child: Column(
         children: [
           Expanded(
-            child: ListView(
-              children: [
-                _buildItem("Акаунт", 0, Icons.person_outline_rounded),
-                _buildItem("Повідомлення", 1, Icons.message),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: SizedBox(
-                    width: 198,
-                    height: 30,
-                    child: Divider(
-                      color: Colors.grey.shade200,
-                    ),
+            child: ListView.builder(
+              padding: EdgeInsets.zero,
+              itemCount: accountMenuItems.length,
+              itemBuilder: (context, index) {
+                final item = menuItems[index];
+
+                List<Widget> widgets = [];
+                widgets.add(
+                  _buildItem(
+                    title: item.title,
+                    index: index,
+                    iconPath: item.icon,
+                    context: context,
                   ),
-                ),
-                _buildItem("Оголошення", 2, Icons.shopping_bag_outlined),
-                _buildItem("На модерації", 3, Icons.remove_red_eye_outlined),
-                _buildItem("Відхилені", 4, Icons.delete_forever_outlined),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: SizedBox(
-                    width: 198,
-                    height: 30,
-                    child: Divider(
-                      color: Colors.grey.shade200,
+                );
+                if (item.id == "messages" ||
+                    item.id == "rejected" ||
+                    item.id == "return") {
+                  widgets.add(
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: SizedBox(
+                        width: 198,
+                        height: 30,
+                        child: Divider(
+                          color: Colors.grey.shade200,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-                _buildItem("Аналітика", 5, Icons.analytics_outlined),
-                _buildItem("Кошти", 6, Icons.credit_card_outlined),
-                _buildItem("Повернення", 7, Icons.assignment_return_outlined),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: SizedBox(
-                    width: 198,
-                    height: 30,
-                    child: Divider(
-                      color: Colors.grey.shade200,
-                    ),
-                  ),
-                ),
-                _buildItem("Допомога", 8, Icons.live_help_outlined),
-                _buildItem("Налаштування", 9, Icons.settings),
-              ],
+                  );
+                }
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: widgets,
+                );
+              },
             ),
           ),
         ],
@@ -68,8 +65,19 @@ class SellerSidebar extends StatelessWidget {
     );
   }
 
-  Widget _buildItem(String title, int index, IconData icon) {
+  Widget _buildItem({
+    required String title,
+    required int index,
+    required String iconPath,
+    required BuildContext context,
+  }) {
     final isSelected = selectedIndex == index;
+    final Widget iconWidget = Image.asset(
+      iconPath,
+      width: 22,
+      height: 22,
+      color: isSelected ? Colors.white : Colors.black,
+    );
 
     return Container(
       decoration: BoxDecoration(
@@ -77,10 +85,7 @@ class SellerSidebar extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       child: ListTile(
-        leading: Icon(
-          icon,
-          color: isSelected ? Colors.white : Colors.black,
-        ),
+        leading: iconWidget,
         title: Text(
           title,
           style: TextStyle(
