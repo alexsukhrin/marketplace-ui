@@ -159,12 +159,76 @@ class _SidebarWidgetState extends State<SidebarWidget> {
                 return const CircularProgressIndicator();
               } else if (snapshot.hasData && snapshot.data == true) {
                 return _SidebarIcon(
-                  icon: Icons.login,
-                  label: 'Вийти',
-                  isExpanded: isExpanded,
-                  isActive: false,
-                  onTap: () => _logout(context),
-                );
+                    icon: Icons.login,
+                    label: 'Вийти',
+                    isExpanded: isExpanded,
+                    isActive: false,
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        barrierColor: Colors.black.withOpacity(0.6),
+                        builder: (ctx) => AlertDialog(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          title: const Center(
+                            child: Text(
+                              'Вийти з акаунту',
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                          content: const Text(
+                            'Ви впевнені, що хочете вийти?',
+                            textAlign: TextAlign.center,
+                          ),
+                          actionsAlignment: MainAxisAlignment.center,
+                          actions: [
+                            SizedBox(
+                              width: 150,
+                              child: OutlinedButton(
+                                style: OutlinedButton.styleFrom(
+                                  backgroundColor:
+                                      AppTheme.progressIndicatorActive,
+                                  side: const BorderSide(
+                                      color: Colors.transparent),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                ),
+                                onPressed: () {
+                                  Navigator.pop(ctx);
+                                },
+                                child: const Text(
+                                  'Назад',
+                                  style: TextStyle(color: AppTheme.witeText),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 150,
+                              child: OutlinedButton(
+                                style: OutlinedButton.styleFrom(
+                                  backgroundColor: AppTheme.textError,
+                                  side: const BorderSide(
+                                      color: Colors.transparent),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                ),
+                                onPressed: () {
+                                  _logout(context);
+                                },
+                                child: const Text(
+                                  'Вийти',
+                                  style: TextStyle(color: AppTheme.witeText),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                      return;
+                    });
               } else {
                 return const SizedBox.shrink();
               }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/ui/screens/main/sidebar_screens/listing_page.dart';
 import 'package:flutter_application_1/src/ui/screens/productDetailsScreen/product_details_screen.dart';
 import 'package:flutter_application_1/src/ui/widgets/bread_crumb_navigation.dart';
 import '../../widgets/main_screen_widgets/desktop/appbar_desktop.dart';
@@ -13,7 +14,6 @@ import '../../widgets/main_screen_widgets/desktop/sidebar_desktop.dart';
 import 'sidebar_screens/about.dart';
 import 'sidebar_screens/cart.dart';
 import 'sidebar_screens/chat.dart';
-import 'sidebar_screens/listing_page.dart';
 import 'sidebar_screens/delivery.dart';
 import 'sidebar_screens/favotites.dart';
 import 'sidebar_screens/notifications.dart';
