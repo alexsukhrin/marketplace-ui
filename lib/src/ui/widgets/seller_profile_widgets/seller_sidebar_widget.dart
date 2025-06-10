@@ -18,7 +18,7 @@ class SellerSidebar extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: 198,
-      height: MediaQuery.of(context).size.height * 0.8,
+      height: MediaQuery.of(context).size.height * 0.855,
       child: Column(
         children: [
           Expanded(
