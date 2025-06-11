@@ -25,15 +25,18 @@ class AppBarWidget extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pushNamed(context, '/main');
-                    },
-                    child: Image.asset(
-                      'assets/images/logo_desktop.png',
-                      width: 35,
-                      height: 44,
-                      fit: BoxFit.contain,
+                  MouseRegion(
+                    cursor: SystemMouseCursors.click,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, '/main');
+                      },
+                      child: Image.asset(
+                        'assets/images/logo_desktop.png',
+                        width: 35,
+                        height: 44,
+                        fit: BoxFit.contain,
+                      ),
                     ),
                   ),
 

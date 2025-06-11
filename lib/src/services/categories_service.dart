@@ -29,8 +29,6 @@ class CategoryService {
         },
       );
 
-      print('Response status: ${response.statusCode}');
-
       if (response.statusCode == 200 || response.statusCode == 201) {
         final data = jsonDecode(response.body);
 
@@ -64,7 +62,6 @@ class CategoryService {
               })
           .toList(),
     });
-    print("Submitting categories: $body");
 
     try {
       final token = await getAuthToken();
@@ -78,9 +75,6 @@ class CategoryService {
         },
         body: body,
       );
-
-      print('Response status: ${response.statusCode}');
-      print('Response body: ${response.body}');
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         // final responseData = jsonDecode(response.body);

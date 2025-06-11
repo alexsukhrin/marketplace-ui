@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/src/ui/screens/main/sidebar_screens/listing_page.dart';
 import 'package:flutter_application_1/src/ui/screens/notFoundScreen/pageNotFoundScreen.dart';
 import 'package:flutter_application_1/src/ui/screens/productDetailsScreen/product_details_screen.dart';
 import 'package:flutter_application_1/src/ui/screens/seller_profile/seller_profile_screen.dart';
 import 'package:flutter_application_1/src/ui/widgets/bread_crumb_navigation.dart';
+import 'package:flutter_application_1/src/ui/widgets/shared_widgets/page_navigation_header.dart';
 import '../../widgets/main_screen_widgets/desktop/appbar_desktop.dart';
 import '../../widgets/main_screen_widgets/desktop/categories_list.dart';
 import '../../widgets/main_screen_widgets/desktop/feature_cards.dart';
@@ -15,7 +17,6 @@ import '../../widgets/main_screen_widgets/desktop/sidebar_desktop.dart';
 import 'sidebar_screens/about.dart';
 import 'sidebar_screens/cart.dart';
 import 'sidebar_screens/chat.dart';
-import 'sidebar_screens/listing_page.dart';
 import 'sidebar_screens/delivery.dart';
 import 'sidebar_screens/favotites.dart';
 import 'sidebar_screens/notifications.dart';
@@ -156,6 +157,13 @@ class _MainScreenDesktopState extends State<MainScreenDesktop> {
                                       ],
                                     ),
                                   ),
+                                PageHeader(
+                                  currentPage: _selectedPage,
+                                  onMenuItemSelected: _onMenuItemSelected,
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
                                 _getSelectedPageContent(),
                                 if (_selectedPage != 'sellerProfile') ...[
                                   const SizedBox(height: 80),
