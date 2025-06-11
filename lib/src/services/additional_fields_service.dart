@@ -32,10 +32,33 @@ class GenderService {
   }
 }
 
-class MaterialService {
-  static Future<List<AdditionalFieldsOptionItem>> getOptions() async {
+class RestOptionsService {
+  static Future<Map<String, List<AdditionalFieldsOptionItem>>>
+      getAllOptions() async {
     final url = Uri.parse('$_baseUrl/api/v1/products/options/materials');
-    return _fetchOptions(url);
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final decoded = jsonDecode(response.body);
+
+      if (decoded is Map<String, dynamic>) {
+        final Map<String, List<AdditionalFieldsOptionItem>> result = {};
+
+        decoded.forEach((key, value) {
+          if (value is List) {
+            result[key] = value
+                .map((item) => AdditionalFieldsOptionItem.fromJson(item))
+                .toList();
+          }
+        });
+
+        return result;
+      } else {
+        throw Exception('Unexpected JSON format');
+      }
+    } else {
+      throw Exception('Failed to load options: ${response.statusCode}');
+    }
   }
 }
 

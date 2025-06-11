@@ -11,8 +11,8 @@ class ProductService {
     final token = await AuthStorage.getToken();
     final url = Uri.parse('$_baseUrl/api/v1/products');
 
-    print('📡 Fetching products from $url');
-    print('🔐 Using token: $token');
+    // print('📡 Fetching products from $url');
+    // print('🔐 Using token: $token');
 
     try {
       final response = await http.get(
@@ -22,8 +22,8 @@ class ProductService {
         },
       );
 
-      print('📥 Response status: ${response.statusCode}');
-      print('📦 Response body: ${utf8.decode(response.bodyBytes)}');
+      // print('📥 Response status: ${response.statusCode}');
+      // print('📦 Response body: ${utf8.decode(response.bodyBytes)}');
 
       if (response.statusCode == 200) {
         final List<dynamic> products =

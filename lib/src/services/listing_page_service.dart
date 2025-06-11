@@ -26,6 +26,21 @@ class ListingPageService {
     String? gender,
     String? clothingSize,
     String? shoeSize,
+    String? bookBinding,
+    String? bookLanguages,
+    String? bookGenre,
+    String? clothingMaterials,
+    String? shoeMaterials,
+    String? homeMaterials,
+    String? homeTypes,
+    String? electronisTypes,
+    String? autoTypes,
+    String? stationeryTypes,
+    String? activityTypes,
+    String? waterSportsTypes,
+    String? cyclingTypes,
+    String? childrenTypes,
+    String? gardenTypes,
   }) async {
     try {
       final token = await AuthStorage.getToken();
@@ -60,6 +75,15 @@ class ListingPageService {
       if (shoeSize != null && shoeSize.isNotEmpty) {
         request.fields['shoe_size'] = shoeSize;
       }
+      if (bookBinding != null && bookBinding.isNotEmpty) {
+        request.fields['book_binding'] = bookBinding;
+      }
+      if (bookLanguages != null && bookLanguages.isNotEmpty) {
+        request.fields['book_languages'] = bookLanguages;
+      }
+      if (bookGenre != null && bookGenre.isNotEmpty) {
+        request.fields['book_genres'] = bookGenre;
+      }
 
       // файли
       for (int i = 0; i < images.length; i++) {
@@ -74,7 +98,7 @@ class ListingPageService {
       }
 
       request.headers['Authorization'] = 'Bearer $token';
-      print('Attached files: ${request.files.map((f) => f.filename).toList()}');
+      // print('Attached files: ${request.files.map((f) => f.filename).toList()}');
       print('🔵 Sending request to: $uri');
       print('🔵 Request fields: ${request.fields}');
       print('🔵 Request headers: ${request.headers}');

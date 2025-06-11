@@ -1,14 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/src/services/delivery_payment_service.dart'
-    show DeliveryOptionService, OptionItem, PaymentOptionService;
-import 'package:flutter_application_1/src/services/additional_fields_service.dart'
-    show
-        AdditionalFieldsOptionItem,
-        ClothSizeService,
-        ColorsService,
-        GenderService,
-        MaterialService,
-        ShoeSizeOption;
+import 'package:flutter_application_1/src/services/delivery_payment_service.dart';
+import 'package:flutter_application_1/src/services/additional_fields_service.dart';
 
 import '../../../services/categories_service.dart';
 
@@ -51,8 +43,22 @@ class _ListingFormState extends State<ListingForm> {
   List<AdditionalFieldsOptionItem> shoeSizeOptions = [];
   List<AdditionalFieldsOptionItem> clothingSizeOptions = [];
   List<AdditionalFieldsOptionItem> colorsOptions = [];
-  List<AdditionalFieldsOptionItem> materialOptions = [];
   List<AdditionalFieldsOptionItem> genderOptions = [];
+  List<AdditionalFieldsOptionItem> shoeMaterials = [];
+  List<AdditionalFieldsOptionItem> clothingMaterials = [];
+  List<AdditionalFieldsOptionItem> homeMaterials = [];
+  List<AdditionalFieldsOptionItem> homeTypes = [];
+  List<AdditionalFieldsOptionItem> electronisTypes = [];
+  List<AdditionalFieldsOptionItem> autoTypes = [];
+  List<AdditionalFieldsOptionItem> stationeryTypes = [];
+  List<AdditionalFieldsOptionItem> activityTypes = [];
+  List<AdditionalFieldsOptionItem> waterSportsTypes = [];
+  List<AdditionalFieldsOptionItem> cyclingTypes = [];
+  List<AdditionalFieldsOptionItem> childrenTypes = [];
+  List<AdditionalFieldsOptionItem> gardenTypes = [];
+  List<AdditionalFieldsOptionItem> bookGenre = [];
+  List<AdditionalFieldsOptionItem> bookBinding = [];
+  List<AdditionalFieldsOptionItem> bookLanguages = [];
 
   String? selectedCategory;
   String? _selectedCondition;
@@ -60,8 +66,23 @@ class _ListingFormState extends State<ListingForm> {
   String? selectedShoeSize;
   String? selectedClothingSize;
   String? selectedColor;
-  String? selectedMaterial;
   String? selectedGender;
+  String? selectedActivityValue;
+  String? selectedbookBinding;
+  String? selectedbookLanguages;
+  String? selectedbookGenre;
+  String? selectedShoeMaterials;
+  String? selectedClothingMaterials;
+  String? selectedHomeMaterials;
+  String? selectedHomeTypes;
+  String? selectedElectronisTypes;
+  String? selectedAutoTypes;
+  String? selectedStationeryTypes;
+  String? selectedActivityTypes;
+  String? selectedWaterSportsTypes;
+  String? selectedCyclingTypes;
+  String? selectedChildrenTypes;
+  String? selectedGardenTypes;
 
   @override
   void initState() {
@@ -70,8 +91,8 @@ class _ListingFormState extends State<ListingForm> {
     _fetchShoSizes();
     _fetchClothingSizes();
     _fetchColor();
-    _fetchMaterial();
     _fetchGender();
+    _fetchAdditionalFields();
   }
 
   Future<void> _fetchCategories() async {
@@ -118,17 +139,6 @@ class _ListingFormState extends State<ListingForm> {
     }
   }
 
-  Future<void> _fetchMaterial() async {
-    try {
-      final options = await MaterialService.getOptions();
-      setState(() {
-        materialOptions = options;
-      });
-    } catch (e) {
-      print('Error loading clothing sizes: $e');
-    }
-  }
-
   Future<void> _fetchGender() async {
     try {
       final options = await GenderService.getOptions();
@@ -137,6 +147,31 @@ class _ListingFormState extends State<ListingForm> {
       });
     } catch (e) {
       print('Error loading clothing sizes: $e');
+    }
+  }
+
+  Future<void> _fetchAdditionalFields() async {
+    try {
+      final options = await RestOptionsService.getAllOptions();
+      setState(() {
+        shoeMaterials = options['shoe_materials'] ?? [];
+        clothingMaterials = options['clothing_materials'] ?? [];
+        homeMaterials = options['home_materials'] ?? [];
+        homeTypes = options['home_types'] ?? [];
+        electronisTypes = options['electronics_types'] ?? [];
+        autoTypes = options['auto_types'] ?? [];
+        stationeryTypes = options['stationery_types'] ?? [];
+        activityTypes = options['activity_types'] ?? [];
+        waterSportsTypes = options['water_sports_types'] ?? [];
+        cyclingTypes = options['cycling_types'] ?? [];
+        childrenTypes = options['children_types'] ?? [];
+        gardenTypes = options['garden_types'] ?? [];
+        bookGenre = options['book_genres'] ?? [];
+        bookBinding = options['book_binding'] ?? [];
+        bookLanguages = options['book_languages'] ?? [];
+      });
+    } catch (e) {
+      print('Error loading additional fields: $e');
     }
   }
 
@@ -187,8 +222,14 @@ class _ListingFormState extends State<ListingForm> {
         if (selectedColor != null && selectedColor!.isNotEmpty) {
           productData['color'] = selectedColor;
         }
-        if (selectedMaterial != null && selectedMaterial!.isNotEmpty) {
-          productData['material'] = selectedMaterial;
+        if (selectedbookBinding != null && selectedbookBinding!.isNotEmpty) {
+          productData['bookBinding'] = selectedbookBinding;
+        }
+        if (selectedbookBinding != null && selectedbookBinding!.isNotEmpty) {
+          productData['bookLanguages'] = selectedbookLanguages;
+        }
+        if (selectedbookBinding != null && selectedbookBinding!.isNotEmpty) {
+          productData['bookGenre'] = selectedbookGenre;
         }
         if (selectedGender != null && selectedGender!.isNotEmpty) {
           productData['gender'] = selectedGender;
@@ -196,9 +237,52 @@ class _ListingFormState extends State<ListingForm> {
         if (selectedClothingSize != null && selectedClothingSize!.isNotEmpty) {
           productData['clothingSize'] = selectedClothingSize;
         }
-        if (selectedShoeSize != null && selectedShoeSize!.isNotEmpty) {
-          productData['shoeSize'] = selectedShoeSize;
+        if (selectedClothingMaterials != null &&
+            selectedClothingMaterials!.isNotEmpty) {
+          productData['clothingMaterials'] = selectedClothingMaterials;
         }
+        if (selectedShoeMaterials != null &&
+            selectedShoeMaterials!.isNotEmpty) {
+          productData['shoeMaterials'] = selectedShoeMaterials;
+        }
+        if (selectedHomeMaterials != null &&
+            selectedHomeMaterials!.isNotEmpty) {
+          productData['homeMaterials'] = selectedHomeMaterials;
+        }
+        if (selectedHomeTypes != null && selectedHomeTypes!.isNotEmpty) {
+          productData['homeTypes'] = selectedHomeTypes;
+        }
+        if (selectedElectronisTypes != null &&
+            selectedElectronisTypes!.isNotEmpty) {
+          productData['electronisTypes'] = selectedElectronisTypes;
+        }
+        if (selectedAutoTypes != null && selectedAutoTypes!.isNotEmpty) {
+          productData['autoTypes'] = selectedAutoTypes;
+        }
+        if (selectedStationeryTypes != null &&
+            selectedStationeryTypes!.isNotEmpty) {
+          productData['stationeryTypes'] = selectedStationeryTypes;
+        }
+        if (selectedActivityTypes != null &&
+            selectedActivityTypes!.isNotEmpty) {
+          productData['activityTypes'] = selectedActivityTypes;
+        }
+        if (selectedWaterSportsTypes != null &&
+            selectedWaterSportsTypes!.isNotEmpty) {
+          productData['waterSportsTypes'] = selectedWaterSportsTypes;
+        }
+        if (selectedCyclingTypes != null && selectedCyclingTypes!.isNotEmpty) {
+          productData['cyclingTypes'] = selectedCyclingTypes;
+        }
+        if (selectedChildrenTypes != null &&
+            selectedChildrenTypes!.isNotEmpty) {
+          productData['childrenTypes'] = selectedChildrenTypes;
+        }
+        if (selectedGardenTypes != null && selectedGardenTypes!.isNotEmpty) {
+          productData['gardenTypes'] = selectedGardenTypes;
+        }
+        // if (selectedActivityValue != null && selectedActivityValue!.isNotEmpty)
+        //   productData['activityValue'] = selectedActivityValue;
 
         print('Body we send: $productData');
         await ListingPageService.createProduct(
@@ -214,10 +298,25 @@ class _ListingFormState extends State<ListingForm> {
           images: images,
           context: context,
           color: selectedColor,
-          material: selectedMaterial,
+          bookBinding: selectedbookBinding,
+          bookGenre: selectedbookGenre,
+          bookLanguages: selectedbookLanguages,
           gender: selectedGender,
           clothingSize: selectedClothingSize,
           shoeSize: selectedShoeSize,
+          clothingMaterials: selectedClothingMaterials,
+          shoeMaterials: selectedShoeMaterials,
+          homeMaterials: selectedHomeMaterials,
+          homeTypes: selectedHomeTypes,
+          electronisTypes: selectedElectronisTypes,
+          autoTypes: selectedAutoTypes,
+          stationeryTypes: selectedStationeryTypes,
+          activityTypes: selectedActivityTypes,
+          waterSportsTypes: selectedWaterSportsTypes,
+          cyclingTypes: selectedCyclingTypes,
+          childrenTypes: selectedChildrenTypes,
+          gardenTypes: selectedGardenTypes,
+          // activityValue: selectedActivityValue,
         );
 
         productNameController.clear();
@@ -233,10 +332,27 @@ class _ListingFormState extends State<ListingForm> {
           selectedCategory = null;
           _selectedCondition = null;
           selectedColor = null;
-          selectedMaterial = null;
+          selectedbookBinding = null;
           selectedGender = null;
           selectedClothingSize = null;
           selectedShoeSize = null;
+          selectedbookGenre = null;
+          selectedbookLanguages = null;
+          selectedGender = null;
+          selectedClothingSize = null;
+          selectedShoeSize = null;
+          selectedClothingMaterials = null;
+          selectedShoeMaterials = null;
+          selectedHomeMaterials = null;
+          selectedHomeTypes = null;
+          selectedElectronisTypes = null;
+          selectedAutoTypes = null;
+          selectedStationeryTypes = null;
+          selectedActivityTypes = null;
+          selectedWaterSportsTypes = null;
+          selectedCyclingTypes = null;
+          selectedChildrenTypes = null;
+          selectedGardenTypes = null;
         });
 
         Navigator.pushReplacementNamed(context, '/main');
@@ -244,6 +360,151 @@ class _ListingFormState extends State<ListingForm> {
         print('Failed to create product: $e');
       }
     }
+  }
+
+  List<AdditionalFieldsOptionItem> get currentMaterialOptions {
+    switch (selectedCategory) {
+      case '14':
+        return shoeMaterials;
+      case '2':
+        return clothingMaterials;
+      case '9':
+        return homeMaterials;
+      default:
+        return [];
+    }
+  }
+
+  String? get selectedMaterial {
+    switch (selectedCategory) {
+      case '2':
+        return selectedClothingMaterials;
+      case '14':
+        return selectedShoeMaterials;
+      case '9':
+        return selectedHomeMaterials;
+      default:
+        return null;
+    }
+  }
+
+  void setSelectedMaterial(String? value) {
+    setState(() {
+      switch (selectedCategory) {
+        case '2':
+          selectedClothingMaterials = value;
+          break;
+        case '14':
+          selectedShoeMaterials = value;
+          break;
+        case '9':
+          selectedHomeMaterials = value;
+          break;
+      }
+    });
+  }
+
+  List<AdditionalFieldsOptionItem> get currentTypeOptions {
+    switch (selectedCategory) {
+      case '9':
+        return homeTypes;
+      case '1':
+        return electronisTypes;
+      case '7':
+        return autoTypes;
+      case '6':
+        return stationeryTypes;
+      case '4':
+        return childrenTypes;
+      case '12':
+        return gardenTypes;
+      default:
+        return [];
+    }
+  }
+
+  String? get selectedType {
+    switch (selectedCategory) {
+      case '9':
+        return selectedHomeTypes;
+      case '1':
+        return selectedElectronisTypes;
+      case '7':
+        return selectedAutoTypes;
+      case '6':
+        return selectedStationeryTypes;
+      case '4':
+        return selectedChildrenTypes;
+      case '12':
+        return selectedGardenTypes;
+      default:
+        return null;
+    }
+  }
+
+  void setSelectedType(String? value) {
+    setState(() {
+      switch (selectedCategory) {
+        case '9':
+          selectedHomeTypes = value;
+          break;
+        case '1':
+          selectedElectronisTypes = value;
+          break;
+        case '7':
+          selectedAutoTypes = value;
+          break;
+        case '6':
+          selectedStationeryTypes = value;
+          break;
+        case '4':
+          selectedChildrenTypes = value;
+          break;
+        case '12':
+          selectedGardenTypes = value;
+          break;
+      }
+    });
+  }
+
+  List<AdditionalFieldsOptionItem> get currentActivityTypeOptions {
+    switch (selectedActivityValue) {
+      case 'water_sports':
+        return waterSportsTypes;
+      case 'cycling':
+        return cyclingTypes;
+      default:
+        return [];
+    }
+  }
+
+  String? get selectedActivityTypeValue {
+    switch (selectedActivityValue) {
+      case 'water_sports':
+        return selectedWaterSportsTypes;
+      case 'cycling':
+        return selectedCyclingTypes;
+      default:
+        return null;
+    }
+  }
+
+  void setSelectedActivityTypeValue(String? value) {
+    setState(() {
+      switch (selectedActivityValue) {
+        case 'water_sports':
+          selectedWaterSportsTypes = value;
+          break;
+        case 'cycling':
+          selectedCyclingTypes = value;
+          break;
+      }
+    });
+  }
+
+  void resetActivityTypeSelection() {
+    selectedWaterSportsTypes = null;
+    selectedCyclingTypes = null;
   }
 
   @override
@@ -330,7 +591,7 @@ class _ListingFormState extends State<ListingForm> {
                         selectedGender = value;
                       });
                     },
-                    hintText: 'Оберіть стать',
+                    hintText: 'Оберіть тут',
                   ),
                   const SizedBox(height: 16),
                 ],
@@ -350,7 +611,7 @@ class _ListingFormState extends State<ListingForm> {
                         selectedShoeSize = value;
                       });
                     },
-                    hintText: 'Оберіть розмір',
+                    hintText: 'Оберіть тут',
                   ),
                   const SizedBox(height: 16),
                 ],
@@ -370,7 +631,7 @@ class _ListingFormState extends State<ListingForm> {
                         selectedClothingSize = value;
                       });
                     },
-                    hintText: 'Оберіть розмір',
+                    hintText: 'Оберіть тут',
                   ),
                   const SizedBox(height: 16),
                 ],
@@ -390,27 +651,151 @@ class _ListingFormState extends State<ListingForm> {
                         selectedColor = value;
                       });
                     },
-                    hintText: 'Оберіть колір',
+                    hintText: 'Оберіть тут',
                   ),
                   const SizedBox(height: 16),
                 ],
 
-                //materal
-                if (selectedCategory == '2' || selectedCategory == '14') ...[
+                //product type
+                if (selectedCategory == '1' ||
+                    selectedCategory == '7' ||
+                    selectedCategory == '9' ||
+                    selectedCategory == '6' ||
+                    selectedCategory == '4' ||
+                    selectedCategory == '12') ...[
+                  const Text('Виберіть тип товару *'),
+                  const SizedBox(height: 8),
+                  CategoryDropdown(
+                    categories: currentTypeOptions
+                        .map((item) =>
+                            {'category_id': item.value, 'name': item.name})
+                        .toList(),
+                    value: selectedType,
+                    onCategorySelected: (value) {
+                      setSelectedType(value);
+                    },
+                    hintText: 'Оберіть тут',
+                  ),
+                  const SizedBox(height: 16),
+                ],
+
+                //activity type
+                if (selectedCategory == '10') ...[
+                  const Text('Виберіть тип активності *'),
+                  const SizedBox(height: 8),
+                  CategoryDropdown(
+                    categories: activityTypes
+                        .map((item) =>
+                            {'category_id': item.value, 'name': item.name})
+                        .toList(),
+                    value: selectedActivityTypes,
+                    onCategorySelected: (value) {
+                      setState(() {
+                        selectedActivityValue = value;
+                        selectedActivityTypes = null;
+                        resetActivityTypeSelection();
+                      });
+                    },
+                    hintText: 'Оберіть тут',
+                  ),
+                  const SizedBox(height: 16),
+                ],
+
+                //activity product type
+                if (selectedActivityValue != null &&
+                    currentActivityTypeOptions.isNotEmpty) ...[
+                  const Text('Виберіть тип товару *'),
+                  const SizedBox(height: 8),
+                  CategoryDropdown(
+                    categories: currentActivityTypeOptions
+                        .map((item) =>
+                            {'category_id': item.value, 'name': item.name})
+                        .toList(),
+                    value: selectedActivityTypeValue,
+                    onCategorySelected: (value) {
+                      setSelectedActivityTypeValue(value);
+                    },
+                    hintText: 'Оберіть тут',
+                  ),
+                  const SizedBox(height: 16),
+                ],
+
+                // materials
+                if (selectedCategory == '2' ||
+                    selectedCategory == '14' ||
+                    selectedCategory == '9') ...[
                   const Text('Оберіть матеріал *'),
                   const SizedBox(height: 8),
                   CategoryDropdown(
-                    categories: materialOptions
+                    categories: currentMaterialOptions
                         .map((item) =>
                             {'category_id': item.value, 'name': item.name})
                         .toList(),
                     value: selectedMaterial,
                     onCategorySelected: (value) {
+                      setSelectedMaterial(value);
+                    },
+                    hintText: 'Оберіть тут',
+                  ),
+                  const SizedBox(height: 16),
+                ],
+
+                //book genres
+                if (selectedCategory == '11') ...[
+                  const Text('Оберіть жанр книги *'),
+                  const SizedBox(height: 8),
+                  CategoryDropdown(
+                    categories: bookGenre
+                        .map((item) =>
+                            {'category_id': item.value, 'name': item.name})
+                        .toList(),
+                    value: selectedbookGenre,
+                    onCategorySelected: (value) {
                       setState(() {
-                        selectedMaterial = value;
+                        selectedbookGenre = value;
                       });
                     },
-                    hintText: 'Оберіть матеріал',
+                    hintText: 'Оберіть тут',
+                  ),
+                  const SizedBox(height: 16),
+                ],
+
+                //book language
+                if (selectedCategory == '11') ...[
+                  const Text('Оберіть мову книги *'),
+                  const SizedBox(height: 8),
+                  CategoryDropdown(
+                    categories: bookLanguages
+                        .map((item) =>
+                            {'category_id': item.value, 'name': item.name})
+                        .toList(),
+                    value: selectedbookLanguages,
+                    onCategorySelected: (value) {
+                      setState(() {
+                        selectedbookLanguages = value;
+                      });
+                    },
+                    hintText: 'Оберіть тут',
+                  ),
+                  const SizedBox(height: 16),
+                ],
+
+                //book binding
+                if (selectedCategory == '11') ...[
+                  const Text('Оберіть палітурку книги *'),
+                  const SizedBox(height: 8),
+                  CategoryDropdown(
+                    categories: bookBinding
+                        .map((item) =>
+                            {'category_id': item.value, 'name': item.name})
+                        .toList(),
+                    value: selectedbookBinding,
+                    onCategorySelected: (value) {
+                      setState(() {
+                        selectedbookBinding = value;
+                      });
+                    },
+                    hintText: 'Оберіть тут',
                   ),
                   const SizedBox(height: 16),
                 ],
