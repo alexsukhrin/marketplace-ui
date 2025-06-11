@@ -82,13 +82,28 @@ class _MessagesWidgetState extends State<MessagesWidget> {
                               : const Center(
                                   child: Text('Немає повідомлень'),
                                 )
-                          : const Center(
-                              child: EmptyAccountWidget(
-                                text: 'У вас ще немає повідомлень',
-                                subtext:
-                                    'Повідомлення з’явиться тут після того як покупець напише вам.',
-                              ),
-                            ),
+                          : activeChats.isEmpty &&
+                                  requestChats.isEmpty &&
+                                  inactiveChats.isEmpty
+                              ? const Center(
+                                  child: EmptyAccountWidget(
+                                    text: 'У вас ще немає повідомлень',
+                                    subtext:
+                                        'Повідомлення з’явиться тут після того \nяк покупець напише вам.',
+                                  ),
+                                )
+                              : Container(
+                                  decoration: const BoxDecoration(
+                                    color: Color(0xFFF7F7F7),
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(20),
+                                    ),
+                                  ),
+                                  child: const Center(
+                                    child:
+                                        Text('Оберіть чат зі списку ліворуч'),
+                                  ),
+                                ),
                     ),
                   ],
                 ),

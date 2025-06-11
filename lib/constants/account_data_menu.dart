@@ -17,7 +17,7 @@ final List<AccountMenu> accountMenuItems = [
       icon: "assets/images/account_menu_icons/announcements.png",
       text: "У вас ще немає активних оголошень",
       subtext:
-          "Оголошення з’являться тут після того як успішно пройдуть модерацію."),
+          "Оголошення з’являться тут після того \nяк успішно пройдуть модерацію."),
   AccountMenu(
       id: "moderation",
       title: "На модерації",
@@ -32,20 +32,25 @@ final List<AccountMenu> accountMenuItems = [
     text: "У вас немає відхилених оголошень",
   ),
   AccountMenu(
-    id: "analytics",
-    title: "Аналітика",
-    icon: "assets/images/account_menu_icons/analytics.png",
-  ),
+      id: "analytics",
+      title: "Аналітика",
+      icon: "assets/images/account_menu_icons/analytics.png",
+      text: "Дані аналітики ще не зібрані",
+      subtext:
+          "Щойно зʼявиться активність на платформі - тут буде відображено статистику."),
   AccountMenu(
-    id: "wallets",
-    title: "Кошти",
-    icon: "assets/images/account_menu_icons/wallets.png",
-  ),
+      id: "wallets",
+      title: "Кошти",
+      icon: "assets/images/account_menu_icons/wallets.png",
+      text: "Наразі інформація про кошти відсутня",
+      subtext:
+          "Система автоматично покаже суму до виведення, \nколи покупка буде завершена."),
   AccountMenu(
-    id: "return",
-    title: "Повернення",
-    icon: "assets/images/account_menu_icons/rotate.png",
-  ),
+      id: "return",
+      title: "Повернення",
+      icon: "assets/images/account_menu_icons/rotate.png",
+      text: "Наразі немає запитів на повернення",
+      subtext: "Усі запити на повернення покупців відображатимуться тут."),
   AccountMenu(
     id: "help",
     title: "Допомога",

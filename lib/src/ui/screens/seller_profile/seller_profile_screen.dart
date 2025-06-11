@@ -14,9 +14,23 @@ class SellerProfileScreen extends StatefulWidget {
 class _SellerProfileScreenState extends State<SellerProfileScreen> {
   int selectedIndex = 0;
 
+  bool _hasData(String id) {
+    switch (id) {
+      case "announcements":
+      case "moderation":
+      case "rejected":
+      case "analytics":
+      case "wallets":
+      case "return":
+        return false;
+      default:
+        return true;
+    }
+  }
+
   Widget _getSelectedPage(int index) {
     final selectedMenuItem = accountMenuItems[index];
-    if (selectedMenuItem.text != null) {
+    if (!_hasData(selectedMenuItem.id)) {
       return EmptyAccountWidget(
         text: selectedMenuItem.text!,
         subtext: selectedMenuItem.subtext,

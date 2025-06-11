@@ -8,7 +8,7 @@ class EmptyAccountWidget extends StatelessWidget {
   @override
   Widget build(context) {
     return SizedBox(
-      width: 348,
+      width: 395,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -23,7 +23,6 @@ class EmptyAccountWidget extends StatelessWidget {
               textAlign: TextAlign.center,
               style: const TextStyle(
                 fontSize: 20,
-                fontWeight: FontWeight.bold,
               ),
             ),
           if (text != null && subtext != null) const SizedBox(height: 8),
