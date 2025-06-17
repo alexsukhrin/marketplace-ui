@@ -123,56 +123,66 @@ class _MainScreenDesktopState extends State<MainScreenDesktop> {
                     children: [
                       AppBarWidget(onMenuItemSelected: _onMenuItemSelected),
                       Expanded(
-                        child: SingleChildScrollView(
-                          controller: _scrollController,
-                          child: Padding(
-                            padding: EdgeInsets.only(
-                              left: 55,
-                              right: 55,
-                              bottom: _selectedPage == 'sellerProfile' ? 0 : 50,
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                if (_selectedPage == 'productDetails')
-                                  Padding(
-                                    padding: const EdgeInsetsDirectional.only(
-                                        bottom: 24),
-                                    child: BreadcrumbNavigation(
-                                      items: [
-                                        BreadcrumbItem(
-                                          label: 'Головна',
-                                          onTap: () =>
-                                              _onMenuItemSelected('home'),
-                                        ),
-                                        // BreadcrumbItem(
-                                        //   label: 'Взуття',
-                                        //   onTap: () => _onMenuItemSelected(
-                                        //       'categoryShoes'),
-                                        // ),
-                                        BreadcrumbItem(
-                                          label:
-                                              _selectedProduct?['title'] ?? '',
-                                        ),
-                                      ],
-                                    ),
+                        child: _selectedPage == 'sellerProfile'
+                            ? const Padding(
+                                padding: EdgeInsets.only(left: 55, right: 55),
+                                child: SellerProfileScreen(),
+                              )
+                            : SingleChildScrollView(
+                                controller: _scrollController,
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                    left: 55,
+                                    right: 55,
+                                    bottom: _selectedPage == 'sellerProfile'
+                                        ? 0
+                                        : 50,
                                   ),
-                                PageHeader(
-                                  currentPage: _selectedPage,
-                                  onMenuItemSelected: _onMenuItemSelected,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      if (_selectedPage == 'productDetails')
+                                        Padding(
+                                          padding:
+                                              const EdgeInsetsDirectional.only(
+                                                  bottom: 24),
+                                          child: BreadcrumbNavigation(
+                                            items: [
+                                              BreadcrumbItem(
+                                                label: 'Головна',
+                                                onTap: () =>
+                                                    _onMenuItemSelected('home'),
+                                              ),
+                                              // BreadcrumbItem(
+                                              //   label: 'Взуття',
+                                              //   onTap: () => _onMenuItemSelected(
+                                              //       'categoryShoes'),
+                                              // ),
+                                              BreadcrumbItem(
+                                                label: _selectedProduct?[
+                                                        'title'] ??
+                                                    '',
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      PageHeader(
+                                        currentPage: _selectedPage,
+                                        onMenuItemSelected: _onMenuItemSelected,
+                                      ),
+                                      const SizedBox(
+                                        height: 20,
+                                      ),
+                                      _getSelectedPageContent(),
+                                      if (_selectedPage != 'sellerProfile') ...[
+                                        const SizedBox(height: 80),
+                                        FooterSection(),
+                                      ],
+                                    ],
+                                  ),
                                 ),
-                                const SizedBox(
-                                  height: 20,
-                                ),
-                                _getSelectedPageContent(),
-                                if (_selectedPage != 'sellerProfile') ...[
-                                  const SizedBox(height: 80),
-                                  FooterSection(),
-                                ],
-                              ],
-                            ),
-                          ),
-                        ),
+                              ),
                       ),
                     ],
                   ),

@@ -16,52 +16,48 @@ class SellerSidebar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 198,
-      height: MediaQuery.of(context).size.height * 0.855,
-      child: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              padding: EdgeInsets.zero,
-              itemCount: accountMenuItems.length,
-              itemBuilder: (context, index) {
-                final item = menuItems[index];
+    return Column(
+      children: [
+        Expanded(
+          child: ListView.builder(
+            padding: EdgeInsets.zero,
+            itemCount: menuItems.length,
+            itemBuilder: (context, index) {
+              final item = menuItems[index];
 
-                List<Widget> widgets = [];
+              List<Widget> widgets = [];
+              widgets.add(
+                _buildItem(
+                  title: item.title,
+                  index: index,
+                  iconPath: item.icon,
+                  context: context,
+                ),
+              );
+              if (item.id == "messages" ||
+                  item.id == "rejected" ||
+                  item.id == "return") {
                 widgets.add(
-                  _buildItem(
-                    title: item.title,
-                    index: index,
-                    iconPath: item.icon,
-                    context: context,
-                  ),
-                );
-                if (item.id == "messages" ||
-                    item.id == "rejected" ||
-                    item.id == "return") {
-                  widgets.add(
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: SizedBox(
-                        width: 198,
-                        height: 30,
-                        child: Divider(
-                          color: Colors.grey.shade200,
-                        ),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: SizedBox(
+                      width: 198,
+                      height: 30,
+                      child: Divider(
+                        color: Colors.grey.shade200,
                       ),
                     ),
-                  );
-                }
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: widgets,
+                  ),
                 );
-              },
-            ),
+              }
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: widgets,
+              );
+            },
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/models/mock_data.dart';
+import 'package:flutter_application_1/constants/mock_data.dart';
 import 'package:flutter_application_1/models/user_chat.dart';
-import 'package:flutter_application_1/src/ui/widgets/seller_profile_widgets/chat_panel_widget.dart';
+import 'package:flutter_application_1/src/ui/widgets/seller_profile_widgets/chat/chat_panel_widget.dart';
 import 'package:flutter_application_1/src/ui/widgets/seller_profile_widgets/empty_account_widget.dart';
-import 'package:flutter_application_1/src/ui/widgets/seller_profile_widgets/messages_list_panel_widget.dart';
-import 'package:flutter_application_1/src/ui/widgets/seller_profile_widgets/messages_top_panel_widget.dart';
+import 'package:flutter_application_1/src/ui/widgets/seller_profile_widgets/chat/messages_list_panel_widget.dart';
+import 'package:flutter_application_1/src/ui/widgets/seller_profile_widgets/chat/messages_top_panel_widget.dart';
 
 class MessagesWidget extends StatefulWidget {
   const MessagesWidget({super.key});

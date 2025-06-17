@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/models/user_chat.dart';
-import 'package:flutter_application_1/src/ui/widgets/seller_profile_widgets/message_tile.dart';
+import 'package:flutter_application_1/src/ui/widgets/seller_profile_widgets/chat/message_tile.dart';
 
 class MessagesListPanel extends StatelessWidget {
   final List<UserChat> activeUsers;
