@@ -4,6 +4,7 @@ import 'package:flutter_application_1/src/ui/widgets/seller_profile_widgets/empt
 import 'package:flutter_application_1/src/ui/widgets/seller_profile_widgets/chat/messages_widget.dart';
 import 'package:flutter_application_1/src/ui/widgets/seller_profile_widgets/chat/seller_sidebar_widget.dart';
 import 'package:flutter_application_1/src/ui/widgets/seller_profile_widgets/profile/profile_widget.dart';
+import 'package:flutter_application_1/src/ui/widgets/seller_profile_widgets/settings/account_settings_widget.dart';
 import 'package:flutter_application_1/src/ui/widgets/seller_profile_widgets/support/support_widget.dart';
 
 class SellerProfileScreen extends StatefulWidget {
@@ -59,7 +60,7 @@ class _SellerProfileScreenState extends State<SellerProfileScreen> {
       case "support":
         return const SupportWidget();
       case "settings":
-        return const Center(child: Text('Сторінка налаштувань'));
+        return const AccountSettingsWidget();
       default:
         return const Center(child: Text('Невідома сторінка'));
     }
@@ -68,7 +69,6 @@ class _SellerProfileScreenState extends State<SellerProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         SizedBox(
           width: 198,

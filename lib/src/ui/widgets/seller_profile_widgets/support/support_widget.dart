@@ -7,17 +7,22 @@ class SupportWidget extends StatelessWidget {
 
   @override
   Widget build(context) {
-    return const SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          FaqsWidget(),
-          SizedBox(height: 34),
-          SupportFormWidget(),
-          SizedBox(
-            height: 16,
-          )
-        ],
+    return SingleChildScrollView(
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+          minHeight: MediaQuery.of(context).size.height,
+        ),
+        child: const IntrinsicHeight(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              FaqsWidget(),
+              SizedBox(height: 34),
+              SupportFormWidget(),
+              SizedBox(height: 16),
+            ],
+          ),
+        ),
       ),
     );
   }
