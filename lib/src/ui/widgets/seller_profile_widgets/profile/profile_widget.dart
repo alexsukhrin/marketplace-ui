@@ -56,7 +56,10 @@ class ProfileWidget extends StatelessWidget {
             ),
             OutlinedButton(
               onPressed: () {},
-              style: OutlinedButton.styleFrom(side: BorderSide.none),
+              style: OutlinedButton.styleFrom(
+                side: BorderSide.none,
+                foregroundColor: Colors.black,
+              ),
               child: const Text('Змінити фото'),
             ),
           ],

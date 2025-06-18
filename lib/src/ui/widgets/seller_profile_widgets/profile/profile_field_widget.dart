@@ -19,9 +19,9 @@ class ProfileField extends StatelessWidget {
             decoration: InputDecoration(
               hintText: 'Введіть тут',
               filled: true,
-              fillColor: Colors.grey.shade300,
-              hoverColor: Colors.grey.shade300,
-              focusColor: Colors.grey.shade300,
+              fillColor: Colors.grey.shade200,
+              hoverColor: Colors.grey.shade200,
+              focusColor: Colors.grey.shade200,
               border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide: BorderSide.none),
