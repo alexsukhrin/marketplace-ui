@@ -24,7 +24,7 @@ final List<AccountMenu> accountMenuItems = [
       icon: "assets/images/account_menu_icons/moderation.png",
       text: "У вас немає оголошень на модерації",
       subtext:
-          "Як тільки ви викладете нове оголошення наші модератори його переглянуть."),
+          "Як тільки ви викладете нове оголошення наші \nмодератори його переглянуть."),
   AccountMenu(
     id: "rejected",
     title: "Відхилені",
@@ -37,7 +37,7 @@ final List<AccountMenu> accountMenuItems = [
       icon: "assets/images/account_menu_icons/analytics.png",
       text: "Дані аналітики ще не зібрані",
       subtext:
-          "Щойно зʼявиться активність на платформі - тут буде відображено статистику."),
+          "Щойно зʼявиться активність на платформі - тут \nбуде відображено статистику."),
   AccountMenu(
       id: "wallets",
       title: "Кошти",
@@ -50,11 +50,11 @@ final List<AccountMenu> accountMenuItems = [
       title: "Повернення",
       icon: "assets/images/account_menu_icons/rotate.png",
       text: "Наразі немає запитів на повернення",
-      subtext: "Усі запити на повернення покупців відображатимуться тут."),
+      subtext: "Усі запити на повернення покупців \nвідображатимуться тут."),
   AccountMenu(
-    id: "help",
+    id: "support",
     title: "Допомога",
-    icon: "assets/images/account_menu_icons/help.png",
+    icon: "assets/images/account_menu_icons/support.png",
   ),
   AccountMenu(
     id: "settings",

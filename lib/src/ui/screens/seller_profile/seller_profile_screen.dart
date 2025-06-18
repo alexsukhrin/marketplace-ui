@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/constants/account_data_menu.dart';
 import 'package:flutter_application_1/src/ui/widgets/seller_profile_widgets/empty_account_widget.dart';
-import 'package:flutter_application_1/src/ui/widgets/seller_profile_widgets/messages_widget.dart';
-import 'package:flutter_application_1/src/ui/widgets/seller_profile_widgets/seller_sidebar_widget.dart';
+import 'package:flutter_application_1/src/ui/widgets/seller_profile_widgets/chat/messages_widget.dart';
+import 'package:flutter_application_1/src/ui/widgets/seller_profile_widgets/chat/seller_sidebar_widget.dart';
+import 'package:flutter_application_1/src/ui/widgets/seller_profile_widgets/profile/profile_widget.dart';
+import 'package:flutter_application_1/src/ui/widgets/seller_profile_widgets/support/support_widget.dart';
 
 class SellerProfileScreen extends StatefulWidget {
   const SellerProfileScreen({super.key});
@@ -41,7 +43,7 @@ class _SellerProfileScreenState extends State<SellerProfileScreen> {
       case "messages":
         return const MessagesWidget();
       case "account":
-        return const Center(child: Text("Сторінка 'Акаунт'"));
+        return const ProfileWidget();
       case "announcements":
         return const Center(child: Text("Тут буде список оголошень"));
       case "moderation":
@@ -54,36 +56,23 @@ class _SellerProfileScreenState extends State<SellerProfileScreen> {
         return const Center(child: Text("Сторінка 'Кошти'"));
       case "returns":
         return const Center(child: Text("Сторінка 'Повернення'"));
-      case "help":
-        return const Center(child: Text("Сторінка 'Допомога'"));
+      case "support":
+        return const SupportWidget();
       case "settings":
         return const Center(child: Text('Сторінка налаштувань'));
       default:
-        return Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Ви вибрали: ${selectedMenuItem.title}',
-                style: const TextStyle(fontSize: 24),
-              ),
-              const SizedBox(height: 16),
-              Text(
-                'У вас ще немає ${selectedMenuItem.title.toLowerCase()}',
-                style: const TextStyle(fontSize: 18, color: Colors.grey),
-              ),
-            ],
-          ),
-        );
+        return const Center(child: Text('Невідома сторінка'));
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      child: Row(
-        children: [
-          SellerSidebar(
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        SizedBox(
+          width: 198,
+          child: SellerSidebar(
             selectedIndex: selectedIndex,
             onItemSelected: (index) {
               setState(() {
@@ -92,12 +81,12 @@ class _SellerProfileScreenState extends State<SellerProfileScreen> {
             },
             menuItems: accountMenuItems,
           ),
-          const SizedBox(width: 56),
-          Expanded(
-            child: Center(child: _getSelectedPage(selectedIndex)),
-          ),
-        ],
-      ),
+        ),
+        const SizedBox(width: 56),
+        Expanded(
+          child: _getSelectedPage(selectedIndex),
+        ),
+      ],
     );
   }
 }

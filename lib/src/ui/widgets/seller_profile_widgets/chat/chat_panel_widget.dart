@@ -3,8 +3,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/models/user_chat.dart';
 import 'package:flutter_application_1/models/chat_message.dart';
-import 'package:flutter_application_1/src/ui/widgets/seller_profile_widgets/chat_user_info_panel_widget.dart';
-import 'package:flutter_application_1/src/ui/widgets/seller_profile_widgets/message_input_field.dart';
+import 'package:flutter_application_1/src/ui/widgets/seller_profile_widgets/chat/chat_user_info_panel_widget.dart';
+import 'package:flutter_application_1/src/ui/widgets/seller_profile_widgets/chat/message_input_field.dart';
 
 class ChatPanel extends StatefulWidget {
   final UserChat userChat;
