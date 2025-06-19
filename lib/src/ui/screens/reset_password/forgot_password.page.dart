@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/constants/colors.dart';
 
 import '../../../exceptions/user_not_found_exception.dart';
 import '../../../services/password_reset_service.dart';
@@ -102,8 +103,6 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -129,10 +128,10 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                         borderRadius: BorderRadius.circular(200),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.orange.withOpacity(0.5),
+                            color: Colors.orange.withAlpha((0.5 * 255).round()),
                             blurRadius: 200,
                             spreadRadius: 20,
-                            offset: Offset(0, -10),
+                            offset: const Offset(0, -10),
                           ),
                         ],
                       ),
@@ -152,7 +151,6 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
                           if (!isDesktop)
                             const Center(
@@ -171,13 +169,22 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                   Text(
                                     'Відновлення паролю',
                                     textAlign: TextAlign.center,
-                                    style: textTheme.displayLarge?.copyWith(),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleLarge
+                                        ?.copyWith(fontSize: 32),
                                   ),
-                                  const SizedBox(height: 8),
+                                  const SizedBox(height: 4),
                                   Text(
                                     'Введіть електронну пошту за якою було зареєстровано акаунт',
                                     textAlign: TextAlign.center,
-                                    style: textTheme.bodyMedium?.copyWith(),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.copyWith(
+                                          color: TColors.greyUltraDark,
+                                          fontSize: 20,
+                                        ),
                                   ),
                                 ],
                               ),

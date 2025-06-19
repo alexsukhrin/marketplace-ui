@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/constants/colors.dart';
 import 'package:flutter_application_1/src/ui/screens/reset_password/forgot_password.page.dart';
-import '../../themes/app_theme.dart';
 
 class ForgotPasswordButton extends StatelessWidget {
   final String? email;
@@ -8,13 +8,15 @@ class ForgotPasswordButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-
     return SizedBox(
-      width: 354,
+      width: 409,
       child: Align(
         alignment: Alignment.centerRight,
         child: TextButton(
+          style: ButtonStyle(
+            overlayColor: WidgetStateProperty.all(Colors.transparent),
+            padding: WidgetStateProperty.all(EdgeInsets.zero),
+          ),
           onPressed: () {
             Navigator.push(
               context,
@@ -23,14 +25,11 @@ class ForgotPasswordButton extends StatelessWidget {
               ),
             );
           },
-          child: Text(
-            'Не пам\'ятаю пароль',
-            style: textTheme.bodySmall?.copyWith(
-              color: AppTheme.linkTextColor,
-              fontSize: 16,
-              fontWeight: FontWeight.w400,
-            ),
-          ),
+          child: Text('Не пам\'ятаю пароль',
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyLarge
+                  ?.copyWith(color: TColors.orange)),
         ),
       ),
     );

@@ -29,6 +29,9 @@ class TColors {
   static const Color greyLight = Color(0xFFF2F2F7);
   static const Color grey = Color(0xFFEFEFEF);
 
+  static const Color greyMediumLight = Color(0xFFB0B0B0);
+  static const Color greyMedium = Color(0xFF757575);
+
   static const Color greyDark = Color(0xFFB6B6B6);
   static const Color greyDarker = Color(0xFF949494);
   static const Color greyDarkest = Color(0xFF464646);

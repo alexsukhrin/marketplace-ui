@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/constants/colors.dart';
 import 'package:flutter_application_1/src/ui/screens/login/login_page.dart';
 import 'package:flutter_application_1/src/ui/widgets/shared_widgets/language_selector.dart';
 
@@ -7,11 +8,8 @@ import '../../../services/auth_service.dart';
 
 import '../../widgets/auth_widgets/auth_button.dart';
 import '../../widgets/auth_widgets/auth_field.dart';
-// import '../../widgets/auth_widgets/form_header.dart';
 import '../../../utils/validators.dart';
 import '../../widgets/loading_dialog.dart';
-
-import '../../themes/app_theme.dart';
 
 class RegistrationPage extends StatefulWidget {
   const RegistrationPage({super.key});
@@ -129,7 +127,6 @@ class RegistrationPageState extends State<RegistrationPage> {
         child: ConstrainedBox(
           constraints: const BoxConstraints(
             maxWidth: 1440,
-            maxHeight: 1024,
           ),
           child: LayoutBuilder(
             builder: (context, constraints) {
@@ -159,32 +156,22 @@ class RegistrationPageState extends State<RegistrationPage> {
         ),
         body: Center(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.all(16.0),
             child: Column(
-              children: <Widget>[
-                // const FormHeader(
-                //   text: 'SHUM',
-                // ),
-                // const SizedBox(height: 30),
-                Column(
-                  children: [
-                    Text(
-                      'Реєстрація',
-                      textAlign: TextAlign.center,
-                      style: textTheme.displayLarge?.copyWith(
-                        fontSize: 32,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      'Отримайте більше можливостей\nстворивши акаунт',
-                      textAlign: TextAlign.center,
-                      style: textTheme.bodyMedium?.copyWith(
-                        fontSize: 20,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ],
+              children: [
+                const SizedBox(height: 76),
+                Text(
+                  'Реєстрація',
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge
+                      ?.copyWith(fontSize: 32),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Отримайте більше можливостей\nстворивши акаунт',
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(height: 48),
                 Form(
@@ -243,7 +230,7 @@ class RegistrationPageState extends State<RegistrationPage> {
                         showCounter: true,
                         isObscureText: true,
                       ),
-                      const SizedBox(height: 16),
+                      const SizedBox(height: 40),
                       AuthButton(
                         text: 'Зареєструватися',
                         isButtonDisabled: _isButtonDisabled,
@@ -256,6 +243,11 @@ class RegistrationPageState extends State<RegistrationPage> {
                         },
                       ),
                       TextButton(
+                        style: ButtonStyle(
+                          overlayColor:
+                              WidgetStateProperty.all(Colors.transparent),
+                          padding: WidgetStateProperty.all(EdgeInsets.zero),
+                        ),
                         onPressed: () {
                           Navigator.push(
                             context,
@@ -265,18 +257,16 @@ class RegistrationPageState extends State<RegistrationPage> {
                           );
                         },
                         child: RichText(
-                          text: const TextSpan(
-                            style: TextStyle(
-                              color: Colors.black,
-                            ),
-                            children: [
+                          text: TextSpan(
+                            style: Theme.of(context).textTheme.bodyMedium,
+                            children: const [
                               TextSpan(
                                 text: 'Вже маєте акаунт? ',
                               ),
                               TextSpan(
                                 text: 'Увійти',
                                 style: TextStyle(
-                                  color: AppTheme.linkTextColor,
+                                  color: TColors.orange,
                                 ),
                               ),
                             ],
