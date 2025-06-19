@@ -5,7 +5,7 @@ class LoginHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       children: [
         // const SizedBox(height: 111),
         // const FormHeader(
@@ -14,13 +14,10 @@ class LoginHeader extends StatelessWidget {
         Text(
           'Вхід',
           textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 32,
-            fontWeight: FontWeight.bold,
-          ),
+          style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 32),
         ),
-        SizedBox(height: 8),
-        Text(
+        const SizedBox(height: 8),
+        const Text(
           'Вітаємо знову у Shum! ',
           textAlign: TextAlign.center,
           style: TextStyle(

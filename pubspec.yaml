@@ -24,6 +24,7 @@ dependencies:
   logger: ^1.4.0
   http: ^1.2.2
   dropdown_button2: ^2.3.9
+  flutter_riverpod: ^2.6.1
 
 dev_dependencies:
   flutter_test:
