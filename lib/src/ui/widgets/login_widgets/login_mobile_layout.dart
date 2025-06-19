@@ -31,7 +31,6 @@ class LoginMobileLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Назад'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
