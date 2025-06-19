@@ -41,7 +41,6 @@ class AuthFieldState extends State<AuthField> {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
     final isValid =
         widget.showSuffixIcon?.call(widget.controller.text) ?? false;
     return Column(
@@ -49,12 +48,13 @@ class AuthFieldState extends State<AuthField> {
       children: [
         Text(
           widget.labelText,
-          style: textTheme.bodyMedium?.copyWith(color: AppTheme.blackText),
+          style:
+              Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: 19),
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: 4),
         ConstrainedBox(
           constraints: BoxConstraints(
-            maxWidth: widget.maxWidth ?? 354,
+            maxWidth: widget.maxWidth ?? 409,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -63,6 +63,8 @@ class AuthFieldState extends State<AuthField> {
                 controller: widget.controller,
                 decoration: InputDecoration(
                   hintText: widget.hintText,
+                  contentPadding:
+                      const EdgeInsets.symmetric(vertical: 16, horizontal: 22),
                   hintStyle: const TextStyle(
                     color: AppTheme.hintTesxtGrey,
                   ),
@@ -100,8 +102,8 @@ class AuthFieldState extends State<AuthField> {
                       ? IconButton(
                           icon: Icon(
                             _isPasswordVisible
-                                ? Icons.visibility
-                                : Icons.visibility_off,
+                                ? Icons.visibility_outlined
+                                : Icons.visibility_off_outlined,
                           ),
                           onPressed: () {
                             setState(() {

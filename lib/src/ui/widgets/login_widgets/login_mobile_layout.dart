@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/constants/colors.dart';
 import 'package:flutter_application_1/src/ui/screens/registration/registration_page.dart';
 import 'package:flutter_application_1/src/ui/widgets/login_widgets/forgot_password_button.dart';
 import 'package:flutter_application_1/src/ui/widgets/login_widgets/login_header.dart';
@@ -6,7 +7,6 @@ import 'package:flutter_application_1/src/ui/widgets/auth_widgets/auth_field.dar
 import 'package:flutter_application_1/src/ui/widgets/auth_widgets/auth_button.dart';
 import 'package:flutter_application_1/src/ui/widgets/shared_widgets/language_selector.dart';
 import 'package:flutter_application_1/src/ui/widgets/social_media/social_media.dart';
-import 'package:flutter_application_1/src/ui/themes/app_theme.dart';
 import 'package:flutter_application_1/src/utils/validators.dart';
 
 class LoginMobileLayout extends StatelessWidget {
@@ -46,7 +46,6 @@ class LoginMobileLayout extends StatelessWidget {
       body: LayoutBuilder(
         builder: (context, constraints) {
           return SingleChildScrollView(
-            padding: const EdgeInsets.all(16.0),
             child: ConstrainedBox(
               constraints: BoxConstraints(
                 minHeight: constraints.maxHeight,
@@ -56,9 +55,7 @@ class LoginMobileLayout extends StatelessWidget {
                   key: formKey,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      const SizedBox(height: 40),
                       const LoginHeader(),
                       const SizedBox(height: 40),
                       AuthField(
@@ -82,7 +79,7 @@ class LoginMobileLayout extends StatelessWidget {
                           email: emailController.text.isNotEmpty
                               ? emailController.text
                               : null),
-                      const SizedBox(height: 30),
+                      const SizedBox(height: 40),
                       AuthButton(
                         text: 'Увійти в акаунт',
                         onPressed: onLogin,
@@ -90,6 +87,11 @@ class LoginMobileLayout extends StatelessWidget {
                       ),
                       const SizedBox(height: 5),
                       TextButton(
+                        style: ButtonStyle(
+                          overlayColor:
+                              WidgetStateProperty.all(Colors.transparent),
+                          padding: WidgetStateProperty.all(EdgeInsets.zero),
+                        ),
                         onPressed: () {
                           Navigator.push(
                             context,
@@ -100,18 +102,13 @@ class LoginMobileLayout extends StatelessWidget {
                         },
                         child: RichText(
                           text: TextSpan(
-                            style: textTheme.bodyMedium?.copyWith(),
+                            style: Theme.of(context).textTheme.bodyMedium,
                             children: const [
-                              TextSpan(
-                                  text: 'Ще не маєте акаунт? ',
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                  )),
+                              TextSpan(text: 'Ще не маєте акаунт? '),
                               TextSpan(
                                 text: ' Зареєструватись',
                                 style: TextStyle(
-                                  fontSize: 15,
-                                  color: AppTheme.linkTextColor,
+                                  color: TColors.orange,
                                 ),
                               ),
                             ],
@@ -135,11 +132,13 @@ class LoginMobileLayout extends StatelessWidget {
                                   const EdgeInsets.symmetric(horizontal: 12.0),
                               child: Text(
                                 'Або',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.grey.shade500,
-                                  fontWeight: FontWeight.w500,
-                                ),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall
+                                    ?.copyWith(
+                                      color: TColors.greyDarker,
+                                      fontSize: 17,
+                                    ),
                               ),
                             ),
                             SizedBox(

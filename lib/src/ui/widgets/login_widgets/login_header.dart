@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/constants/colors.dart';
 
 class LoginHeader extends StatelessWidget {
   const LoginHeader({super.key});
@@ -17,13 +18,13 @@ class LoginHeader extends StatelessWidget {
           style: Theme.of(context).textTheme.titleLarge?.copyWith(fontSize: 32),
         ),
         const SizedBox(height: 8),
-        const Text(
+        Text(
           'Вітаємо знову у Shum! ',
           textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 20,
-            color: Color(0xFF757575),
-          ),
+          style: Theme.of(context)
+              .textTheme
+              .titleMedium
+              ?.copyWith(color: TColors.greyDark),
         ),
       ],
     );

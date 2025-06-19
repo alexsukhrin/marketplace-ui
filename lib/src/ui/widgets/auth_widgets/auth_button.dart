@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/constants/colors.dart';
 
 import '../../themes/app_theme.dart';
 
@@ -19,7 +20,7 @@ class AuthButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
-      constraints: const BoxConstraints(maxWidth: 354),
+      constraints: const BoxConstraints(maxWidth: 409),
       child: ElevatedButton(
         onPressed: isButtonDisabled == true ? null : onPressed,
         style: ElevatedButton.styleFrom(
@@ -27,7 +28,7 @@ class AuthButton extends StatelessWidget {
               ? AppTheme.disabledButtonColor
               : AppTheme.activeButtonColor,
           foregroundColor: AppTheme.witeText,
-          minimumSize: const Size(354, 52),
+          minimumSize: const Size(409, 52),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
           ),
@@ -35,11 +36,10 @@ class AuthButton extends StatelessWidget {
         ),
         child: Text(
           text,
-          style: const TextStyle(
-            color: AppTheme.witeText,
-            fontSize: 18,
-            fontWeight: FontWeight.w400,
-          ),
+          style: Theme.of(context)
+              .textTheme
+              .titleSmall
+              ?.copyWith(fontSize: 18, color: TColors.white),
         ),
       ),
     );
