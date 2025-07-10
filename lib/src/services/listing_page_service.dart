@@ -99,25 +99,25 @@ class ListingPageService {
 
       request.headers['Authorization'] = 'Bearer $token';
       // print('Attached files: ${request.files.map((f) => f.filename).toList()}');
-      print('🔵 Sending request to: $uri');
-      print('🔵 Request fields: ${request.fields}');
-      print('🔵 Request headers: ${request.headers}');
+      // print('🔵 Sending request to: $uri');
+      // print('🔵 Request fields: ${request.fields}');
+      // print('🔵 Request headers: ${request.headers}');
 
       var streamedResponse = await request.send();
       var response = await http.Response.fromStream(streamedResponse);
 
-      print('🟣 Response status: ${response.statusCode}');
-      print('🟣 Response body: ${response.body}');
+      // print('🟣 Response status: ${response.statusCode}');
+      // print('🟣 Response body: ${response.body}');
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         _showPopup(context, 'Продукт відправлений на модерацію');
       } else {
         _showPopup(context, 'Помилка додавання продукту: ${response.body}');
-        print('Error body: ${response.body}');
+        // print('Error body: ${response.body}');
       }
     } catch (e) {
       _showPopup(context, 'Помилка при відправці даних');
-      print('Error sending product data: $e');
+      // print('Error sending product data: $e');
     }
   }
 

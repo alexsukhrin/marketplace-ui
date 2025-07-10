@@ -15,7 +15,6 @@ class FavoriteButtonState extends State<FavoriteButton> {
   void toggleFavorite() {
     setState(() {
       isFavorite = !isFavorite;
-      print("Додано в улюблене: $isFavorite");
     });
   }
 

@@ -41,7 +41,7 @@ class ProductInfoState extends State<ProductInfo> {
                   ),
                   const SizedBox(width: 10),
                   MouseRegion(
-                    onEnter: (_) => print('Cursor is over the icon'),
+                    onEnter: (_) => {},
                     cursor: SystemMouseCursors.click,
                     child: Transform(
                       alignment: Alignment.center,

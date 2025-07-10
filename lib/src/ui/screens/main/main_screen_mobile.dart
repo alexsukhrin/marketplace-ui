@@ -19,7 +19,6 @@ class MainScreenMobile extends StatelessWidget {
               SearchField(
                 onSearch: () {
                   // Implement search logic
-                  print("Search icon tapped!");
                 },
               ),
               // CustomCarousel(),

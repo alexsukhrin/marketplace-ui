@@ -11,9 +11,6 @@ class ProductService {
     final token = await AuthStorage.getToken();
     final url = Uri.parse('$_baseUrl/api/v1/products');
 
-    // print('📡 Fetching products from $url');
-    // print('🔐 Using token: $token');
-
     try {
       final response = await http.get(
         url,
@@ -21,9 +18,6 @@ class ProductService {
           'Authorization': 'Bearer $token',
         },
       );
-
-      // print('📥 Response status: ${response.statusCode}');
-      // print('📦 Response body: ${utf8.decode(response.bodyBytes)}');
 
       if (response.statusCode == 200) {
         final List<dynamic> products =
@@ -34,7 +28,6 @@ class ProductService {
             'Failed to load products. Status code: ${response.statusCode}');
       }
     } catch (e) {
-      print('🔴 Error fetching products: $e');
       throw Exception('Error fetching products: $e');
     }
   }

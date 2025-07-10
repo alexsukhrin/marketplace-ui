@@ -25,14 +25,6 @@ class _SupportFormWidgetState extends State<SupportFormWidget> {
 
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
-      final name = _enteredName.text.trim();
-      final contact = _enteredContact.text.trim();
-      final message = _enteredText.text.trim();
-
-      print('🔸 Name: $name');
-      print('🔸 Contact: $contact');
-      print('🔸 Message: $message');
-
       _enteredName.clear();
       _enteredContact.clear();
       _enteredText.clear();

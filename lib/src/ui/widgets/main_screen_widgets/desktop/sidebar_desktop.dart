@@ -28,7 +28,7 @@ class _SidebarWidgetState extends State<SidebarWidget> {
         (Route<dynamic> route) => false,
       );
     } catch (e) {
-      print('Error during logout: $e');
+      // print('Error during logout: $e');
     }
   }
 

@@ -7,10 +7,10 @@ class TokenBasedWidget extends StatefulWidget {
   const TokenBasedWidget({super.key, required this.child});
 
   @override
-  _TokenBasedWidgetState createState() => _TokenBasedWidgetState();
+  TokenBasedWidgetState createState() => TokenBasedWidgetState();
 }
 
-class _TokenBasedWidgetState extends State<TokenBasedWidget> {
+class TokenBasedWidgetState extends State<TokenBasedWidget> {
   bool hasToken = false;
 
   @override

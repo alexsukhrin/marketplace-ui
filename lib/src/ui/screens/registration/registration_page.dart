@@ -85,8 +85,8 @@ class RegistrationPageState extends State<RegistrationPage> {
         }
       } catch (e, stackTrace) {
         LoadingDialog.hide(context);
-        print('Caught error: $e');
-        print('Stack trace: $stackTrace');
+        // print('Caught error: $e');
+        // print('Stack trace: $stackTrace');
 
         showDialog(
           context: context,

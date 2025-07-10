@@ -31,7 +31,7 @@ class NewOffersWidgetState extends State<NewOffersWidget> {
         isFavorite = List<bool>.filled(latest.length, false);
       });
     } catch (e) {
-      print('Error loading latest offers: $e');
+      // print('Error loading latest offers: $e');
     }
   }
 

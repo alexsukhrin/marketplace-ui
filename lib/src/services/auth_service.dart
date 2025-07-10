@@ -22,7 +22,7 @@ class AuthService {
       );
 
       final responseBody = jsonDecode(response.body);
-      print('Response body: $responseBody');
+      // print('Response body: $responseBody');
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         if (responseBody.containsKey('token') &&
@@ -32,7 +32,7 @@ class AuthService {
 
           if (token.isNotEmpty) {
             await AuthStorage.saveToken(token);
-            print(message);
+            // print(message);
           } else {
             throw Exception('Token not found in the response.');
           }
@@ -51,7 +51,7 @@ class AuthService {
         throw Exception('Помилка реєстрації: ${response.statusCode}');
       }
     } catch (e) {
-      print('Помилка підключення: $e');
+      // print('Помилка підключення: $e');
     }
   }
 
@@ -79,17 +79,17 @@ class AuthService {
           await AuthStorage.saveToken(responseData['token']);
         }
 
-        print('Логін успішний: $responseData');
+        // print('Логін успішний: $responseData');
         return responseData;
       } else {
-        print('Помилка логіну: ${response.statusCode} ${response.body}');
+        // print('Помилка логіну: ${response.statusCode} ${response.body}');
         return {
           'success': false,
           'message': 'Невірна електронна пошта або пароль',
         };
       }
     } catch (e) {
-      print('Помилка підключення до API: $e');
+      // print('Помилка підключення до API: $e');
       throw Exception('Помилка підключення до API: $e');
     }
   }
@@ -108,13 +108,13 @@ class AuthService {
       );
 
       if (response.statusCode == 200) {
-        print('Email для відновлення паролю надіслано: ${response.body}');
+        // print('Email для відновлення паролю надіслано: ${response.body}');
       } else {
-        print(
-            'Помилка відправлення email: ${response.statusCode} ${response.body}');
+        // print(
+        //     'Помилка відправлення email: ${response.statusCode} ${response.body}');
       }
     } catch (e) {
-      print('Помилка підключення: $e');
+      // print('Помилка підключення: $e');
     }
   }
 }

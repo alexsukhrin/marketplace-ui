@@ -5,10 +5,10 @@ class SocialButton extends StatelessWidget {
   final VoidCallback onTap;
 
   const SocialButton({
-    Key? key,
+    super.key,
     required this.icon,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class SocialButton extends StatelessWidget {
           color: Colors.grey.shade100,
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.1),
+              color: Color.fromRGBO(0, 0, 0, 0.1),
               blurRadius: 5,
               spreadRadius: 2,
             ),

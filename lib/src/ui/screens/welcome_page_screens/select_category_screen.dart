@@ -23,7 +23,6 @@ class SelectCategoryScreenState extends State<SelectCategoryScreen> {
   @override
   void initState() {
     super.initState();
-    print('Fetching categories...');
     fetchCategories();
   }
 
@@ -34,7 +33,6 @@ class SelectCategoryScreenState extends State<SelectCategoryScreen> {
         categories = fetchedCategories;
         isLoading = false;
       });
-      print(categories);
     } catch (e) {
       setState(() {
         isLoading = false;

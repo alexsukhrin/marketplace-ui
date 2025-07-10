@@ -45,7 +45,7 @@ class CategoryService {
         throw Exception('Failed to fetch categories: ${response.body}');
       }
     } catch (e) {
-      print('Error fetching categories: $e');
+      // print('Error fetching categories: $e');
       throw Exception('Error fetching categories: $e');
     }
   }
@@ -78,13 +78,13 @@ class CategoryService {
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         // final responseData = jsonDecode(response.body);
-        print('Categories submitted successfully: ${response.body}');
+        // print('Categories submitted successfully: ${response.body}');
       } else {
         throw Exception(
             'Error submitting categories: ${response.statusCode} ${response.body}');
       }
     } catch (e) {
-      print('Error submitting categories: $e');
+      // print('Error submitting categories: $e');
       throw Exception('Error submitting categories: $e');
     }
   }

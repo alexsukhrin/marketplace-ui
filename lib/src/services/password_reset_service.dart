@@ -35,7 +35,6 @@ class PasswordResetService {
         throw Exception(errorResponse['error'] ?? 'Невідома помилка');
       }
     } catch (e) {
-      print('Caught error: $e');
       rethrow;
     }
   }
@@ -66,7 +65,6 @@ class PasswordResetService {
         throw Exception('Помилка: ${response.body}');
       }
     } catch (e) {
-      print("error");
       if (e is InvalidOtpException) {
         rethrow;
       }
@@ -93,13 +91,10 @@ class PasswordResetService {
       );
 
       if (response.statusCode == 200) {
-        print('Пароль успішно змінено: ${response.body}');
       } else {
-        print('Помилка зміни паролю: ${response.statusCode} ${response.body}');
         throw Exception('Помилка: ${response.body}');
       }
     } catch (e) {
-      print('Помилка підключення: $e');
       throw Exception('Помилка підключення до сервера');
     }
   }

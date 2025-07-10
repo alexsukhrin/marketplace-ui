@@ -21,7 +21,6 @@ class AuthStorage {
     } else {
       await _secureStorage?.write(key: _tokenKey, value: token);
     }
-    print('Token saved: $token');
   }
 
   static Future<String?> getToken() async {

@@ -43,7 +43,7 @@ class _CategoryWidgetState extends State<CategoryWidget> {
         _categories = categories;
       });
     } catch (e) {
-      print('Error loading categories: $e');
+      // print('Error loading categories: $e');
     }
   }
 
@@ -55,7 +55,7 @@ class _CategoryWidgetState extends State<CategoryWidget> {
 
   void _navigateToCategory(int categoryId) {
     // navigation logic
-    print('Navigating to category: $categoryId');
+    // print('Navigating to category: $categoryId');
   }
 
   @override
