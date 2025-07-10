@@ -32,4 +32,4 @@ jobs:
         run: flutter build web
 
       - name: Build Docker image
-        run: docker build -t test-nginx-web -f Dockerfile . 
+        run: docker build -t marketplace-web -f Dockerfile . 
