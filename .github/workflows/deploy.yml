@@ -10,12 +10,13 @@ jobs:
     environment: prod
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v4
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.22.0'
+          flutter-version: 'stable'
 
       - name: Install dependencies
         run: flutter pub get
