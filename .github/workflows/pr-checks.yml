@@ -1,0 +1,35 @@
+name: PR Checks
+
+on:
+  pull_request:
+    branches: [ master, main ]
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.19.6'
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Run formatter
+        run: flutter format --set-exit-if-changed .
+
+      - name: Run analyzer
+        run: flutter analyze
+
+      - name: Run tests
+        run: flutter test
+
+      - name: Build web
+        run: flutter build web
+
+      - name: Build Docker image
+        run: docker build -t test-nginx-web -f Dockerfile . 
