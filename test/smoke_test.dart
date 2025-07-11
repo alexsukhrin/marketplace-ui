@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() {
-  testWidgets('smoke test: додаток успішно запускається', (WidgetTester tester) async {
+  testWidgets('smoke test: додаток успішно запускається',
+      (WidgetTester tester) async {
     await tester.pumpWidget(
       const ProviderScope(
         child: Marcketplace(),
@@ -12,4 +13,4 @@ void main() {
     );
     expect(find.byType(Marcketplace), findsOneWidget);
   });
-} 
+}
