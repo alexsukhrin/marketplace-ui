@@ -58,9 +58,13 @@ class _LoginPageState extends State<LoginPage> {
       final response = await AuthService.loginUser(email, password);
       LoadingDialog.hide(context);
 
-      if (response.containsKey('token')) {
-        final token = response['token'];
-        await AuthStorage.saveToken(token);
+      if (response.containsKey('access-token')) {
+        final accessToken = response['access-token'];
+        final refreshToken = response['refresh-token'];
+
+        print('TOKEN!! $accessToken');
+        await AuthStorage.saveAccessToken(accessToken);
+        await AuthStorage.saveRefreshToken(refreshToken);
 
         if (mounted) {
           Navigator.pushReplacementNamed(context, '/main');
@@ -75,8 +79,7 @@ class _LoginPageState extends State<LoginPage> {
     } catch (e) {
       LoadingDialog.hide(context);
       if (mounted) {
-        _showErrorDialog(
-            context, 'Щось пішло не так. Будь ласка, спробуйте пізніше.');
+        Navigator.pushReplacementNamed(context, '/notFoundScreen');
       }
     }
   }

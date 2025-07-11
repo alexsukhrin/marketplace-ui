@@ -5,7 +5,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AuthStorage {
   static FlutterSecureStorage? _secureStorage;
   static SharedPreferences? _prefs;
-  static const _tokenKey = 'auth_token';
+  static const _accessTokenKey = 'access_token';
+  static const _refreshTokenKey = 'refresh_token';
 
   static Future<void> init() async {
     if (kIsWeb) {
@@ -15,28 +16,42 @@ class AuthStorage {
     }
   }
 
-  static Future<void> saveToken(String token) async {
+  static Future<void> saveAccessToken(String token) async {
     if (kIsWeb) {
-      await _prefs?.setString(_tokenKey, token);
+      await _prefs?.setString(_accessTokenKey, token);
     } else {
-      await _secureStorage?.write(key: _tokenKey, value: token);
-    }
-    print('Token saved: $token');
-  }
-
-  static Future<String?> getToken() async {
-    if (kIsWeb) {
-      return _prefs?.getString(_tokenKey);
-    } else {
-      return await _secureStorage?.read(key: _tokenKey);
+      await _secureStorage?.write(key: _accessTokenKey, value: token);
     }
   }
 
-  static Future<void> deleteToken() async {
+  static Future<void> saveRefreshToken(String token) async {
     if (kIsWeb) {
-      await _prefs?.remove(_tokenKey);
+      await _prefs?.setString(_refreshTokenKey, token);
     } else {
-      await _secureStorage?.delete(key: _tokenKey);
+      await _secureStorage?.write(key: _refreshTokenKey, value: token);
     }
+  }
+
+  static Future<String?> getAccessToken() async {
+    return kIsWeb
+        ? _prefs?.getString(_accessTokenKey)
+        : await _secureStorage?.read(key: _accessTokenKey);
+  }
+
+  static Future<String?> getRefreshToken() async {
+    return kIsWeb
+        ? _prefs?.getString(_refreshTokenKey)
+        : await _secureStorage?.read(key: _refreshTokenKey);
+  }
+
+  static Future<void> deleteTokens() async {
+    if (kIsWeb) {
+      await _prefs?.remove(_accessTokenKey);
+      await _prefs?.remove(_refreshTokenKey);
+    } else {
+      await _secureStorage?.delete(key: _accessTokenKey);
+      await _secureStorage?.delete(key: _refreshTokenKey);
+    }
+    print('Access & refresh tokens deleted');
   }
 }

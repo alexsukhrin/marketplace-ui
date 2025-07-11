@@ -102,7 +102,7 @@ class _PageNotFoundScreenState extends State<PageNotFoundScreen> {
                     ),
                   ),
                   onPressed: () {
-                    Navigator.pushNamed(context, "/main");
+                    Navigator.pushNamed(context, "/");
                   },
                   child: const Text("На головну сторінку",
                       style: TextStyle(color: Colors.white, fontSize: 16)),

@@ -32,8 +32,8 @@ class RegistrationPageState extends State<RegistrationPage> {
 
   Map<String, String> getFormData() {
     return {
-      "first_name": _firstNameController.text,
-      "last_name": _lastNameController.text,
+      "first-name": _firstNameController.text,
+      "last-name": _lastNameController.text,
       "email": _emailController.text,
       "password": _passwordController.text,
     };

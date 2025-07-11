@@ -20,7 +20,7 @@ class _TokenBasedWidgetState extends State<TokenBasedWidget> {
   }
 
   Future<void> _checkToken() async {
-    final token = await AuthStorage.getToken();
+    final token = await AuthStorage.getAccessToken();
     setState(() {
       // hasToken = token != null && token.isNotEmpty;
       hasToken = token != null;
