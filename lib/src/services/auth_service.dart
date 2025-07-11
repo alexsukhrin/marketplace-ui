@@ -6,7 +6,7 @@ import 'auth_storage.dart';
 
 class AuthService {
   static const String _baseUrl =
-      'http://ec2-18-197-114-210.eu-central-1.compute.amazonaws.com:8032';
+      'http://ec2-18-153-92-5.eu-central-1.compute.amazonaws.com:8032';
 
   static Future<void> registerUser(Map<String, String> formData) async {
     final url = Uri.parse('$_baseUrl/api/v1/auth/register');
@@ -27,11 +27,13 @@ class AuthService {
       if (response.statusCode == 200 || response.statusCode == 201) {
         if (responseBody.containsKey('token') &&
             responseBody.containsKey('message')) {
-          final token = responseBody['token'] ?? '';
+          final accessToken = responseBody['access-token'];
+          final refreshToken = responseBody['refresh-token'];
           final message = responseBody['message'] ?? 'Повідомлення не надано';
 
-          if (token.isNotEmpty) {
-            await AuthStorage.saveToken(token);
+          if (accessToken != null && refreshToken != null) {
+            await AuthStorage.saveAccessToken(accessToken);
+            await AuthStorage.saveRefreshToken(refreshToken);
             print(message);
           } else {
             throw Exception('Token not found in the response.');
@@ -75,8 +77,11 @@ class AuthService {
       if (response.statusCode == 200) {
         var responseData = jsonDecode(response.body);
 
-        if (responseData.containsKey('token')) {
-          await AuthStorage.saveToken(responseData['token']);
+        if (responseData.containsKey('access-token')) {
+          await AuthStorage.saveAccessToken(responseData['access-token']);
+        }
+        if (responseData.containsKey('refresh-token')) {
+          await AuthStorage.saveRefreshToken(responseData['refresh-token']);
         }
 
         print('Логін успішний: $responseData');
@@ -115,6 +120,47 @@ class AuthService {
       }
     } catch (e) {
       print('Помилка підключення: $e');
+    }
+  }
+
+  static Future<bool> refreshAccessToken() async {
+    final url = Uri.parse('$_baseUrl/api/v1/auth/refresh');
+    final refreshToken = await AuthStorage.getRefreshToken();
+
+    if (refreshToken == null) {
+      print('Refresh-token відсутній');
+      return false;
+    }
+
+    try {
+      final response = await http.post(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $refreshToken',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
+
+        if (responseData.containsKey('access-token')) {
+          await AuthStorage.saveAccessToken(responseData['access-token']);
+        }
+        if (responseData.containsKey('refresh-token')) {
+          await AuthStorage.saveRefreshToken(responseData['refresh-token']);
+        }
+
+        print('Токен успішно оновлено');
+        return true;
+      } else {
+        print('Помилка оновлення токена: ${response.statusCode}');
+        return false;
+      }
+    } catch (e) {
+      print('Помилка при оновленні токена: $e');
+      return false;
     }
   }
 }

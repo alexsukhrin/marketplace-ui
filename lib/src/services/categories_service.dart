@@ -8,7 +8,7 @@ class CategoryService {
 
   // Utility function to retrieve the JWT token
   static Future<String> getAuthToken() async {
-    final token = await AuthStorage.getToken();
+    final token = await AuthStorage.getAccessToken();
     if (token == null || token.isEmpty) {
       throw Exception('JWT token is missing.');
     }
