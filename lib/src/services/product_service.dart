@@ -8,7 +8,7 @@ class ProductService {
       'http://ec2-18-197-114-210.eu-central-1.compute.amazonaws.com:8032';
 
   static Future<List<dynamic>> fetchProducts() async {
-    final token = await AuthStorage.getToken();
+    final token = await AuthStorage.getAccessToken();
     final url = Uri.parse('$_baseUrl/api/v1/products');
 
     // print('📡 Fetching products from $url');

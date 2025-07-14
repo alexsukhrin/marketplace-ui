@@ -43,7 +43,7 @@ class ListingPageService {
     String? gardenTypes,
   }) async {
     try {
-      final token = await AuthStorage.getToken();
+      final token = await AuthStorage.getAccessToken();
 
       var uri = Uri.parse('$_baseUrl/api/v1/products/create');
       var request = http.MultipartRequest('POST', uri);

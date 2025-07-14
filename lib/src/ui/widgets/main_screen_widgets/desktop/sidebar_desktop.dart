@@ -20,7 +20,7 @@ class _SidebarWidgetState extends State<SidebarWidget> {
 
   Future<void> _logout(BuildContext context) async {
     try {
-      await AuthStorage.deleteToken();
+      await AuthStorage.deleteTokens();
 
       Navigator.pushAndRemoveUntil(
         context,
@@ -33,7 +33,7 @@ class _SidebarWidgetState extends State<SidebarWidget> {
   }
 
   Future<bool> _isUserLoggedIn() async {
-    String? token = await AuthStorage.getToken();
+    String? token = await AuthStorage.getAccessToken();
     return token != null;
   }
 

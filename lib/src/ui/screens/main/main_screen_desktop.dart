@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/src/ui/screens/main/sidebar_screens/listing_page.dart';
-import 'package:flutter_application_1/src/ui/screens/notFoundScreen/pageNotFoundScreen.dart';
+import 'package:flutter_application_1/src/ui/screens/notFoundScreen/page_not_found_screen.dart';
 import 'package:flutter_application_1/src/ui/screens/productDetailsScreen/product_details_screen.dart';
 import 'package:flutter_application_1/src/ui/screens/seller_profile/seller_profile_screen.dart';
 import 'package:flutter_application_1/src/ui/widgets/bread_crumb_navigation.dart';
