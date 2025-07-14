@@ -26,13 +26,13 @@ jobs:
         run: flutter build web
 
       - name: Log in to GitHub Container Registry
-        run: echo ${{ secrets.GHCR_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+        run: echo ${{ secrets.GHCR_TOKEN }} | docker login ghcr.io -u ${{ vars.GHCR_USERNAME }} --password-stdin
 
       - name: Build Docker image
-        run: docker build -t ghcr.io/${{ github.actor }}/marketplace-web:latest -f Dockerfile .
+        run: docker build -t ghcr.io/${{ vars.GHCR_USERNAME }}/marketplace-web:latest -f Dockerfile .
 
       - name: Push Docker image
-        run: docker push ghcr.io/${{ github.actor }}/marketplace-web:latest
+        run: docker push ghcr.io/${{ vars.GHCR_USERNAME }}/marketplace-web:latest
 
       - name: Deploy on EC2
         uses: appleboy/ssh-action@v1.0.3
@@ -42,7 +42,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             echo ${{ secrets.GHCR_TOKEN }} | docker login ghcr.io -u ${{ vars.GHCR_USERNAME }} --password-stdin
-            docker pull ghcr.io/${{ github.actor }}/marketplace-web:latest
+            docker pull ghcr.io/${{ vars.GHCR_USERNAME }}/marketplace-web:latest
             docker stop marketplace-web || true
             docker rm marketplace-web || true
-            docker run -d --name marketplace-web -p 80:80 ghcr.io/${{ github.actor }}/marketplace-web:latest
+            docker run -d --name marketplace-web -p 80:80 ghcr.io/${{ vars.GHCR_USERNAME }}/marketplace-web:latest
