@@ -67,6 +67,15 @@ class Desktop extends StatelessWidget {
                         isButtonDisabled: false,
                         buttonType: ButtonType.outlined, // Outlined button
                       ),
+                      const SizedBox(height: 8),
+                      // CustomButton(
+                      //   text: "Увійти як Адміністратор",
+                      //   onPressed: () {
+                      //     Navigator.pushNamed(context, '/adminDashboard');
+                      //   },
+                      //   isButtonDisabled: false,
+                      //   buttonType: ButtonType.outlined, // Outlined button
+                      // ),
                     ],
                   ),
 
@@ -190,6 +199,15 @@ class Mobile extends StatelessWidget {
                     },
                     isButtonDisabled: false,
                     buttonType: ButtonType.outlined,
+                  ),
+                  const SizedBox(height: 8),
+                  CustomButton(
+                    text: "Увійти як Адміністратор",
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/dashboard');
+                    },
+                    isButtonDisabled: false,
+                    buttonType: ButtonType.outlined, // Outlined button
                   ),
                 ],
               ),

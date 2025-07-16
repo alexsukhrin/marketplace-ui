@@ -26,7 +26,7 @@ class MainAuthButtons extends StatelessWidget {
           OutlinedButton(
             onPressed: () {},
             style: OutlinedButton.styleFrom(
-              side: BorderSide(color: AppTheme.linkTextColor),
+              side: const BorderSide(color: AppTheme.linkTextColor),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
               ),

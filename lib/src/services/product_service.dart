@@ -5,7 +5,7 @@ import 'auth_storage.dart';
 
 class ProductService {
   static const String _baseUrl =
-      'http://ec2-18-197-114-210.eu-central-1.compute.amazonaws.com:8032';
+      'http://ec2-18-153-92-5.eu-central-1.compute.amazonaws.com:8032';
 
   static Future<List<dynamic>> fetchProducts() async {
     final token = await AuthStorage.getAccessToken();

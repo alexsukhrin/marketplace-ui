@@ -100,7 +100,7 @@ class SeasonalOffersWidget extends StatelessWidget {
                         ),
                       ),
                     ),
-                    if (i != itemsPerRow - 1) SizedBox(width: 10),
+                    if (i != itemsPerRow - 1) const SizedBox(width: 10),
                   ]
                 ],
               ),

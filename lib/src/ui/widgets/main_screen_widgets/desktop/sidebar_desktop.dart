@@ -38,6 +38,9 @@ class _SidebarWidgetState extends State<SidebarWidget> {
   }
 
   void _selectMenuItem(String menuItem) {
+    if (menuItem == 'admin') {
+      Navigator.pushNamed(context, '/adminDashboard');
+    }
     setState(() {
       selectedMenuItem = menuItem;
     });
@@ -150,6 +153,14 @@ class _SidebarWidgetState extends State<SidebarWidget> {
                 isActive: selectedMenuItem == 'about',
                 onTap: () => _selectMenuItem('about'),
               ),
+              const SizedBox(height: 10),
+              _SidebarIcon(
+                svgPath: 'images/main_icons/admin.svg',
+                label: 'Адмін панель',
+                isExpanded: isExpanded,
+                isActive: selectedMenuItem == 'admin',
+                onTap: () => _selectMenuItem('admin'),
+              )
             ],
           ),
           FutureBuilder<bool>(

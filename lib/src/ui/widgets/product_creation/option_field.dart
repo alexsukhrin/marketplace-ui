@@ -16,10 +16,9 @@ class OptionField<T> extends FormField<List<int>> {
     required this.getOptions,
     required this.getOptionName,
     required this.getOptionId,
-    FormFieldValidator<List<int>>? validator,
+    super.validator,
   }) : super(
           initialValue: [],
-          validator: validator,
           builder: (FormFieldState<List<int>> state) {
             return _OptionFieldContent<T>(
               labelText: labelText,
@@ -44,7 +43,7 @@ class _OptionFieldContent<T> extends StatefulWidget {
   final int Function(T option) getOptionId;
 
   const _OptionFieldContent({
-    Key? key,
+    super.key,
     required this.labelText,
     required this.controller,
     required this.validator,
@@ -52,7 +51,7 @@ class _OptionFieldContent<T> extends StatefulWidget {
     required this.getOptions,
     required this.getOptionName,
     required this.getOptionId,
-  }) : super(key: key);
+  });
 
   @override
   _OptionFieldContentState<T> createState() => _OptionFieldContentState<T>();
@@ -80,7 +79,7 @@ class _OptionFieldContentState<T> extends State<_OptionFieldContent<T>> {
     final selectedIds = widget.formState.value ?? [];
     final hasError = widget.formState.hasError;
 
-    void _onSelect(int id) {
+    void onSelect(int id) {
       setState(() {
         final updated = List<int>.from(selectedIds);
         if (updated.contains(id)) {
@@ -113,7 +112,7 @@ class _OptionFieldContentState<T> extends State<_OptionFieldContent<T>> {
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 12),
                     child: GestureDetector(
-                      onTap: () => _onSelect(widget.getOptionId(option)),
+                      onTap: () => onSelect(widget.getOptionId(option)),
                       child: Container(
                         width: double.infinity,
                         padding: const EdgeInsets.symmetric(

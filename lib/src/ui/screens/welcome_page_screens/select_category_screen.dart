@@ -80,7 +80,7 @@ class SelectCategoryScreenState extends State<SelectCategoryScreen> {
             submitCategories: submitCategories,
           ),
         ),
-        tablet: Tablet(),
+        tablet: const Tablet(),
         mobile: Mobile(
           categories: categories,
           selectedCategories: selectedCategories,

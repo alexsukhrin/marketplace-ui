@@ -13,6 +13,7 @@ import 'src/ui/screens/categories/all_categories_page.dart';
 import 'src/ui/screens/login/login_page.dart';
 import 'src/ui/shared_pages/success_page.dart.dart';
 import 'src/ui/screens/welcome_page_screens/greeting_screen.dart';
+import 'src/ui/screens/adminDashboard/admin_dashboard_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -53,7 +54,8 @@ class _MarcketplaceState extends ConsumerState<Marcketplace> {
         '/selectCategory': (context) => const SelectCategoryScreen(),
         '/main': (context) => const MainScreen(),
         '/categories': (context) => const AllCategoriesPage(),
-        '/notFoundScreen': (context) => const PageNotFoundScreen()
+        '/notFoundScreen': (context) => const PageNotFoundScreen(),
+        '/adminDashboard': (context) => const AdminDashboardMainPage(),
       },
       builder: (context, child) {
         return Scaffold(

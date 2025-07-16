@@ -153,7 +153,7 @@ class CodeValidatePageState extends State<CodeValidatePage> {
                             color: Colors.orange.withOpacity(0.5),
                             blurRadius: 200,
                             spreadRadius: 20,
-                            offset: Offset(0, -10),
+                            offset: const Offset(0, -10),
                           ),
                         ],
                       )

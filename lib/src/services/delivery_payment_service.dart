@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 const String _baseUrl =
-    'http://ec2-18-197-114-210.eu-central-1.compute.amazonaws.com:8032';
+    'http://ec2-18-153-92-5.eu-central-1.compute.amazonaws.com:8032';
 
 class PaymentOptionService {
   static Future<List<OptionItem>> getOptions() async {

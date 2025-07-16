@@ -197,8 +197,8 @@ class ImageUploaderState extends State<ImageUploader> {
                                 ),
                               ),
                               child: DragTarget<int>(
-                                onAccept: (oldIndex) =>
-                                    _onReorder(oldIndex, index),
+                                onAcceptWithDetails: (oldIndex) =>
+                                    _onReorder(oldIndex as int, index),
                                 builder:
                                     (context, candidateData, rejectedData) {
                                   return MouseRegion(

@@ -3,7 +3,7 @@ import '../../../themes/app_theme.dart';
 import '../../shared_widgets/title_text.dart';
 
 class FAQSection extends StatefulWidget {
-  FAQSection({super.key});
+  const FAQSection({super.key});
 
   @override
   _FAQSectionState createState() => _FAQSectionState();

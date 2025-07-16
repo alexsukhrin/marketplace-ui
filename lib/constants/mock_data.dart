@@ -1,4 +1,3 @@
-import 'package:flutter_application_1/models/chat_message.dart';
 import 'package:flutter_application_1/models/user_chat.dart';
 
 final List<UserChat> userChats = [

@@ -29,11 +29,11 @@ class CustomCarousel extends StatelessWidget {
                         children: [
                           Text(
                             slide['title']!,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 24, fontWeight: FontWeight.bold),
                           ),
                           Text(slide['subtitle']!),
-                          SizedBox(height: 8),
+                          const SizedBox(height: 8),
                           ElevatedButton(
                             onPressed: () {
                               // Add action here
@@ -42,7 +42,7 @@ class CustomCarousel extends StatelessWidget {
                               backgroundColor: AppTheme
                                   .activeButtonColor, // Set active button color here
                             ),
-                            child: Text(
+                            child: const Text(
                               'Детальніше',
                               style: TextStyle(
                                   color: Colors
@@ -67,7 +67,7 @@ class CustomCarousel extends StatelessWidget {
                 top: 0,
                 bottom: 0,
                 child: IconButton(
-                  icon: Icon(Icons.arrow_forward_ios),
+                  icon: const Icon(Icons.arrow_forward_ios),
                   onPressed: () {
                     // Implement next slide navigation
                   },

@@ -7,7 +7,7 @@ import '../exceptions/user_not_found_exception.dart';
 class PasswordResetService {
   static String? _token;
   static const String _baseUrl =
-      'http://ec2-18-197-114-210.eu-central-1.compute.amazonaws.com:8032';
+      'http://ec2-18-153-92-5.eu-central-1.compute.amazonaws.com:8032';
 
   static Future<Map<String, dynamic>> sendRecoveryEmail(String email) async {
     final url = Uri.parse('$_baseUrl/api/v1/auth/reset-password');

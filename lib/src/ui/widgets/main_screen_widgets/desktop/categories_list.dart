@@ -115,7 +115,7 @@ class _CategoryWidgetState extends State<CategoryWidget> {
                               height: 108,
                               fit: BoxFit.cover,
                               errorBuilder: (context, error, stackTrace) {
-                                return Icon(Icons.image, size: 94);
+                                return const Icon(Icons.image, size: 94);
                               },
                             ),
                           ),
@@ -124,7 +124,7 @@ class _CategoryWidgetState extends State<CategoryWidget> {
                             alignment: Alignment.centerLeft,
                             child: Text(
                               category['name'],
-                              style: TextStyle(fontSize: 14),
+                              style: const TextStyle(fontSize: 14),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
