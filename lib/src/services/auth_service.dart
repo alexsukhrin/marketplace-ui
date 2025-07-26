@@ -4,6 +4,7 @@ import 'dart:convert';
 import '../exceptions/email_already_registered_exception.dart';
 import 'auth_storage.dart';
 import '../config/api_config.dart';
+import 'token_manager.dart';
 
 class AuthService {
   static Future<void> registerUser(Map<String, String> formData) async {
@@ -23,6 +24,7 @@ class AuthService {
       print('Response body: $responseBody');
 
       if (response.statusCode == 200 || response.statusCode == 201) {
+
         if (responseBody.containsKey('tokens') &&
             responseBody.containsKey('user')) {
           final tokens = responseBody['tokens'];
@@ -30,8 +32,11 @@ class AuthService {
           final refreshToken = tokens['refresh'];
 
           if (accessToken != null && refreshToken != null) {
-            await AuthStorage.saveAccessToken(accessToken);
-            await AuthStorage.saveRefreshToken(refreshToken);
+            // Використовуємо TokenManager для зберігання токенів та запуску auto-refresh
+            await TokenManager.instance.setTokens(
+              accessToken: accessToken,
+              refreshToken: refreshToken,
+            );
             print(
                 'Користувач зареєстрований: ${responseBody['user']['email']}');
           } else {
@@ -70,6 +75,18 @@ class AuthService {
     }
   }
 
+  /// Вихід користувача (logout)
+  static Future<void> logout() async {
+    await TokenManager.instance.clearTokens();
+    print('Користувач вийшов з системи');
+  }
+
+  /// Перевіряє чи користувач авторизований
+  static Future<bool> isLoggedIn() async {
+    final token = await TokenManager.instance.getValidAccessToken();
+    return token != null;
+  }
+
   static Future<Map<String, dynamic>> loginUser(
       String email, String password) async {
     final url = Uri.parse(ApiConfig.authLogin);
@@ -90,11 +107,25 @@ class AuthService {
       if (response.statusCode == 200) {
         var responseData = jsonDecode(response.body);
 
-        if (responseData.containsKey('access-token')) {
-          await AuthStorage.saveAccessToken(responseData['access-token']);
+        // Перевіряємо новий формат відповіді
+        if (responseData.containsKey('tokens')) {
+          final tokens = responseData['tokens'];
+          final accessToken = tokens['access'];
+          final refreshToken = tokens['refresh'];
+          
+          if (accessToken != null && refreshToken != null) {
+            await TokenManager.instance.setTokens(
+              accessToken: accessToken,
+              refreshToken: refreshToken,
+            );
+          }
         }
-        if (responseData.containsKey('refresh-token')) {
-          await AuthStorage.saveRefreshToken(responseData['refresh-token']);
+        // Підтримка старого формату (якщо потрібно)
+        else if (responseData.containsKey('access-token')) {
+          await TokenManager.instance.setTokens(
+            accessToken: responseData['access-token'],
+            refreshToken: responseData['refresh-token'],
+          );
         }
 
         print('Логін успішний: $responseData');

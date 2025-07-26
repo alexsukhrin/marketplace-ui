@@ -54,4 +54,9 @@ class AuthStorage {
     }
     print('Access & refresh tokens deleted');
   }
+
+  /// Алізас для deleteTokens для сумісності
+  static Future<void> clearTokens() async {
+    await deleteTokens();
+  }
 }
