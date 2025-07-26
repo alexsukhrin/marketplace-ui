@@ -6,7 +6,6 @@ import 'package:flutter/foundation.dart';
 import '../config/api_config.dart';
 
 class ListingPageService {
-
   static Future<bool> createProduct(
     Map<String, dynamic> productData,
     List<File> images,
@@ -77,7 +76,8 @@ class ListingPageService {
 
       print('🚀 Sending request to: ${request.url}');
       print('📋 Request fields: ${request.fields}');
-      print('🖼️ Request files: ${request.files.map((f) => f.filename).toList()}');
+      print(
+          '🖼️ Request files: ${request.files.map((f) => f.filename).toList()}');
 
       final streamedResponse = await request.send();
       final response = await http.Response.fromStream(streamedResponse);

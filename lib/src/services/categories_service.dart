@@ -25,10 +25,10 @@ class CategoryService {
         },
       );
 
-             if (response.statusCode == 200) {
-         final List<dynamic> categories = jsonDecode(response.body);
-         print('Categories fetched successfully: $categories');
-         return List<Map<String, dynamic>>.from(categories);
+      if (response.statusCode == 200) {
+        final List<dynamic> categories = jsonDecode(response.body);
+        print('Categories fetched successfully: $categories');
+        return List<Map<String, dynamic>>.from(categories);
       } else {
         print('Failed to fetch categories: ${response.statusCode}');
         throw Exception('Failed to fetch categories');
