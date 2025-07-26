@@ -23,35 +23,49 @@ class AuthService {
       print('Response body: $responseBody');
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        if (responseBody.containsKey('token') &&
-            responseBody.containsKey('message')) {
-          final accessToken = responseBody['access-token'];
-          final refreshToken = responseBody['refresh-token'];
-          final message = responseBody['message'] ?? 'Повідомлення не надано';
+        if (responseBody.containsKey('tokens') &&
+            responseBody.containsKey('user')) {
+          final tokens = responseBody['tokens'];
+          final accessToken = tokens['access'];
+          final refreshToken = tokens['refresh'];
 
           if (accessToken != null && refreshToken != null) {
             await AuthStorage.saveAccessToken(accessToken);
             await AuthStorage.saveRefreshToken(refreshToken);
-            print(message);
+            print('Користувач зареєстрований: ${responseBody['user']['email']}');
           } else {
-            throw Exception('Token not found in the response.');
+            throw Exception('Токени не знайдено в відповіді сервера.');
           }
         } else {
-          throw Exception('Response body does not contain expected fields.');
+          throw Exception('Відповідь сервера не містить очікуваних полів.');
         }
       } else if (response.statusCode == 400) {
-        final responseBody = jsonDecode(response.body);
-        if (responseBody['error'] == "User data not valid.") {
-          throw EmailAlreadyRegisteredException(
-              'Упс, така пошта вже використовується.');
-        } else {
-          throw Exception('Невідома помилка реєстрації');
+        // Обробка помилок валідації
+        if (responseBody.containsKey('email')) {
+          final emailErrors = responseBody['email'];
+          if (emailErrors.toString().contains('already exists')) {
+            throw EmailAlreadyRegisteredException(
+                'Користувач з такою поштою вже існує.');
+          }
         }
+        
+        // Загальна помилка валідації
+        final errorMessages = <String>[];
+        responseBody.forEach((field, errors) {
+          if (errors is List) {
+            errorMessages.addAll(errors.map((e) => '$field: $e'));
+          } else {
+            errorMessages.add('$field: $errors');
+          }
+        });
+        
+        throw Exception('Помилка валідації:\n${errorMessages.join('\n')}');
       } else {
         throw Exception('Помилка реєстрації: ${response.statusCode}');
       }
     } catch (e) {
       print('Помилка підключення: $e');
+      rethrow; // ✅ Пробрасуємо помилку далі до UI
     }
   }
 
