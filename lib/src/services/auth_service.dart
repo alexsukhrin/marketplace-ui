@@ -32,7 +32,8 @@ class AuthService {
           if (accessToken != null && refreshToken != null) {
             await AuthStorage.saveAccessToken(accessToken);
             await AuthStorage.saveRefreshToken(refreshToken);
-            print('Користувач зареєстрований: ${responseBody['user']['email']}');
+            print(
+                'Користувач зареєстрований: ${responseBody['user']['email']}');
           } else {
             throw Exception('Токени не знайдено в відповіді сервера.');
           }
@@ -48,7 +49,7 @@ class AuthService {
                 'Користувач з такою поштою вже існує.');
           }
         }
-        
+
         // Загальна помилка валідації
         final errorMessages = <String>[];
         responseBody.forEach((field, errors) {
@@ -58,7 +59,7 @@ class AuthService {
             errorMessages.add('$field: $errors');
           }
         });
-        
+
         throw Exception('Помилка валідації:\n${errorMessages.join('\n')}');
       } else {
         throw Exception('Помилка реєстрації: ${response.statusCode}');
