@@ -9,11 +9,11 @@ import '../../../localization/app_localizations.dart';
 import '../../widgets/responsive/responsive_design.dart';
 import '../../widgets/welcome_page_widgets/left_section.dart';
 
-class WelcomeScreen extends StatelessWidget {
+class WelcomeScreen extends ConsumerWidget {
   const WelcomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return const Scaffold(
       body: TResponsiveWidget(
           desktop: Padding(
@@ -26,11 +26,12 @@ class WelcomeScreen extends StatelessWidget {
   }
 }
 
-class Desktop extends StatelessWidget {
+class Desktop extends ConsumerWidget {
   const Desktop({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
     return Scaffold(
       body: Row(
         children: [
@@ -53,7 +54,7 @@ class Desktop extends StatelessWidget {
                       const WelcomeText(),
                       const SizedBox(height: 36),
                       CustomButton(
-                        text: "Зареєструватись",
+                        text: l10n.signUp,
                         onPressed: () {
                           Navigator.pushNamed(context, '/registration');
                         },
@@ -62,7 +63,7 @@ class Desktop extends StatelessWidget {
                       ),
                       const SizedBox(height: 8),
                       CustomButton(
-                        text: "Увійти",
+                        text: l10n.signIn,
                         onPressed: () {
                           Navigator.pushNamed(context, '/login');
                         },
@@ -78,9 +79,9 @@ class Desktop extends StatelessWidget {
                     onPressed: () {
                       Navigator.pushNamed(context, '/main');
                     },
-                    child: const Text(
-                      'Пропустити цей крок',
-                      style: TextStyle(
+                    child: Text(
+                      l10n.skipStep,
+                      style: const TextStyle(
                         color: Color(0xFF8E8E8E),
                         fontSize: 15,
                         decoration: TextDecoration.none,
@@ -107,11 +108,11 @@ class Tablet extends StatelessWidget {
   }
 }
 
-class Mobile extends StatelessWidget {
+class Mobile extends ConsumerWidget {
   const Mobile({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppTheme.backgroundColorWhite,
@@ -204,26 +205,28 @@ class Mobile extends StatelessWidget {
   }
 }
 
-class WelcomeText extends StatelessWidget {
+class WelcomeText extends ConsumerWidget {
   const WelcomeText({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return const Column(
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+    
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
-          "Привіт!",
-          style: TextStyle(
+          l10n.welcomeTitle,
+          style: const TextStyle(
             fontSize: 32,
             fontWeight: FontWeight.bold,
           ),
         ),
-        SizedBox(height: 8),
+        const SizedBox(height: 8),
         Text(
-          "Отримай безпечний досвід покупок\n разом з нами",
+          l10n.welcomeSubtitle,
           textAlign: TextAlign.center,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 16,
             color: AppTheme.lightBodyColor,
           ),

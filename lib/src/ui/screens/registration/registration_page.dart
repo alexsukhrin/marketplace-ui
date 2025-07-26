@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/constants/colors.dart';
 import 'package:flutter_application_1/src/ui/screens/login/login_page.dart';
 import 'package:flutter_application_1/src/ui/widgets/shared_widgets/language_selector.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../localization/app_localizations.dart';
 
 import '../../../exceptions/email_already_registered_exception.dart';
 import '../../../services/auth_service.dart';
@@ -11,14 +13,14 @@ import '../../widgets/auth_widgets/auth_field.dart';
 import '../../../utils/validators.dart';
 import '../../widgets/loading_dialog.dart';
 
-class RegistrationPage extends StatefulWidget {
+class RegistrationPage extends ConsumerStatefulWidget {
   const RegistrationPage({super.key});
 
   @override
   RegistrationPageState createState() => RegistrationPageState();
 }
 
-class RegistrationPageState extends State<RegistrationPage> {
+class RegistrationPageState extends ConsumerState<RegistrationPage> {
   String? _emailError;
   final _formKey = GlobalKey<FormState>();
 
@@ -122,6 +124,7 @@ class RegistrationPageState extends State<RegistrationPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Scaffold(
       body: Center(
         child: ConstrainedBox(

@@ -71,6 +71,20 @@ class AppLocalizations {
       _localizedValues[locale.languageCode]!['welcome_subtitle']!;
   String get getStarted =>
       _localizedValues[locale.languageCode]!['get_started']!;
+  String get skipStep =>
+      _localizedValues[locale.languageCode]!['skip_step']!;
+  String get downloadApp =>
+      _localizedValues[locale.languageCode]!['download_app']!;
+  
+  // === РЕЄСТРАЦІЯ ===
+  String get yourName => _localizedValues[locale.languageCode]!['your_name']!;
+  String get yourSurname => _localizedValues[locale.languageCode]!['your_surname']!;
+  String get yourEmail => _localizedValues[locale.languageCode]!['your_email']!;
+  String get enterName => _localizedValues[locale.languageCode]!['enter_name']!;
+  String get enterSurname => _localizedValues[locale.languageCode]!['enter_surname']!;
+  String get enterEmail => _localizedValues[locale.languageCode]!['enter_email']!;
+  String get enterPassword => _localizedValues[locale.languageCode]!['enter_password']!;
+  String get enterPasswordAgain => _localizedValues[locale.languageCode]!['enter_password_again']!;
 
   /// Словник перекладів
   static const Map<String, Map<String, String>> _localizedValues = {
@@ -113,9 +127,21 @@ class AppLocalizations {
       'profile': 'Профіль',
 
       // Вітальний екран
-      'welcome_title': 'Ласкаво просимо до SHUM',
-      'welcome_subtitle': 'Ваш новий маркетплейс',
+      'welcome_title': 'Привіт!',
+      'welcome_subtitle': 'Отримай безпечний досвід покупок\n разом з нами',
       'get_started': 'Почати',
+      'skip_step': 'Пропустити цей крок',
+      'download_app': 'Завантажити застосунок',
+      
+      // Реєстрація
+      'your_name': 'Ваше ім\'я',
+      'your_surname': 'Ваше прізвище', 
+      'your_email': 'Ваша пошта',
+      'enter_name': 'Введіть ім\'я',
+      'enter_surname': 'Введіть прізвище',
+      'enter_email': 'Введіть пошту',
+      'enter_password': 'Введіть пароль',
+      'enter_password_again': 'Введіть пароль повторно',
     },
     'en': {
       // General
@@ -156,9 +182,21 @@ class AppLocalizations {
       'profile': 'Profile',
 
       // Welcome screen
-      'welcome_title': 'Welcome to SHUM',
-      'welcome_subtitle': 'Your new marketplace',
+      'welcome_title': 'Hello!',
+      'welcome_subtitle': 'Get a secure shopping experience\n with us',
       'get_started': 'Get Started',
+      'skip_step': 'Skip this step',
+      'download_app': 'Download App',
+      
+      // Registration
+      'your_name': 'Your Name',
+      'your_surname': 'Your Surname',
+      'your_email': 'Your Email',
+      'enter_name': 'Enter name',
+      'enter_surname': 'Enter surname',
+      'enter_email': 'Enter email',
+      'enter_password': 'Enter password',
+      'enter_password_again': 'Enter password again',
     },
   };
 }
