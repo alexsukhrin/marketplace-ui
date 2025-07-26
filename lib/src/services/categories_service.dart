@@ -1,11 +1,9 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'auth_storage.dart';
+import '../config/api_config.dart';
 
 class CategoryService {
-  static const String _baseUrl =
-      'http://ec2-18-197-114-210.eu-central-1.compute.amazonaws.com:8032';
-
   // Utility function to retrieve the JWT token
   static Future<String> getAuthToken() async {
     final token = await AuthStorage.getAccessToken();
@@ -15,77 +13,91 @@ class CategoryService {
     return token;
   }
 
-  // Fetch product categories
   static Future<List<Map<String, dynamic>>> getCategories() async {
-    final url = Uri.parse('$_baseUrl/api/v1/products/categories');
-    try {
-      // final token = await getAuthToken();
+    final url = Uri.parse(ApiConfig.productsCategories);
 
+    try {
       final response = await http.get(
-        url,
-        headers: {
-          // 'Authorization': 'Bearer $token',
-          'Accept': 'application/json',
-        },
-      );
-
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        final data = jsonDecode(response.body);
-
-        final categoryList = List<Map<String, dynamic>>.from(
-          data['categories'].map((category) => {
-                'name': category['name'],
-                'category_id': category['category_id'],
-                'photo': category['photo'] ?? "",
-              }),
-        );
-
-        return categoryList;
-      } else {
-        throw Exception('Failed to fetch categories: ${response.body}');
-      }
-    } catch (e) {
-      print('Error fetching categories: $e');
-      throw Exception('Error fetching categories: $e');
-    }
-  }
-
-  // Submit selected categories
-  static Future<void> submitCategories(
-      List<Map<String, dynamic>> categories) async {
-    final url = Uri.parse('$_baseUrl/api/v1/users/categories');
-    final body = jsonEncode({
-      'categories': categories
-          .map((category) => {
-                // 'name': category['name'],
-                'category_id': category['category_id'],
-              })
-          .toList(),
-    });
-
-    try {
-      final token = await getAuthToken();
-
-      final response = await http.post(
         url,
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          'Authorization': 'Bearer $token',
         },
-        body: body,
       );
 
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        // final responseData = jsonDecode(response.body);
-        print('Categories submitted successfully: ${response.body}');
+      if (response.statusCode == 200) {
+        final List<dynamic> categories = jsonDecode(response.body);
+        print('Categories fetched successfully: $categories');
+        return List<Map<String, dynamic>>.from(categories);
       } else {
-        throw Exception(
-            'Error submitting categories: ${response.statusCode} ${response.body}');
+        print('Failed to fetch categories: ${response.statusCode}');
+        throw Exception('Failed to fetch categories');
       }
     } catch (e) {
-      print('Error submitting categories: $e');
-      throw Exception('Error submitting categories: $e');
+      print('Error fetching categories: $e');
+      throw Exception('Network error while fetching categories');
+    }
+  }
+
+  static Future<void> submitCategories(
+      List<Map<String, dynamic>> categoriesRequest) async {
+    try {
+      final token = await getAuthToken();
+
+      final url = Uri.parse(ApiConfig.usersCategories);
+
+      final response = await http.put(
+        url,
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: jsonEncode({
+          "categories": categoriesRequest,
+        }),
+      );
+
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        print('Categories updated successfully');
+      } else {
+        print('Failed to update categories: ${response.statusCode}');
+        throw Exception('Failed to update categories');
+      }
+    } catch (e) {
+      print('Error updating categories: $e');
+      throw Exception('Network error while updating categories');
+    }
+  }
+
+  static Future<List<dynamic>> getUserInterests() async {
+    try {
+      final token = await getAuthToken();
+
+      final url = Uri.parse(ApiConfig.usersCategories);
+
+      final response = await http.get(
+        url,
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> responseData = jsonDecode(response.body);
+        return responseData['categories'] ?? [];
+      } else {
+        print('Failed to get user interests: ${response.statusCode}');
+        return [];
+      }
+    } catch (e) {
+      print('Error getting user interests: $e');
+      return [];
     }
   }
 }

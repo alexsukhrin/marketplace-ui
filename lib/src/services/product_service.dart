@@ -2,14 +2,12 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import 'auth_storage.dart';
+import '../config/api_config.dart';
 
 class ProductService {
-  static const String _baseUrl =
-      'http://ec2-18-197-114-210.eu-central-1.compute.amazonaws.com:8032';
-
   static Future<List<dynamic>> fetchProducts() async {
     final token = await AuthStorage.getAccessToken();
-    final url = Uri.parse('$_baseUrl/api/v1/products');
+    final url = Uri.parse(ApiConfig.products);
 
     // print('📡 Fetching products from $url');
     // print('🔐 Using token: $token');
@@ -18,24 +16,26 @@ class ProductService {
       final response = await http.get(
         url,
         headers: {
-          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          if (token != null) 'Authorization': 'Bearer $token',
         },
       );
 
-      // print('📥 Response status: ${response.statusCode}');
-      // print('📦 Response body: ${utf8.decode(response.bodyBytes)}');
+      // print('📊 Response status: ${response.statusCode}');
+      // print('📄 Response body: ${response.body}');
 
       if (response.statusCode == 200) {
-        final List<dynamic> products =
-            jsonDecode(utf8.decode(response.bodyBytes));
+        final List<dynamic> products = jsonDecode(response.body);
+        print('✅ Products loaded successfully: ${products.length} items');
         return products;
       } else {
-        throw Exception(
-            'Failed to load products. Status code: ${response.statusCode}');
+        print('❌ Failed to load products: ${response.statusCode}');
+        throw Exception('Failed to load products: ${response.statusCode}');
       }
     } catch (e) {
-      print('🔴 Error fetching products: $e');
-      throw Exception('Error fetching products: $e');
+      print('🔥 Network error: $e');
+      throw Exception('Network error: $e');
     }
   }
 }
