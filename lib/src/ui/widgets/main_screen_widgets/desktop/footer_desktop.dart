@@ -1,47 +1,50 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../utils/auth_validator.dart';
 import '../../../themes/app_theme.dart';
 import '../../shared_widgets/language_selector.dart';
+import '../../../../localization/app_localizations.dart';
 
-class FooterSection extends StatelessWidget {
+class FooterSection extends ConsumerWidget {
   FooterSection({super.key});
 
-  final List<Map<String, dynamic>> listSections = [
-    {
-      'title': 'Сторінки',
-      'items': [
-        'Категорії',
-        'Сезонні пропозиції',
-        'Нові оголошення',
-        'Сповіщення',
-        'Відгуки',
-        'Рекомендовані товари',
-        'Історія',
-      ],
-    },
-    {
-      'title': 'Інше',
-      'items': [
-        'Доставка та оплата',
-        'Питання',
-        'Пошук',
-        'Продати',
-        'Чат',
-        'Обране',
-      ],
-    },
-    {
-      'title': 'Контакти',
-      'items': [
-        'Про нас',
-        'Підтримка',
-      ],
-    },
-  ];
-
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
+
+    final List<Map<String, dynamic>> listSections = [
+      {
+        'title': l10n.pages,
+        'items': [
+          l10n.categories,
+          l10n.seasonalOffers,
+          l10n.newAds,
+          l10n.notifications,
+          l10n.reviews,
+          l10n.recommendedProducts,
+          l10n.history,
+        ],
+      },
+      {
+        'title': l10n.other,
+        'items': [
+          l10n.delivery,
+          l10n.questions,
+          l10n.search,
+          l10n.sell,
+          l10n.chat,
+          l10n.favorites,
+        ],
+      },
+      {
+        'title': l10n.contacts,
+        'items': [
+          l10n.about,
+          l10n.support,
+        ],
+      },
+    ];
     return Container(
       padding: const EdgeInsets.fromLTRB(30, 30, 30, 12),
       decoration: BoxDecoration(

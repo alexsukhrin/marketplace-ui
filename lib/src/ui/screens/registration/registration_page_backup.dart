@@ -124,6 +124,7 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Scaffold(
       body: Center(
         child: ConstrainedBox(
@@ -162,7 +163,7 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
               children: [
                 const SizedBox(height: 76),
                 Text(
-                  AppLocalizations.of(context).signUp,
+                  'Реєстрація',
                   textAlign: TextAlign.center,
                   style: Theme.of(context)
                       .textTheme
@@ -171,7 +172,7 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  AppLocalizations.of(context).registrationSubtitle,
+                  'Отримайте більше можливостей\nстворивши акаунт',
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
@@ -234,7 +235,7 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
                       ),
                       const SizedBox(height: 40),
                       AuthButton(
-                        text: AppLocalizations.of(context).signUp,
+                        text: 'Зареєструватися',
                         isButtonDisabled: _isButtonDisabled,
                         onPressed: () {
                           _firstNameController.text =
@@ -261,14 +262,13 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
                         child: RichText(
                           text: TextSpan(
                             style: Theme.of(context).textTheme.bodyMedium,
-                            children: [
+                            children: const [
                               TextSpan(
-                                text: AppLocalizations.of(context)
-                                    .alreadyHaveAccount,
+                                text: 'Вже маєте акаунт? ',
                               ),
                               TextSpan(
-                                text: AppLocalizations.of(context).signIn,
-                                style: const TextStyle(
+                                text: 'Увійти',
+                                style: TextStyle(
                                   color: TColors.orange,
                                 ),
                               ),
