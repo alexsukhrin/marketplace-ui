@@ -85,6 +85,8 @@ class AppLocalizations {
   String get enterEmail => _localizedValues[locale.languageCode]!['enter_email']!;
   String get enterPassword => _localizedValues[locale.languageCode]!['enter_password']!;
   String get enterPasswordAgain => _localizedValues[locale.languageCode]!['enter_password_again']!;
+  String get repeatPassword => _localizedValues[locale.languageCode]!['repeat_password']!;
+  String get alreadyHaveAccount => _localizedValues[locale.languageCode]!['already_have_account']!;
 
   /// Словник перекладів
   static const Map<String, Map<String, String>> _localizedValues = {
@@ -142,6 +144,8 @@ class AppLocalizations {
       'enter_email': 'Введіть пошту',
       'enter_password': 'Введіть пароль',
       'enter_password_again': 'Введіть пароль повторно',
+      'repeat_password': 'Повторіть пароль',
+      'already_have_account': 'Вже маєте акаунт?',
     },
     'en': {
       // General
@@ -157,7 +161,7 @@ class AppLocalizations {
       'home': 'Home',
       'about': 'About',
       'sign_up': 'Sign Up',
-      'sign_in': 'Sign In',
+      'sign_in': 'Log In',
       'logout': 'Logout',
 
       // Forms
@@ -182,10 +186,10 @@ class AppLocalizations {
       'profile': 'Profile',
 
       // Welcome screen
-      'welcome_title': 'Hello!',
-      'welcome_subtitle': 'Get a secure shopping experience\n with us',
+      'welcome_title': 'Welcome!',
+      'welcome_subtitle': 'Get a safe shopping experience \n with us',
       'get_started': 'Get Started',
-      'skip_step': 'Skip this step',
+      'skip_step': 'Skip for now',
       'download_app': 'Download App',
       
       // Registration
@@ -197,6 +201,8 @@ class AppLocalizations {
       'enter_email': 'Enter email',
       'enter_password': 'Enter password',
       'enter_password_again': 'Enter password again',
+      'repeat_password': 'Repeat password',
+      'already_have_account': 'Already have an account?',
     },
   };
 }
