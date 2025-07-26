@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_application_1/src/services/auth_storage.dart';
 import 'package:flutter_application_1/src/ui/screens/notFoundScreen/page_not_found_screen.dart';
 import 'package:flutter_application_1/src/ui/screens/registration/registration_page.dart';
@@ -9,6 +10,8 @@ import 'package:flutter_application_1/src/ui/screens/welcome_page_screens/welcom
 import 'package:flutter_application_1/src/ui/themes/providers/theme_provider.dart';
 import 'package:flutter_application_1/src/ui/themes/t_app_theme.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'src/localization/app_localizations.dart';
+import 'src/providers/language_provider.dart';
 import 'src/ui/screens/categories/all_categories_page.dart';
 import 'src/ui/screens/login/login_page.dart';
 import 'src/ui/shared_pages/success_page.dart.dart';
@@ -35,6 +38,8 @@ class _MarcketplaceState extends ConsumerState<Marcketplace> {
   @override
   Widget build(BuildContext context) {
     final themeMode = ref.watch(themeProvider);
+    final locale = ref.watch(localeProvider);
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'SHUM',
@@ -42,6 +47,17 @@ class _MarcketplaceState extends ConsumerState<Marcketplace> {
       darkTheme: TAppTheme.darkTheme,
       themeMode:
           themeMode == AppThemeMode.light ? ThemeMode.light : ThemeMode.dark,
+
+      // Додаємо підтримку локалізації
+      locale: locale,
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: AppLocalizations.supportedLocales,
+
       initialRoute: '/',
       routes: {
         '/': (context) => const WelcomeScreen(),
