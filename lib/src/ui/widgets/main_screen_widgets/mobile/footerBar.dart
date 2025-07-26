@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../themes/app_theme.dart';
+import '../../../../localization/app_localizations.dart';
 
-class FooterBarWidget extends StatefulWidget {
+class FooterBarWidget extends ConsumerStatefulWidget {
   const FooterBarWidget({super.key});
 
   @override
   FooterBarWidgetState createState() => FooterBarWidgetState();
 }
 
-class FooterBarWidgetState extends State<FooterBarWidget> {
+class FooterBarWidgetState extends ConsumerState<FooterBarWidget> {
   int _selectedIndex = 0;
 
   void _navigateBottomBar(int index) {
@@ -21,6 +23,7 @@ class FooterBarWidgetState extends State<FooterBarWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     return Container(
       decoration: const BoxDecoration(
         color: AppTheme.backgroundColorWhite,
@@ -46,23 +49,23 @@ class FooterBarWidgetState extends State<FooterBarWidget> {
             items: [
               BottomNavigationBarItem(
                 icon: _buildIcon('assets/images/footer_icons/home.svg', 0),
-                label: 'Головна',
+                label: l10n.home,
               ),
               BottomNavigationBarItem(
                 icon: _buildIcon('assets/images/footer_icons/search.svg', 1),
-                label: 'Пошук',
+                label: l10n.search,
               ),
               BottomNavigationBarItem(
                 icon: _buildIcon('assets/images/footer_icons/add.svg', 2),
-                label: 'Продати',
+                label: l10n.sell,
               ),
               BottomNavigationBarItem(
                 icon: _buildIcon('assets/images/footer_icons/message.svg', 3),
-                label: 'Чат',
+                label: l10n.chat,
               ),
               BottomNavigationBarItem(
                 icon: _buildIcon('assets/images/footer_icons/profile.svg', 4),
-                label: 'Акаунт',
+                label: l10n.account,
               ),
             ],
           ),

@@ -92,6 +92,12 @@ class AppLocalizations {
   String get signInAccount => _localizedValues[locale.languageCode]!['sign_in_account']!;
   String get welcomeBack => _localizedValues[locale.languageCode]!['welcome_back']!;
   String get dontHaveAccount => _localizedValues[locale.languageCode]!['dont_have_account']!;
+  
+  // === НАВІГАЦІЯ ===
+  String get search => _localizedValues[locale.languageCode]!['search']!;
+  String get sell => _localizedValues[locale.languageCode]!['sell']!;
+  String get chat => _localizedValues[locale.languageCode]!['chat']!;
+  String get account => _localizedValues[locale.languageCode]!['account']!;
 
   /// Словник перекладів
   static const Map<String, Map<String, String>> _localizedValues = {
@@ -156,6 +162,12 @@ class AppLocalizations {
       'sign_in_account': 'Увійти в акаунт',
       'welcome_back': 'Вітаємо знову у Shum!',
       'dont_have_account': 'Ще не маєте акаунт?',
+      
+      // Навігація
+      'search': 'Пошук',
+      'sell': 'Продати',
+      'chat': 'Чат',
+      'account': 'Акаунт',
     },
     'en': {
       // General
@@ -218,6 +230,12 @@ class AppLocalizations {
       'sign_in_account': 'Sign In to Account',
       'welcome_back': 'Welcome back to Shum!',
       'dont_have_account': 'Don\'t have an account?',
+      
+      // Navigation
+      'search': 'Search',
+      'sell': 'Sell',
+      'chat': 'Chat',
+      'account': 'Account',
     },
   };
 }

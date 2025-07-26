@@ -124,7 +124,6 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
     return Scaffold(
       body: Center(
         child: ConstrainedBox(
@@ -163,7 +162,7 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
               children: [
                 const SizedBox(height: 76),
                 Text(
-                  l10n.signUp,
+                  'Реєстрація',
                   textAlign: TextAlign.center,
                   style: Theme.of(context)
                       .textTheme
