@@ -181,30 +181,30 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
                   key: _formKey,
                   child: Column(
                     children: [
-                        labelText: l10n.yourName,
+                      AuthField(
                         labelText: 'Ваше ім’я',
                         validator: validateName,
                         controller: _firstNameController,
-                        hintText: l10n.enterName,
+                        hintText: "Введіть ім'я",
                         showSuffixIcon: (text) {
                           return validateName(text) == null;
                         },
                       ),
                       const SizedBox(height: 12),
                       AuthField(
-                        labelText: l10n.yourSurname,
+                        labelText: 'Ваше прізвище',
                         validator: validateName,
                         controller: _lastNameController,
-                        hintText: l10n.enterSurname,
+                        hintText: "Введіть прізвище",
                         showSuffixIcon: (text) {
                           return validateName(text) == null;
                         },
                       ),
                       const SizedBox(height: 12),
                       AuthField(
-                        labelText: l10n.yourEmail,
+                        labelText: 'Ваша пошта',
                         controller: _emailController,
-                        hintText: l10n.enterEmail,
+                        hintText: 'Введіть пошту',
                         validator: validateEmail,
                         showSuffixIcon: (text) {
                           return validateEmail(text) == null;
@@ -213,20 +213,20 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
                       ),
                       const SizedBox(height: 12),
                       AuthField(
-                        labelText: l10n.password,
+                        labelText: 'Пароль',
                         controller: _passwordController,
-                        hintText: l10n.enterPassword,
+                        hintText: 'Введіть пароль',
                         validator: validatePassword,
                         showCounter: true,
                         isObscureText: true,
                       ),
                       AuthField(
-                        labelText: l10n.repeatPassword,
+                        labelText: 'Повторіть пароль',
                         controller: _confirmPasswordController,
-                        hintText: l10n.enterPasswordAgain,
+                        hintText: 'Введіть пароль повторно',
                         validator: (value) {
                           if (value != _passwordController.text) {
-                            return l10n.passwordsDoNotMatch;
+                            return 'Паролі не співпадають';
                           }
                           return validatePassword(value);
                         },
@@ -235,7 +235,7 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
                       ),
                       const SizedBox(height: 40),
                       AuthButton(
-                        text: l10n.register,
+                        text: 'Зареєструватися',
                         isButtonDisabled: _isButtonDisabled,
                         onPressed: () {
                           _firstNameController.text =
@@ -264,10 +264,10 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
                             style: Theme.of(context).textTheme.bodyMedium,
                             children: const [
                               TextSpan(
-                                text: l10n.alreadyHaveAccount + ' ',
+                                text: 'Вже маєте акаунт? ',
                               ),
                               TextSpan(
-                                text: l10n.signIn,
+                                text: 'Увійти',
                                 style: TextStyle(
                                   color: TColors.orange,
                                 ),
