@@ -3,14 +3,13 @@ import 'dart:convert';
 
 import '../exceptions/invalid_opt_exception.dart';
 import '../exceptions/user_not_found_exception.dart';
+import '../config/api_config.dart';
 
 class PasswordResetService {
   static String? _token;
-  static const String _baseUrl =
-      'http://ec2-18-197-114-210.eu-central-1.compute.amazonaws.com:8032';
 
   static Future<Map<String, dynamic>> sendRecoveryEmail(String email) async {
-    final url = Uri.parse('$_baseUrl/api/v1/auth/reset-password');
+    final url = Uri.parse(ApiConfig.authResetPassword);
 
     try {
       final response = await http.post(
@@ -22,26 +21,33 @@ class PasswordResetService {
         body: jsonEncode({'email': email}),
       );
 
+      final responseData = jsonDecode(response.body);
+
       if (response.statusCode == 200) {
-        return jsonDecode(response.body);
+        print('Recovery email sent successfully');
+        return {
+          'success': true,
+          'message': responseData['message'] ?? 'Email sent successfully'
+        };
+      } else if (response.statusCode == 404) {
+        throw UserNotFoundException('Користувача з такою поштою не знайдено');
       } else {
-        final errorResponse = jsonDecode(response.body);
-
-        if (response.statusCode == 404 &&
-            errorResponse['error'] == 'User not found.') {
-          throw UserNotFoundException('Ця пошта не зареєстрована');
-        }
-
-        throw Exception(errorResponse['error'] ?? 'Невідома помилка');
+        return {
+          'success': false,
+          'message': responseData['error'] ?? 'Unknown error occurred'
+        };
       }
     } catch (e) {
-      print('Caught error: $e');
-      rethrow;
+      if (e is UserNotFoundException) {
+        rethrow;
+      }
+      print('Network error: $e');
+      throw Exception('Network error');
     }
   }
 
   static Future<void> validateRecoveryCode(String email, String code) async {
-    final url = Uri.parse('$_baseUrl/api/v1/auth/otp');
+    final url = Uri.parse(ApiConfig.authOtp);
 
     try {
       final response = await http.post(
@@ -50,57 +56,64 @@ class PasswordResetService {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
         },
-        body: jsonEncode({'email': email, 'otp': code}),
+        body: jsonEncode({
+          'email': email,
+          'otp': code,
+        }),
       );
 
+      final responseData = jsonDecode(response.body);
+
       if (response.statusCode == 200) {
-        final responseData = jsonDecode(response.body);
         _token = responseData['token'];
-      } else if (response.statusCode == 403) {
-        final errorResponse = jsonDecode(response.body);
-        if (errorResponse['error'] == 'Otp not verified') {
-          throw InvalidOtpException('Упс! Код невірний. Спробуйте знову.');
+        print('OTP verified successfully');
+      } else if (response.statusCode == 400) {
+        if (responseData['error'] == "Invalid OTP.") {
+          throw InvalidOtpException('Невірний код підтвердження');
+        } else {
+          throw Exception('Invalid OTP');
         }
-        throw Exception('Помилка: ${response.body}');
       } else {
-        throw Exception('Помилка: ${response.body}');
+        throw Exception('Unknown error occurred');
       }
     } catch (e) {
-      print("error");
       if (e is InvalidOtpException) {
         rethrow;
       }
-      throw Exception('Помилка підключення до сервера');
+      print('Network error: $e');
+      throw Exception('Network error');
     }
   }
 
   static Future<void> resetPassword(String newPassword) async {
     if (_token == null) {
-      throw Exception(
-          'Токен відсутній. Спочатку виконайте validateRecoveryCode.');
+      throw Exception('No verification token available');
     }
-    final url = Uri.parse('$_baseUrl/api/v1/auth/update-password');
+
+    final url = Uri.parse(ApiConfig.authUpdatePassword);
 
     try {
-      final response = await http.patch(
+      final response = await http.post(
         url,
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
           'Authorization': 'Bearer $_token',
         },
-        body: jsonEncode({'password': newPassword}),
+        body: jsonEncode({'new_password': newPassword}),
       );
 
+      final responseData = jsonDecode(response.body);
+
       if (response.statusCode == 200) {
-        print('Пароль успішно змінено: ${response.body}');
+        _token = null; // Clear token after successful password update
+        print('Password updated successfully');
       } else {
-        print('Помилка зміни паролю: ${response.statusCode} ${response.body}');
-        throw Exception('Помилка: ${response.body}');
+        throw Exception(responseData['error'] ?? 'Failed to update password');
       }
     } catch (e) {
-      print('Помилка підключення: $e');
-      throw Exception('Помилка підключення до сервера');
+      print('Network error: $e');
+      throw Exception('Network error');
     }
   }
 }

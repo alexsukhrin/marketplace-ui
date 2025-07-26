@@ -1,129 +1,101 @@
-import 'package:flutter/material.dart';
-
-import 'auth_storage.dart';
+import 'dart:convert';
+import 'dart:io';
+import 'package:flutter_application_1/src/services/auth_storage.dart';
 import 'package:http/http.dart' as http;
-import 'package:http_parser/http_parser.dart';
-import 'dart:typed_data';
+import 'package:flutter/foundation.dart';
+import '../config/api_config.dart';
 
 class ListingPageService {
-  static const String _baseUrl =
-      'http://ec2-18-197-114-210.eu-central-1.compute.amazonaws.com:8032';
 
-  static Future<void> createProduct({
-    required String title,
-    required String description,
-    required String category,
-    required String brand,
-    required String condition,
-    required double price,
-    required String phoneNumber,
-    required String deliveryOption,
-    required String paymentOption,
-    required List<Uint8List> images,
-    required BuildContext context,
-    String? color,
-    String? material,
-    String? gender,
-    String? clothingSize,
-    String? shoeSize,
-    String? bookBinding,
-    String? bookLanguages,
-    String? bookGenre,
-    String? clothingMaterials,
-    String? shoeMaterials,
-    String? homeMaterials,
-    String? homeTypes,
-    String? electronisTypes,
-    String? autoTypes,
-    String? stationeryTypes,
-    String? activityTypes,
-    String? waterSportsTypes,
-    String? cyclingTypes,
-    String? childrenTypes,
-    String? gardenTypes,
-  }) async {
+  static Future<bool> createProduct(
+    Map<String, dynamic> productData,
+    List<File> images,
+  ) async {
     try {
       final token = await AuthStorage.getAccessToken();
 
-      var uri = Uri.parse('$_baseUrl/api/v1/products/create');
-      var request = http.MultipartRequest('POST', uri);
-
-      // текстові поля
-      request.fields['title'] = title;
-      request.fields['description'] = description;
-      request.fields['category_id'] = category;
-      request.fields['brand'] = brand;
-      request.fields['condition'] = condition;
-      request.fields['price'] = price.toString();
-      request.fields['phone_number'] = phoneNumber;
-      request.fields['delivery_option'] = deliveryOption;
-      request.fields['payment_option'] = paymentOption;
-
-      // Необов’язкові поля
-      if (color != null && color.isNotEmpty) {
-        request.fields['color'] = color;
-      }
-      if (material != null && material.isNotEmpty) {
-        request.fields['material'] = material;
-      }
-      if (gender != null && gender.isNotEmpty) {
-        request.fields['gender'] = gender;
-      }
-      if (clothingSize != null && clothingSize.isNotEmpty) {
-        request.fields['clothing_size'] = clothingSize;
-      }
-      if (shoeSize != null && shoeSize.isNotEmpty) {
-        request.fields['shoe_size'] = shoeSize;
-      }
-      if (bookBinding != null && bookBinding.isNotEmpty) {
-        request.fields['book_binding'] = bookBinding;
-      }
-      if (bookLanguages != null && bookLanguages.isNotEmpty) {
-        request.fields['book_languages'] = bookLanguages;
-      }
-      if (bookGenre != null && bookGenre.isNotEmpty) {
-        request.fields['book_genres'] = bookGenre;
+      if (token == null) {
+        print('🔐 No auth token found');
+        return false;
       }
 
-      // файли
+      print('📦 Creating product with data: $productData');
+      print('🖼️ Number of images: ${images.length}');
+
+      // Convert productData to the exact format expected by the API
+      final List<Map<String, dynamic>> productDataList = [
+        {
+          'name': productData['name'],
+          'description': productData['description'],
+          'price': productData['price'].toString(),
+          'category': productData['category'],
+          'condition': productData['condition'],
+          'brand': productData['brand'],
+          'size': productData['size'],
+          'color': productData['color'],
+          'material': productData['material'],
+          'gender': productData['gender'],
+          'delivery_method': productData['delivery_method'],
+          'payment_method': productData['payment_method'],
+        }
+      ];
+
+      var request = http.MultipartRequest(
+        'POST',
+        Uri.parse(ApiConfig.productsCreate),
+      );
+
+      request.headers.addAll({
+        'Authorization': 'Bearer $token',
+        'Accept': 'application/json',
+      });
+
+      request.fields['products'] = jsonEncode(productDataList);
+
+      // Add images
       for (int i = 0; i < images.length; i++) {
-        request.files.add(
-          http.MultipartFile.fromBytes(
-            'photos',
-            images[i],
-            filename: 'photo_$i.jpg',
-            contentType: MediaType('image', 'jpeg'),
-          ),
-        );
+        if (kIsWeb) {
+          // For web, read bytes and add as MultipartFile
+          final bytes = await images[i].readAsBytes();
+          request.files.add(
+            http.MultipartFile.fromBytes(
+              'images',
+              bytes,
+              filename: 'image_$i.jpg',
+            ),
+          );
+        } else {
+          // For mobile platforms
+          request.files.add(
+            await http.MultipartFile.fromPath(
+              'images',
+              images[i].path,
+            ),
+          );
+        }
       }
 
-      request.headers['Authorization'] = 'Bearer $token';
-      // print('Attached files: ${request.files.map((f) => f.filename).toList()}');
-      print('🔵 Sending request to: $uri');
-      print('🔵 Request fields: ${request.fields}');
-      print('🔵 Request headers: ${request.headers}');
+      print('🚀 Sending request to: ${request.url}');
+      print('📋 Request fields: ${request.fields}');
+      print('🖼️ Request files: ${request.files.map((f) => f.filename).toList()}');
 
-      var streamedResponse = await request.send();
-      var response = await http.Response.fromStream(streamedResponse);
+      final streamedResponse = await request.send();
+      final response = await http.Response.fromStream(streamedResponse);
 
-      print('🟣 Response status: ${response.statusCode}');
-      print('🟣 Response body: ${response.body}');
+      print('📨 Response status: ${response.statusCode}');
+      print('📄 Response body: ${response.body}');
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        _showPopup(context, 'Продукт відправлений на модерацію');
+        print('✅ Product created successfully');
+        return true;
       } else {
-        _showPopup(context, 'Помилка додавання продукту: ${response.body}');
-        print('Error body: ${response.body}');
+        print('❌ Failed to create product: ${response.statusCode}');
+        print('Error details: ${response.body}');
+        return false;
       }
     } catch (e) {
-      _showPopup(context, 'Помилка при відправці даних');
-      print('Error sending product data: $e');
+      print('🔥 Error creating product: $e');
+      return false;
     }
-  }
-
-  static void _showPopup(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message)),
-    );
   }
 }

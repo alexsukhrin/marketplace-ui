@@ -3,13 +3,11 @@ import 'dart:convert';
 
 import '../exceptions/email_already_registered_exception.dart';
 import 'auth_storage.dart';
+import '../config/api_config.dart';
 
 class AuthService {
-  static const String _baseUrl =
-      'http://ec2-18-153-92-5.eu-central-1.compute.amazonaws.com:8032';
-
   static Future<void> registerUser(Map<String, String> formData) async {
-    final url = Uri.parse('$_baseUrl/api/v1/auth/register');
+    final url = Uri.parse(ApiConfig.authRegister);
 
     try {
       final response = await http.post(
@@ -59,7 +57,7 @@ class AuthService {
 
   static Future<Map<String, dynamic>> loginUser(
       String email, String password) async {
-    final url = Uri.parse('$_baseUrl/api/v1/auth/login');
+    final url = Uri.parse(ApiConfig.authLogin);
 
     try {
       final response = await http.post(
@@ -100,7 +98,7 @@ class AuthService {
   }
 
   static Future<void> sendRecoveryEmail(String email) async {
-    final url = Uri.parse('$_baseUrl/api/v1/auth/reset-password');
+    final url = Uri.parse(ApiConfig.authResetPassword);
 
     try {
       final response = await http.post(
@@ -124,7 +122,7 @@ class AuthService {
   }
 
   static Future<bool> refreshAccessToken() async {
-    final url = Uri.parse('$_baseUrl/api/v1/auth/refresh');
+    final url = Uri.parse(ApiConfig.authRefresh);
     final refreshToken = await AuthStorage.getRefreshToken();
 
     if (refreshToken == null) {

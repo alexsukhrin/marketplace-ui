@@ -1,11 +1,9 @@
 import 'dart:convert';
 import 'package:flutter_application_1/src/services/auth_storage.dart';
+import 'package:flutter_application_1/src/config/api_config.dart';
 import 'package:http/http.dart' as http;
 
 class UserRoleService {
-  static const String _baseUrl =
-      'http://ec2-18-197-114-210.eu-central-1.compute.amazonaws.com:8032';
-
   static Future<void> sendRole(Map<String, bool> role) async {
     final token = await AuthStorage.getAccessToken();
     print('Retrieved token: $token');
@@ -13,7 +11,7 @@ class UserRoleService {
       throw Exception('Authorization token is missing');
     }
 
-    final url = Uri.parse('$_baseUrl/api/v1/users/create');
+    final url = Uri.parse(ApiConfig.usersCreate);
 
     try {
       final response = await http.post(
