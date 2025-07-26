@@ -24,7 +24,6 @@ class AuthService {
       print('Response body: $responseBody');
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-
         if (responseBody.containsKey('tokens') &&
             responseBody.containsKey('user')) {
           final tokens = responseBody['tokens'];
@@ -112,7 +111,7 @@ class AuthService {
           final tokens = responseData['tokens'];
           final accessToken = tokens['access'];
           final refreshToken = tokens['refresh'];
-          
+
           if (accessToken != null && refreshToken != null) {
             await TokenManager.instance.setTokens(
               accessToken: accessToken,
