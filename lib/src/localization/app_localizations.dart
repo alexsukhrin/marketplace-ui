@@ -98,6 +98,21 @@ class AppLocalizations {
   String get sell => _localizedValues[locale.languageCode]!['sell']!;
   String get chat => _localizedValues[locale.languageCode]!['chat']!;
   String get account => _localizedValues[locale.languageCode]!['account']!;
+  
+  // === FOOTER SECTIONS ===
+  String get pages => _localizedValues[locale.languageCode]!['pages']!;
+  String get other => _localizedValues[locale.languageCode]!['other']!;
+  String get contacts => _localizedValues[locale.languageCode]!['contacts']!;
+  String get seasonalOffers => _localizedValues[locale.languageCode]!['seasonal_offers']!;
+  String get newAds => _localizedValues[locale.languageCode]!['new_ads']!;
+  String get notifications => _localizedValues[locale.languageCode]!['notifications']!;
+  String get reviews => _localizedValues[locale.languageCode]!['reviews']!;
+  String get recommendedProducts => _localizedValues[locale.languageCode]!['recommended_products']!;
+  String get history => _localizedValues[locale.languageCode]!['history']!;
+  String get delivery => _localizedValues[locale.languageCode]!['delivery']!;
+  String get questions => _localizedValues[locale.languageCode]!['questions']!;
+  String get favorites => _localizedValues[locale.languageCode]!['favorites']!;
+  String get support => _localizedValues[locale.languageCode]!['support']!;
 
   /// Словник перекладів
   static const Map<String, Map<String, String>> _localizedValues = {
@@ -168,6 +183,21 @@ class AppLocalizations {
       'sell': 'Продати',
       'chat': 'Чат',
       'account': 'Акаунт',
+      
+      // Footer Sections
+      'pages': 'Сторінки',
+      'other': 'Інше',
+      'contacts': 'Контакти',
+      'seasonal_offers': 'Сезонні пропозиції',
+      'new_ads': 'Нові оголошення',
+      'notifications': 'Сповіщення',
+      'reviews': 'Відгуки',
+      'recommended_products': 'Рекомендовані товари',
+      'history': 'Історія',
+      'delivery': 'Доставка та оплата',
+      'questions': 'Питання',
+      'favorites': 'Обране',
+      'support': 'Підтримка',
     },
     'en': {
       // General
@@ -236,6 +266,21 @@ class AppLocalizations {
       'sell': 'Sell',
       'chat': 'Chat',
       'account': 'Account',
+      
+      // Footer Sections
+      'pages': 'Pages',
+      'other': 'Other',
+      'contacts': 'Contacts',
+      'seasonal_offers': 'Seasonal Offers',
+      'new_ads': 'New Ads',
+      'notifications': 'Notifications',
+      'reviews': 'Reviews',
+      'recommended_products': 'Recommended Products',
+      'history': 'History',
+      'delivery': 'Delivery & Payment',
+      'questions': 'Questions',
+      'favorites': 'Favorites',
+      'support': 'Support',
     },
   };
 }
