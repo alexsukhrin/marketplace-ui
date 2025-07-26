@@ -27,10 +27,12 @@ class ApiConfig {
 
   // Product options
   static String get shoeSizes => '$baseUrl/api/products/options/shoe-sizes/';
-  static String get clothingSizes => '$baseUrl/api/products/options/clothing-sizes/';
+  static String get clothingSizes =>
+      '$baseUrl/api/products/options/clothing-sizes/';
   static String get colors => '$baseUrl/api/products/options/colors/';
   static String get genders => '$baseUrl/api/products/options/genders/';
   static String get materials => '$baseUrl/api/products/options/materials/';
   static String get paymentOptions => '$baseUrl/api/products/payment-options/';
-  static String get deliveryOptions => '$baseUrl/api/products/delivery-options/';
+  static String get deliveryOptions =>
+      '$baseUrl/api/products/delivery-options/';
 }
