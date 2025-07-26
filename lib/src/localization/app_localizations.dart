@@ -113,6 +113,9 @@ class AppLocalizations {
   String get questions => _localizedValues[locale.languageCode]!['questions']!;
   String get favorites => _localizedValues[locale.languageCode]!['favorites']!;
   String get support => _localizedValues[locale.languageCode]!['support']!;
+  
+  // === REGISTRATION PAGE ===
+  String get registrationSubtitle => _localizedValues[locale.languageCode]!['registration_subtitle']!;
 
   /// Словник перекладів
   static const Map<String, Map<String, String>> _localizedValues = {
@@ -198,6 +201,9 @@ class AppLocalizations {
       'questions': 'Питання',
       'favorites': 'Обране',
       'support': 'Підтримка',
+      
+      // Registration
+      'registration_subtitle': 'Отримайте більше можливостей\nстворивши акаунт',
     },
     'en': {
       // General
@@ -281,6 +287,9 @@ class AppLocalizations {
       'questions': 'Questions',
       'favorites': 'Favorites',
       'support': 'Support',
+      
+      // Registration
+      'registration_subtitle': 'Get more opportunities\nby creating an account',
     },
   };
 }

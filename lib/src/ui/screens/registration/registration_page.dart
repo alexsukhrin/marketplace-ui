@@ -162,7 +162,7 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
               children: [
                 const SizedBox(height: 76),
                 Text(
-                  'Реєстрація',
+                  AppLocalizations.of(context).signUp,
                   textAlign: TextAlign.center,
                   style: Theme.of(context)
                       .textTheme
@@ -171,7 +171,7 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Отримайте більше можливостей\nстворивши акаунт',
+                  AppLocalizations.of(context).registrationSubtitle,
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
@@ -234,7 +234,7 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
                       ),
                       const SizedBox(height: 40),
                       AuthButton(
-                        text: 'Зареєструватися',
+                        text: AppLocalizations.of(context).signUp,
                         isButtonDisabled: _isButtonDisabled,
                         onPressed: () {
                           _firstNameController.text =
@@ -261,13 +261,13 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
                         child: RichText(
                           text: TextSpan(
                             style: Theme.of(context).textTheme.bodyMedium,
-                            children: const [
+                            children: [
                               TextSpan(
-                                text: 'Вже маєте акаунт? ',
+                                text: AppLocalizations.of(context).alreadyHaveAccount,
                               ),
                               TextSpan(
-                                text: 'Увійти',
-                                style: TextStyle(
+                                text: AppLocalizations.of(context).signIn,
+                                style: const TextStyle(
                                   color: TColors.orange,
                                 ),
                               ),
