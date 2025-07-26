@@ -87,6 +87,11 @@ class AppLocalizations {
   String get enterPasswordAgain => _localizedValues[locale.languageCode]!['enter_password_again']!;
   String get repeatPassword => _localizedValues[locale.languageCode]!['repeat_password']!;
   String get alreadyHaveAccount => _localizedValues[locale.languageCode]!['already_have_account']!;
+  
+  // === ВХІД ===
+  String get signInAccount => _localizedValues[locale.languageCode]!['sign_in_account']!;
+  String get welcomeBack => _localizedValues[locale.languageCode]!['welcome_back']!;
+  String get dontHaveAccount => _localizedValues[locale.languageCode]!['dont_have_account']!;
 
   /// Словник перекладів
   static const Map<String, Map<String, String>> _localizedValues = {
@@ -146,6 +151,11 @@ class AppLocalizations {
       'enter_password_again': 'Введіть пароль повторно',
       'repeat_password': 'Повторіть пароль',
       'already_have_account': 'Вже маєте акаунт?',
+      
+      // Вхід
+      'sign_in_account': 'Увійти в акаунт',
+      'welcome_back': 'Вітаємо знову у Shum!',
+      'dont_have_account': 'Ще не маєте акаунт?',
     },
     'en': {
       // General
@@ -203,6 +213,11 @@ class AppLocalizations {
       'enter_password_again': 'Enter password again',
       'repeat_password': 'Repeat password',
       'already_have_account': 'Already have an account?',
+      
+      // Sign In
+      'sign_in_account': 'Sign In to Account',
+      'welcome_back': 'Welcome back to Shum!',
+      'dont_have_account': 'Don\'t have an account?',
     },
   };
 }

@@ -8,8 +8,10 @@ import 'package:flutter_application_1/src/ui/widgets/auth_widgets/auth_button.da
 import 'package:flutter_application_1/src/ui/widgets/shared_widgets/language_selector.dart';
 import 'package:flutter_application_1/src/ui/widgets/social_media/social_media.dart';
 import 'package:flutter_application_1/src/utils/validators.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../localization/app_localizations.dart';
 
-class LoginMobileLayout extends StatelessWidget {
+class LoginMobileLayout extends ConsumerWidget {
   final TextTheme textTheme;
   final GlobalKey<FormState> formKey;
   final TextEditingController emailController;
@@ -28,7 +30,8 @@ class LoginMobileLayout extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context);
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -59,8 +62,8 @@ class LoginMobileLayout extends StatelessWidget {
                       const LoginHeader(),
                       const SizedBox(height: 40),
                       AuthField(
-                        labelText: 'Ваша пошта',
-                        hintText: "Введіть пошту",
+                        labelText: l10n.yourEmail,
+                        hintText: l10n.enterEmail,
                         controller: emailController,
                         validator: validateEmail,
                         showSuffixIcon: (text) {
@@ -69,8 +72,8 @@ class LoginMobileLayout extends StatelessWidget {
                       ),
                       const SizedBox(height: 12),
                       AuthField(
-                        labelText: 'Пароль',
-                        hintText: "Введіть пароль",
+                        labelText: l10n.password,
+                        hintText: l10n.enterPassword,
                         controller: passwordController,
                         validator: validatePassword,
                         isObscureText: true,
@@ -81,7 +84,7 @@ class LoginMobileLayout extends StatelessWidget {
                               : null),
                       const SizedBox(height: 40),
                       AuthButton(
-                        text: 'Увійти в акаунт',
+                        text: l10n.signInAccount,
                         onPressed: onLogin,
                         isButtonDisabled: isButtonDisabled,
                       ),
@@ -103,10 +106,10 @@ class LoginMobileLayout extends StatelessWidget {
                         child: RichText(
                           text: TextSpan(
                             style: Theme.of(context).textTheme.bodyMedium,
-                            children: const [
-                              TextSpan(text: 'Ще не маєте акаунт? '),
+                            children: [
+                              TextSpan(text: l10n.dontHaveAccount + ' '),
                               TextSpan(
-                                text: ' Зареєструватись',
+                                text: l10n.signUp,
                                 style: TextStyle(
                                   color: TColors.orange,
                                 ),
