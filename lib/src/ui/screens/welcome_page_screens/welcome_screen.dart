@@ -9,19 +9,21 @@ import '../../../localization/app_localizations.dart';
 import '../../widgets/responsive/responsive_design.dart';
 import '../../widgets/welcome_page_widgets/left_section.dart';
 
+
 class WelcomeScreen extends ConsumerWidget {
   const WelcomeScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return const Scaffold(
+    return Scaffold(
       body: TResponsiveWidget(
-          desktop: Padding(
-            padding: EdgeInsets.symmetric(vertical: 33.0, horizontal: 61.0),
-            child: Desktop(),
-          ),
-          tablet: Tablet(),
-          mobile: Mobile()),
+        desktop: Padding(
+          padding: EdgeInsets.symmetric(vertical: 33.0, horizontal: 61.0),
+          child: Desktop(),
+        ),
+        tablet: Tablet(),
+        mobile: Mobile(),
+      ),
     );
   }
 }

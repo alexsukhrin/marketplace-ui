@@ -163,7 +163,7 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
               children: [
                 const SizedBox(height: 76),
                 Text(
-                  'Реєстрація',
+                  l10n.signUp,
                   textAlign: TextAlign.center,
                   style: Theme.of(context)
                       .textTheme
@@ -181,30 +181,30 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
                   key: _formKey,
                   child: Column(
                     children: [
-                      AuthField(
+                        labelText: l10n.yourName,
                         labelText: 'Ваше ім’я',
                         validator: validateName,
                         controller: _firstNameController,
-                        hintText: "Введіть ім'я",
+                        hintText: l10n.enterName,
                         showSuffixIcon: (text) {
                           return validateName(text) == null;
                         },
                       ),
                       const SizedBox(height: 12),
                       AuthField(
-                        labelText: 'Ваше прізвище',
+                        labelText: l10n.yourSurname,
                         validator: validateName,
                         controller: _lastNameController,
-                        hintText: "Введіть прізвище",
+                        hintText: l10n.enterSurname,
                         showSuffixIcon: (text) {
                           return validateName(text) == null;
                         },
                       ),
                       const SizedBox(height: 12),
                       AuthField(
-                        labelText: 'Ваша пошта',
+                        labelText: l10n.yourEmail,
                         controller: _emailController,
-                        hintText: 'Введіть пошту',
+                        hintText: l10n.enterEmail,
                         validator: validateEmail,
                         showSuffixIcon: (text) {
                           return validateEmail(text) == null;
@@ -213,20 +213,20 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
                       ),
                       const SizedBox(height: 12),
                       AuthField(
-                        labelText: 'Пароль',
+                        labelText: l10n.password,
                         controller: _passwordController,
-                        hintText: 'Введіть пароль',
+                        hintText: l10n.enterPassword,
                         validator: validatePassword,
                         showCounter: true,
                         isObscureText: true,
                       ),
                       AuthField(
-                        labelText: 'Повторіть пароль',
+                        labelText: l10n.repeatPassword,
                         controller: _confirmPasswordController,
-                        hintText: 'Введіть пароль повторно',
+                        hintText: l10n.enterPasswordAgain,
                         validator: (value) {
                           if (value != _passwordController.text) {
-                            return 'Паролі не співпадають';
+                            return l10n.passwordsDoNotMatch;
                           }
                           return validatePassword(value);
                         },
@@ -235,7 +235,7 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
                       ),
                       const SizedBox(height: 40),
                       AuthButton(
-                        text: 'Зареєструватися',
+                        text: l10n.register,
                         isButtonDisabled: _isButtonDisabled,
                         onPressed: () {
                           _firstNameController.text =
@@ -264,10 +264,10 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
                             style: Theme.of(context).textTheme.bodyMedium,
                             children: const [
                               TextSpan(
-                                text: 'Вже маєте акаунт? ',
+                                text: l10n.alreadyHaveAccount + ' ',
                               ),
                               TextSpan(
-                                text: 'Увійти',
+                                text: l10n.signIn,
                                 style: TextStyle(
                                   color: TColors.orange,
                                 ),
