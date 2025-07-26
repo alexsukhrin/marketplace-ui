@@ -10,7 +10,7 @@ class LocalizationDebug extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final currentLanguage = ref.watch(languageProvider);
-    
+
     return Container(
       padding: const EdgeInsets.all(16),
       margin: const EdgeInsets.all(8),
@@ -44,12 +44,16 @@ class LocalizationDebug extends ConsumerWidget {
           Row(
             children: [
               ElevatedButton(
-                onPressed: () => ref.read(languageProvider.notifier).changeLanguage(AppLanguage.ukrainian),
+                onPressed: () => ref
+                    .read(languageProvider.notifier)
+                    .changeLanguage(AppLanguage.ukrainian),
                 child: const Text('Force UA'),
               ),
               const SizedBox(width: 8),
               ElevatedButton(
-                onPressed: () => ref.read(languageProvider.notifier).changeLanguage(AppLanguage.english),
+                onPressed: () => ref
+                    .read(languageProvider.notifier)
+                    .changeLanguage(AppLanguage.english),
                 child: const Text('Force EN'),
               ),
             ],
@@ -58,4 +62,4 @@ class LocalizationDebug extends ConsumerWidget {
       ),
     );
   }
-} 
+}

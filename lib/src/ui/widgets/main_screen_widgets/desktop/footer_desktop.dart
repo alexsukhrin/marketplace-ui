@@ -12,7 +12,7 @@ class FooterSection extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
-    
+
     final List<Map<String, dynamic>> listSections = [
       {
         'title': l10n.pages,

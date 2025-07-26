@@ -263,7 +263,8 @@ class RegistrationPageState extends ConsumerState<RegistrationPage> {
                             style: Theme.of(context).textTheme.bodyMedium,
                             children: [
                               TextSpan(
-                                text: AppLocalizations.of(context).alreadyHaveAccount,
+                                text: AppLocalizations.of(context)
+                                    .alreadyHaveAccount,
                               ),
                               TextSpan(
                                 text: AppLocalizations.of(context).signIn,

@@ -9,7 +9,6 @@ import '../../../localization/app_localizations.dart';
 import '../../widgets/responsive/responsive_design.dart';
 import '../../widgets/welcome_page_widgets/left_section.dart';
 
-
 class WelcomeScreen extends ConsumerWidget {
   const WelcomeScreen({super.key});
 
@@ -213,7 +212,7 @@ class WelcomeText extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
-    
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
